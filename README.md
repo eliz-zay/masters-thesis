@@ -35,7 +35,7 @@ https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-l
 - `opt -disable-output hello.ll -passes=helloworld` - perform passes using optimizer
 
 
-### Skeleton pass: plugin
+## Skeleton pass: plugin
 
 ### Build the pass
 - `cd ./pass/build`
@@ -43,10 +43,11 @@ https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-l
 - `make`
 
 ### Run
-```shell
+- `cd ./thesis/target`
+- ```shell
   opt \
     -disable-output \
-    -load-pass-plugin=/Users/elizaveta/Documents/uni/thesis/thesis/pass/build/skeleton/libSkeletonPass.so \
+    -load-pass-plugin="/Users/elizaveta/Documents/uni/thesis/thesis/pass/build/skeleton/libSkeletonPass.so" \
     -passes=skeleton \
     hello.ll
 ```
