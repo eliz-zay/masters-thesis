@@ -17,9 +17,10 @@
 using namespace llvm;
 
 namespace {
-  struct SkeletonPass : public PassInfoMixin<SkeletonPass> {
+  struct AnnotationPass : public PassInfoMixin<AnnotationPass> {
     PreservedAnalyses run(Module &M, ModuleAnalysisManager &FAM) {
-      // Get annotations of global functions and variables
+      LLVMContext &Ctx = M.getContext();
+
       auto *Annotations = M.getNamedGlobal("llvm.global.annotations");
       if (!Annotations || !Annotations->hasInitializer()) {
         return PreservedAnalyses::all();
@@ -31,17 +32,15 @@ namespace {
       }
 
       for (unsigned i = 0; i < Array->getNumOperands(); ++i) {
-        errs() << "Processing attribute" << "\n";
-
         auto *Struct = dyn_cast<ConstantStruct>(Array->getOperand(i));
         if (!Struct || Struct->getNumOperands() < 2) {
           continue;
         }
 
         // Get the annotated function or variable
-        auto *AnnotatedValue = dyn_cast<Function>(Struct->getOperand(0)->stripPointerCasts());
+        auto *AnnotatedValue = dyn_cast<Value>(Struct->getOperand(0)->stripPointerCasts());
         if (!AnnotatedValue) {
-          continue; // Skip non-function annotations
+          continue;
         }
 
         // Get the annotation string
@@ -54,28 +53,33 @@ namespace {
 
         StringRef Annotation = AnnotationMD->getAsString();
 
-        errs()
-          << "Function: " << AnnotatedValue->getName()
-          << ", annotation: " << Annotation.data()
-          << "\n";
+        if (auto *F = dyn_cast<Function>(AnnotatedValue)) {
+          MDNode *AnnotationNode = MDNode::get(Ctx, MDString::get(Ctx, Annotation));
+          F->setMetadata("annotation", AnnotationNode);
+
+          errs() << "[annotation] Attached annotation: " << F->getName()
+                 << " -> " << Annotation << "\n";
+        } else {
+          errs() << "[annotation] No annotation: " << AnnotatedValue->getName() << "\n";
+        }
       }
 
-      return PreservedAnalyses::all();
+      return PreservedAnalyses::none();
     }
   };
 } // namespace
 
 // Register the pass with the new pass manager
-llvm::PassPluginLibraryInfo getSkeletonPassPluginInfo() {
+llvm::PassPluginLibraryInfo getAnnotationPassPluginInfo() {
   return {
     LLVM_PLUGIN_API_VERSION,
-    "SkeletonPass",
+    "AnnotationPass",
     LLVM_VERSION_STRING,
     [](PassBuilder &PB) {
       PB.registerPipelineParsingCallback(
          [](StringRef Name, ModulePassManager &MPM, ArrayRef<PassBuilder::PipelineElement>) {
-          if (Name == "skeleton") {
-            MPM.addPass(SkeletonPass());
+          if (Name == "annotation") {
+            MPM.addPass(AnnotationPass());
             return true;
           }
           return false;
@@ -86,5 +90,5 @@ llvm::PassPluginLibraryInfo getSkeletonPassPluginInfo() {
 }
 
 extern "C" LLVM_ATTRIBUTE_WEAK ::llvm::PassPluginLibraryInfo llvmGetPassPluginInfo() {
-  return getSkeletonPassPluginInfo();
+  return getAnnotationPassPluginInfo();
 }

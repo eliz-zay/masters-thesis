@@ -12,7 +12,12 @@ using namespace llvm;
 namespace {
   struct SkeletonPass : public PassInfoMixin<SkeletonPass> {
     PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {
-      errs() << "Running skeleton on function: " << F.getName() << "\n";
+      if (auto *MD = F.getMetadata("annotation")) {
+        errs() << "[skeleton] Found annotation: " << F.getName() << "\n";
+      } else {
+        errs() << "[skeleton] No annotation: " << F.getName() << "\n";
+      }
+
       return PreservedAnalyses::all();
     }
   };
