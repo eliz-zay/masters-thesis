@@ -54,11 +54,15 @@ namespace {
         StringRef Annotation = AnnotationMD->getAsString();
 
         if (auto *F = dyn_cast<Function>(AnnotatedValue)) {
-          MDNode *AnnotationNode = MDNode::get(Ctx, MDString::get(Ctx, Annotation));
+          // Remove last element of the parsed string with ASCII code 0
+          std::string annotation = Annotation.str();
+          annotation.pop_back();
+
+          MDNode *AnnotationNode = MDNode::get(Ctx, MDString::get(Ctx, annotation));
           F->setMetadata("annotation", AnnotationNode);
 
           errs() << "[annotation] Attached annotation: " << F->getName()
-                 << " -> " << Annotation << "\n";
+                 << " -> " << annotation << "\n";
         } else {
           errs() << "[annotation] No annotation: " << AnnotatedValue->getName() << "\n";
         }

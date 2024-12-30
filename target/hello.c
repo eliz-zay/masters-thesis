@@ -7,6 +7,7 @@ void foo() {
 
 char __attribute__((annotate("nookie:43"))) theNookie = 'a';
 
+__attribute__((annotate("flatten")))
 int main() {
     foo();
     printf("Hello, LLVM!\n");
