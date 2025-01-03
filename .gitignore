@@ -37,3 +37,6 @@
 **/CMakeFiles
 **/*.cmake
 **/CMakeCache.txt
+
+*.dot
+*.png

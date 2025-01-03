@@ -8,12 +8,46 @@ void foo() {
 char __attribute__((annotate("nookie:43"))) theNookie = 'a';
 
 __attribute__((annotate("flatten")))
-int main() {
-    foo();
-    printf("Hello, LLVM!\n");
+int main(int argc) {
+    int n = argc;
+    
+    while (n > 4) {
+        if (n % 2 == 0) {
+            n = n / 2;
+        } else {
+            n = n * 3 + 1;
+        }
 
-    // Local annotations are ignored in the pass
-    int __attribute__((annotate("nookie:44"))) theNookieLocal = 100;
+        while (n % 3 == 0) {
+            n = n - 1;
+        }
+
+
+        switch (n) {
+            case 77: {
+                while (n > 17) {
+                    n = n - 5;
+                }
+                break;
+            }
+            case 22: {
+                while (n > 4) {
+                    if (n % 2 == 0) {
+                        n = n / 2;
+                    } else {
+                        n = n * 3 + 1;
+                    }
+                }
+                break;
+            }
+            case 44: {
+                n = 5;
+                break;
+            }
+        }
+
+        printf("%i\n", n);
+    }
 
     return 0;
 }

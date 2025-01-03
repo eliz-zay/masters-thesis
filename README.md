@@ -52,9 +52,18 @@ https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-l
     -load-pass-plugin="/Users/elizaveta/Documents/uni/thesis/thesis/pass/build/flatten/libFlattenPass.so" \
     -passes="module(annotation),function(skeleton),function(flatten)" \
     hello.ll
-```
+  ```
+
+To forward output to a new file, replace `-disable-output` with `-o hello2.ll`.
 
 `file <filename>`, `file ./bin/opt`
+
+## Visualize CFG of a function
+Prerequisite: `brew install graphviz`
+
+- `opt -passes=dot-cfg hello.ll` - generate `.main.dot`
+- `dot -Tpng .main.dot -o main.png` - generate `main.png`
+Works for every function in the program.
 
 ## Implementation
 LLVM IR does not keep annotations attached to functions and variables directly. Instead, the annotations are kept in the global section
