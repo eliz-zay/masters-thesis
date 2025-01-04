@@ -99,8 +99,8 @@ namespace {
     std::vector<PHINode *> getPHINodes(Function &F) const {
       std::vector<PHINode *> nodes;
 
-      for (auto &BB: F) {
-        for (auto &inst: BB) {
+      for (auto &block: F) {
+        for (auto &inst: block) {
           if (isa<PHINode>(&inst)) {
             nodes.push_back(cast<PHINode>(&inst));
           }
@@ -168,6 +168,14 @@ namespace {
       BasicBlock &entryBlock = F.front();
       entryBlock.setName("entryBlock");
 
+      auto it = F.begin();
+      it++;
+      (*it).setName("if-else_1");
+      it++;
+      (*it).setName("while_%3");
+      it++;
+      (*it).setName("switch");
+
       // Split conditional branch in two
       if (BranchInst *branch = dyn_cast<BranchInst>(entryBlock.getTerminator())) {
         if (branch->isConditional()) {
@@ -182,6 +190,66 @@ namespace {
 
       auto blockCaseIdxs = this->generateCaseBlockIdxs(F);
 
+      for (auto it = blockCaseIdxs.begin(); it != blockCaseIdxs.end(); it++) {
+        auto block = it->first;
+
+        if (dyn_cast<ReturnInst>(block->getTerminator())) {
+          continue;
+        }
+
+        builder.SetInsertPoint(block->getTerminator());
+        
+        if (auto branch = dyn_cast<BranchInst>(block->getTerminator())) {
+          if (branch->isUnconditional()) {
+            auto successor = branch->getSuccessor(0);
+            auto caseIdx = blockCaseIdxs[successor];
+
+            builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), caseIdx), caseVar);
+          } else {
+            errs() << block->getName() << blockCaseIdxs[block] << "\n";
+            auto successorTrue = branch->getSuccessor(0);
+            auto successorFalse = branch->getSuccessor(1);
+
+            auto trueCaseIdx = blockCaseIdxs[successorTrue];
+            auto falseCaseIdx = blockCaseIdxs[successorFalse];
+
+            Value *selectInst = builder.CreateSelect(
+              branch->getCondition(),
+              ConstantInt::get(Type::getInt32Ty(context), trueCaseIdx),
+              ConstantInt::get(Type::getInt32Ty(context), falseCaseIdx),
+              "",
+              branch
+            );
+            builder.CreateStore(selectInst, caseVar);
+          }
+
+          continue;
+        }
+
+        if (dyn_cast<SwitchInst>(block->getTerminator())) {
+          continue;
+        }
+
+        throw "Unknown branch type";
+      }
+
+      // todo: упорядочить создание кейсов по индексам, для красоты
+      for (auto it = blockCaseIdxs.begin(); it != blockCaseIdxs.end(); it++) {
+        auto block = it->first;
+        auto caseIdx = it->second;
+
+        if (
+          dyn_cast<BranchInst>(block->getTerminator()) ||
+          dyn_cast<SwitchInst>(block->getTerminator())
+        ) {
+          block->getTerminator()->eraseFromParent();
+          builder.SetInsertPoint(block);
+          builder.CreateBr(loopEnd);
+        }
+
+        switchInst->addCase(ConstantInt::get(Type::getInt32Ty(context), caseIdx), block);
+      }
+
       // remove instructions referenced in multiple blocks.
       // `DemoteRegToStack` replaces them with a slot in the stack frame
       for (auto &inst: getInstructionReferencedInMultipleBlocks(F)) {
@@ -193,26 +261,6 @@ namespace {
       for (auto &phiNode: getPHINodes(F)) {
         DemotePHIToStack(phiNode);
       }
-
-      for (auto it = blockCaseIdxs.begin(); it != blockCaseIdxs.end(); it++) {
-        auto block = it->first;
-
-        builder.SetInsertPoint(block->getTerminator());
-        builder.SetInsertPoint(block);
-
-        if (
-          dyn_cast<BranchInst>(block->getTerminator()) ||
-          dyn_cast<SwitchInst>(block->getTerminator())
-        ) {
-          block->getTerminator()->eraseFromParent();
-          builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), 4), caseVar);
-          builder.CreateBr(loopEnd);
-        }
-
-        switchInst->addCase(ConstantInt::get(Type::getInt32Ty(context), switchInst->getNumCases()), block);
-      }
-
-      // UPDATE BLOCK TERMINATORS (`next` variable and branch to loopStart)
 
       return PreservedAnalyses::all();
     }
