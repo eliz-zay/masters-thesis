@@ -9,6 +9,7 @@
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
+#include "llvm/Transforms/Utils/Local.h"
 
 using namespace llvm;
 
@@ -18,15 +19,52 @@ namespace {
     const std::string annotationName = "flatten";
 
     // Split basic block by the last two instructions and returns a new block (the second part)
-    BasicBlock* splitBlockByConditionalBranch(BasicBlock *block) {
+    BasicBlock* splitBlockByConditionalBranch(BasicBlock &block) {
       // also take into account the `icmp` instruction that preceeds the `br` instruction
-      auto lastInst = std::prev(block->end());
-      if (lastInst != block->begin()) {
+      auto lastInst = std::prev(block.end());
+      if (lastInst != block.begin()) {
         --lastInst;
       }
 
-      BasicBlock *split = block->splitBasicBlock(lastInst, "entryBlockSplit");
+      BasicBlock *split = block.splitBasicBlock(lastInst, "entryBlockSplit");
       return split;
+    }
+
+    std::vector<PHINode *> getPHINodes(Function &F) const {
+      std::vector<PHINode *> nodes;
+
+      for (auto &BB: F) {
+        for (auto &inst: BB) {
+          if (isa<PHINode>(&inst)) {
+            nodes.push_back(cast<PHINode>(&inst));
+          }
+        }
+      }
+
+      return nodes;
+    }
+
+    std::vector<Instruction *> getInstructionReferencedInMultipleBlocks(Function &F) const {
+      BasicBlock *EntryBasicBlock = &*F.begin();
+      std::vector<Instruction *> usedOutside;
+
+      for (auto &block: F) {
+        for (auto &inst: block) {
+          // in the entry block there will be a bunch of stack allocation using alloca
+          // that are referenced in multiple blocks thus we need to ignore those when
+          // filtering.
+          if (isa<AllocaInst>(&inst) && inst.getParent() == EntryBasicBlock) {
+            continue;
+          }
+
+          // check if used outside the current block.
+          if (inst.isUsedOutsideOfBlock(&BB)) {
+            usedOutside.push_back(&inst);
+          }
+        }
+      }
+
+      return usedOutside;
     }
 
   public:
@@ -71,24 +109,17 @@ namespace {
       LLVMContext &context = F.getContext();
       IRBuilder<> builder(context);
 
-      std::vector<BasicBlock *> blocks;
-
-      for (auto &block: F) {
-        blocks.emplace_back(&block);
-      }
-
-      BasicBlock *entryBlock = blocks.front();
-      entryBlock->setName("entryBlock");
+      BasicBlock &entryBlock = F.front();
+      entryBlock.setName("entryBlock");
 
       // Split conditional branch in two
-      if (BranchInst *branch = dyn_cast<BranchInst>(entryBlock->getTerminator())) {
+      if (BranchInst *branch = dyn_cast<BranchInst>(entryBlock.getTerminator())) {
         if (branch->isConditional()) {
-          BasicBlock *split = this->splitBlockByConditionalBranch(entryBlock);
-          blocks.insert(std::next(blocks.begin()), split);
+          this->splitBlockByConditionalBranch(entryBlock);
         }
       }
 
-      // if (BranchInst *branch = dyn_cast<BranchInst>(entryBlock->getTerminator())) {
+      // if (BranchInst *branch = dyn_cast<BranchInst>(entryBlock.getTerminator())) {
       //   // BasicBlock *successorBlock = branch->getSuccessor(0);
       //   BasicBlock *successorBlock = blocks[5];
 
@@ -103,28 +134,28 @@ namespace {
 
       // CREATE SWITCH AND LOOP
 
-      builder.SetInsertPoint(entryBlock->getFirstInsertionPt());
-      AllocaInst *nextVar = new AllocaInst(Type::getInt32Ty(context), 0, "next", entryBlock->getFirstInsertionPt());
+      builder.SetInsertPoint(entryBlock.getFirstInsertionPt());
+      AllocaInst *nextVar = new AllocaInst(Type::getInt32Ty(context), 0, "next", entryBlock.getFirstInsertionPt());
       builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), 0), nextVar);
 
-      BasicBlock *loopStart = BasicBlock::Create(context, "loopStart", &F, entryBlock);
-      BasicBlock *loopEnd = BasicBlock::Create(context, "loopEnd", &F, entryBlock);
+      BasicBlock *loopStart = BasicBlock::Create(context, "loopStart", &F, &entryBlock);
+      BasicBlock *loopEnd = BasicBlock::Create(context, "loopEnd", &F, &entryBlock);
 
       // make entryBlock point to loopStart instead of entryBlockSplit
-      entryBlock->moveBefore(loopStart);
-      entryBlock->getTerminator()->eraseFromParent();
-      builder.SetInsertPoint(entryBlock);
+      entryBlock.moveBefore(loopStart);
+      entryBlock.getTerminator()->eraseFromParent();
+      builder.SetInsertPoint(&entryBlock);
       builder.CreateBr(loopStart);
 
       // create the switch in loopStart
       builder.SetInsertPoint(loopStart);
       LoadInst *loadNextVar = builder.CreateLoad(nextVar->getAllocatedType(), nextVar, "next");
-      SwitchInst *switchStatement = builder.CreateSwitch(loadNextVar, nullptr);
+      SwitchInst *switchInst = builder.CreateSwitch(loadNextVar, nullptr);
 
       // create default block. `setDefaultDest` updates the `switch` terminator
       // and links loopStart with defaultSwitchBlock
       BasicBlock *defaultSwitchBlock = BasicBlock::Create(context, "defaultSwitchBlock", &F, loopEnd);
-      switchStatement->setDefaultDest(defaultSwitchBlock);
+      switchInst->setDefaultDest(defaultSwitchBlock);
 
       // make default block point to the loop end
       builder.SetInsertPoint(defaultSwitchBlock);
@@ -135,66 +166,55 @@ namespace {
       builder.CreateBr(loopStart);
 
       // At this point, all blocks except the entryBlock are not reachable
+      // USE BLOCKS AS SWITCH CASES
+
+      std::map<BasicBlock *, int> blockIdxs;
+
+      for (auto [blockIter, i] = std::tuple{F.begin(), 0}; blockIter != F.end(); blockIter++, i++) {
+        blockIdxs[&*blockIter] = i;
+      }
+
+      // remove instructions referenced in multiple blocks.
+      // `DemoteRegToStack` replaces them with a slot in the stack frame
+      for (auto &inst: getInstructionReferencedInMultipleBlocks(F)) {
+        DemoteRegToStack(*inst);
+      }
+
+      // phi nodes are dependent on predecessors and their parent nodes cannot be simply replaced.
+      // `DemotePHIToStack` replaces `phi` instruction with a slot in the stack frame
+      for (auto &phiNode: getPHINodes(F)) {
+        DemotePHIToStack(phiNode);
+      }
+
+      // Number of created blocks: entryBlock, loopStart, loopEnd, defaultSwitchBlock
+      const int generatedBlocksNum = 4;
+
+      for (auto it = blockIdxs.begin(); it != blockIdxs.end(); it++) {
+        if (it->second < generatedBlocksNum) {
+          errs() << it->first->getName() << "\n";
+          continue;
+        }
+
+        auto block = it->first;
+
+        builder.SetInsertPoint(block->getTerminator());
+        builder.SetInsertPoint(block);
+
+        if (
+          dyn_cast<BranchInst>(block->getTerminator()) ||
+          dyn_cast<SwitchInst>(block->getTerminator())
+        ) {
+          block->getTerminator()->eraseFromParent();
+          builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), 4), nextVar);
+          builder.CreateBr(loopEnd);
+        }
 
 
+        switchInst->addCase(ConstantInt::get(Type::getInt32Ty(context), switchInst->getNumCases()), block);
+        block->moveBefore(defaultSwitchBlock);
+      }
 
-
-
-
-
-      // // we erase the first basic block since its already taken care of and won't
-      // // be part of the switch.
-      // blocks.erase(blocks.begin());
-
-      // // for each of the original basic blocks put them in the switch
-      // // we need to do this separately, so we can then reference the cases directly.
-      // for (auto &BB: blocks) {
-      //   switchStmt->addCase(ConstantInt::get(Type::getInt32Ty(context), switchStmt->getNumCases()), BB);
-      //   BB->moveBefore(defaultSwitchBasicBlock);
-      // }
-
-      // // setup lookup table.
-      // constexpr int32_t extraNumberCount = 3;
-
-      // // Create an array of i32 with the desired size.
-      // ArrayType *casesArrayType = ArrayType::get(
-      //   Type::getInt32Ty(context),
-      //   switchStmt->getNumCases() + extraNumberCount
-      // );
-
-      // builder.SetInsertPoint(&*entryBlock->getFirstInsertionPt());
-      // AllocaInst *LookupTable = builder.CreateAlloca(
-      //   casesArrayType,
-      //   nullptr,
-      //   "lookupTable"
-      // );
-
-      // // populate the lookup table
-      // std::vector<int32_t> lookupTableValues;
-      // for (int32_t idx = 0; idx < int32_t(switchStmt->getNumCases() + extraNumberCount); ++idx) {
-      //   int32_t val = (idx + 1) - extraNumberCount;
-      //   lookupTableValues.push_back(val);
-      //   Value *EP = builder.CreateInBoundsGEP(
-      //     casesArrayType,
-      //     LookupTable,
-      //     {ConstantInt::get(Type::getInt32Ty(context), 0), ConstantInt::get(Type::getInt32Ty(context), idx)}
-      //   );
-      //   builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), val), EP);
-      // }
-
-      // builder.CreateStore(
-      //   builder.CreateLoad(
-      //     Type::getInt32Ty(context),
-      //     builder.CreateInBoundsGEP(
-      //       casesArrayType,
-      //       LookupTable,
-      //       {
-      //         ConstantInt::get(Type::getInt32Ty(context), 0),
-      //         ConstantInt::get(Type::getInt32Ty(context), 0)
-      //       }
-      //     )),
-      //   loadDispatcherVal->getPointerOperand()
-      // );
+      // UPDATE BLOCK TERMINATORS (`next` variable and branch to loopStart)
 
       return PreservedAnalyses::all();
 
