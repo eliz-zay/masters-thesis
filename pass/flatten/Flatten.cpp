@@ -14,20 +14,86 @@
 using namespace llvm;
 
 namespace {
+  struct SwitchLoop {
+    SwitchInst *switchInst;
+    BasicBlock *loopEnd;
+  };
+
   struct FlattenPass : public PassInfoMixin<FlattenPass> {
   private:
     const std::string annotationName = "flatten";
 
     // Split basic block by the last two instructions and returns a new block (the second part)
-    BasicBlock* splitBlockByConditionalBranch(BasicBlock &block) {
+    void splitBlockByConditionalBranch(BasicBlock &block) const {
       // also take into account the `icmp` instruction that preceeds the `br` instruction
       auto lastInst = std::prev(block.end());
       if (lastInst != block.begin()) {
         --lastInst;
       }
 
-      BasicBlock *split = block.splitBasicBlock(lastInst, "entryBlockSplit");
-      return split;
+      block.splitBasicBlock(lastInst, "entryBlockSplit");
+    }
+
+    std::map<BasicBlock *, int> generateCaseBlockIdxs(Function &F) const {
+      // Number of created blocks: entryBlock, loopStart, loopEnd, defaultSwitchBlock
+      const int generatedBlocksNum = 4;
+
+      std::map<BasicBlock *, int> caseBlockIdxs;
+
+      int i = 0;
+      auto blockIt = F.begin();
+      std::advance(blockIt, generatedBlocksNum);
+
+      for (; blockIt != F.end(); blockIt++, i++) {
+        caseBlockIdxs[&*blockIt] = i;
+      }
+
+      return caseBlockIdxs;
+    }
+
+    AllocaInst* initializeSwitchCaseVar(Function &F, IRBuilder<> &builder) {
+      LLVMContext &context = F.getContext();
+      BasicBlock &entryBlock = F.front();
+
+      builder.SetInsertPoint(entryBlock.getFirstInsertionPt());
+      AllocaInst *caseVar = new AllocaInst(Type::getInt32Ty(context), 0, "caseVar", entryBlock.getFirstInsertionPt());
+      builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), 0), caseVar);
+
+      return caseVar;
+    }
+
+    SwitchLoop generateSwitchLoop(Function &F, IRBuilder<> &builder, AllocaInst *caseVar) const {
+      LLVMContext &context = F.getContext();
+      BasicBlock &entryBlock = F.front();
+
+      BasicBlock *loopStart = BasicBlock::Create(context, "loopStart", &F, &entryBlock);
+      BasicBlock *loopEnd = BasicBlock::Create(context, "loopEnd", &F, &entryBlock);
+
+      // make entryBlock point to loopStart instead of entryBlockSplit
+      entryBlock.moveBefore(loopStart);
+      entryBlock.getTerminator()->eraseFromParent();
+      builder.SetInsertPoint(&entryBlock);
+      builder.CreateBr(loopStart);
+
+      // create the switch in loopStart
+      builder.SetInsertPoint(loopStart);
+      LoadInst *varLoad = builder.CreateLoad(caseVar->getAllocatedType(), caseVar, "caseVar");
+      SwitchInst *switchInst = builder.CreateSwitch(varLoad, nullptr);
+
+      // create default block. `setDefaultDest` updates the `switch` terminator
+      // and links loopStart with defaultSwitchBlock
+      BasicBlock *defaultSwitchBlock = BasicBlock::Create(context, "defaultSwitchBlock", &F, loopEnd);
+      switchInst->setDefaultDest(defaultSwitchBlock);
+
+      // make default block point to the loop end
+      builder.SetInsertPoint(defaultSwitchBlock);
+      builder.CreateBr(loopEnd);
+
+      // connect the end to the start of the loop
+      builder.SetInsertPoint(loopEnd);
+      builder.CreateBr(loopStart);
+
+      return {switchInst, loopEnd};
     }
 
     std::vector<PHINode *> getPHINodes(Function &F) const {
@@ -58,7 +124,7 @@ namespace {
           }
 
           // check if used outside the current block.
-          if (inst.isUsedOutsideOfBlock(&BB)) {
+          if (inst.isUsedOutsideOfBlock(&block)) {
             usedOutside.push_back(&inst);
           }
         }
@@ -94,16 +160,6 @@ namespace {
     ! пока плющим только блоки с branch
     todo: пропускать блоки с исключениями и indirectbr
     todo: обрабатывать switch
-
-    условная или безусловная branch инструкция заменяется на:
-    * next = *next-block*
-    * br *initial-block*
-
-    для выхода отдельный кейс
-
-    * создать entry блок с переменной next и switch
-    * пронумеровать существующие блоки
-    * переделать terminating branch в формат с новыми блоками
      */
     PreservedAnalyses flattenCFG(Function &F, FunctionAnalysisManager &FAM) {
       LLVMContext &context = F.getContext();
@@ -119,60 +175,12 @@ namespace {
         }
       }
 
-      // if (BranchInst *branch = dyn_cast<BranchInst>(entryBlock.getTerminator())) {
-      //   // BasicBlock *successorBlock = branch->getSuccessor(0);
-      //   BasicBlock *successorBlock = blocks[5];
-
-      //   // Remove the old terminator (branch)
-      //   branch->eraseFromParent();
-
-      //   // Insert a new conditional or unconditional branch to the end of entryBlock
-      //   builder.SetInsertPoint(entryBlock);
-      //   builder.CreateBr(successorBlock);
-      // }
-
-
-      // CREATE SWITCH AND LOOP
-
-      builder.SetInsertPoint(entryBlock.getFirstInsertionPt());
-      AllocaInst *nextVar = new AllocaInst(Type::getInt32Ty(context), 0, "next", entryBlock.getFirstInsertionPt());
-      builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), 0), nextVar);
-
-      BasicBlock *loopStart = BasicBlock::Create(context, "loopStart", &F, &entryBlock);
-      BasicBlock *loopEnd = BasicBlock::Create(context, "loopEnd", &F, &entryBlock);
-
-      // make entryBlock point to loopStart instead of entryBlockSplit
-      entryBlock.moveBefore(loopStart);
-      entryBlock.getTerminator()->eraseFromParent();
-      builder.SetInsertPoint(&entryBlock);
-      builder.CreateBr(loopStart);
-
-      // create the switch in loopStart
-      builder.SetInsertPoint(loopStart);
-      LoadInst *loadNextVar = builder.CreateLoad(nextVar->getAllocatedType(), nextVar, "next");
-      SwitchInst *switchInst = builder.CreateSwitch(loadNextVar, nullptr);
-
-      // create default block. `setDefaultDest` updates the `switch` terminator
-      // and links loopStart with defaultSwitchBlock
-      BasicBlock *defaultSwitchBlock = BasicBlock::Create(context, "defaultSwitchBlock", &F, loopEnd);
-      switchInst->setDefaultDest(defaultSwitchBlock);
-
-      // make default block point to the loop end
-      builder.SetInsertPoint(defaultSwitchBlock);
-      builder.CreateBr(loopEnd);
-
-      // connect the end to the start of the loop
-      builder.SetInsertPoint(loopEnd);
-      builder.CreateBr(loopStart);
+      auto caseVar = this->initializeSwitchCaseVar(F, builder);
+      auto [switchInst, loopEnd] = this->generateSwitchLoop(F, builder, caseVar);
 
       // At this point, all blocks except the entryBlock are not reachable
-      // USE BLOCKS AS SWITCH CASES
 
-      std::map<BasicBlock *, int> blockIdxs;
-
-      for (auto [blockIter, i] = std::tuple{F.begin(), 0}; blockIter != F.end(); blockIter++, i++) {
-        blockIdxs[&*blockIter] = i;
-      }
+      auto blockCaseIdxs = this->generateCaseBlockIdxs(F);
 
       // remove instructions referenced in multiple blocks.
       // `DemoteRegToStack` replaces them with a slot in the stack frame
@@ -186,15 +194,7 @@ namespace {
         DemotePHIToStack(phiNode);
       }
 
-      // Number of created blocks: entryBlock, loopStart, loopEnd, defaultSwitchBlock
-      const int generatedBlocksNum = 4;
-
-      for (auto it = blockIdxs.begin(); it != blockIdxs.end(); it++) {
-        if (it->second < generatedBlocksNum) {
-          errs() << it->first->getName() << "\n";
-          continue;
-        }
-
+      for (auto it = blockCaseIdxs.begin(); it != blockCaseIdxs.end(); it++) {
         auto block = it->first;
 
         builder.SetInsertPoint(block->getTerminator());
@@ -205,43 +205,16 @@ namespace {
           dyn_cast<SwitchInst>(block->getTerminator())
         ) {
           block->getTerminator()->eraseFromParent();
-          builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), 4), nextVar);
+          builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), 4), caseVar);
           builder.CreateBr(loopEnd);
         }
 
-
         switchInst->addCase(ConstantInt::get(Type::getInt32Ty(context), switchInst->getNumCases()), block);
-        block->moveBefore(defaultSwitchBlock);
       }
 
       // UPDATE BLOCK TERMINATORS (`next` variable and branch to loopStart)
 
       return PreservedAnalyses::all();
-
-
-
-
-
-      for (BasicBlock &block : F) {
-        errs() << "\nblock\n";
-
-        // If the basic block has a conditional branch, we need to flatten it
-        BranchInst *branch = dyn_cast<BranchInst>(block.getTerminator());
-        if (!branch) {
-          return PreservedAnalyses::all();
-        }
-
-        if (branch->isConditional()) {
-          this->flattenBranch(branch);
-        }
-
-      }
-
-      return PreservedAnalyses::all();
-    }
-
-    void flattenBranch(BranchInst *branch) {
-      errs() << "flattening branch\n";
     }
   };
 } // namespace
