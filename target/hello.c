@@ -45,9 +45,7 @@ int main(int argc) {
                 break;
             }
         }
-
-        printf("%i\n", n);
     }
 
-    return 0;
+    return n;
 }

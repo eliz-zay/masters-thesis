@@ -206,7 +206,6 @@ namespace {
 
             builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), caseIdx), caseVar);
           } else {
-            errs() << block->getName() << blockCaseIdxs[block] << "\n";
             auto successorTrue = branch->getSuccessor(0);
             auto successorFalse = branch->getSuccessor(1);
 
@@ -217,8 +216,7 @@ namespace {
               branch->getCondition(),
               ConstantInt::get(Type::getInt32Ty(context), trueCaseIdx),
               ConstantInt::get(Type::getInt32Ty(context), falseCaseIdx),
-              "",
-              branch
+              "casevar_branch"
             );
             builder.CreateStore(selectInst, caseVar);
           }
@@ -226,14 +224,36 @@ namespace {
           continue;
         }
 
-        if (dyn_cast<SwitchInst>(block->getTerminator())) {
+        if (auto blockSwitchInst = dyn_cast<SwitchInst>(block->getTerminator())) {
+          Value *condition = blockSwitchInst->getCondition();
+
+          // In LLVM switch representation, the default switch case points to the next block
+          // in condition if no case is matched, even if there os no explicit default case
+          auto defaultBlockIdx = blockCaseIdxs[blockSwitchInst->case_default()->getCaseSuccessor()];
+          builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), defaultBlockIdx), caseVar);
+
+          for (auto &switchCase : blockSwitchInst->cases()) {
+            ConstantInt *caseValue = switchCase.getCaseValue();
+            BasicBlock *caseBlock = switchCase.getCaseSuccessor();
+            int caseIdx = blockCaseIdxs[caseBlock];
+
+            Value *icmpEq = builder.CreateICmpEQ(condition, caseValue, "case_eq");
+            Value *selectInst = builder.CreateSelect(
+              icmpEq,
+              ConstantInt::get(Type::getInt32Ty(context), caseIdx),
+              ConstantInt::get(Type::getInt32Ty(context), defaultBlockIdx),
+              "casevar_case"
+            );
+            builder.CreateStore(selectInst, caseVar);
+          }
+
           continue;
         }
 
         throw "Unknown branch type";
       }
 
-      // todo: упорядочить создание кейсов по индексам, для красоты
+      // упорядочить создание кейсов по индексам, для красоты
       for (auto it = blockCaseIdxs.begin(); it != blockCaseIdxs.end(); it++) {
         auto block = it->first;
         auto caseIdx = it->second;
