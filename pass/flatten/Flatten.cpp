@@ -57,7 +57,6 @@ namespace {
 
       builder.SetInsertPoint(entryBlock.getFirstInsertionPt());
       AllocaInst *caseVar = new AllocaInst(Type::getInt32Ty(context), 0, "caseVar", entryBlock.getFirstInsertionPt());
-      builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), 0), caseVar);
 
       return caseVar;
     }
@@ -69,7 +68,7 @@ namespace {
       BasicBlock *loopStart = BasicBlock::Create(context, "loopStart", &F, &entryBlock);
       BasicBlock *loopEnd = BasicBlock::Create(context, "loopEnd", &F, &entryBlock);
 
-      // make entryBlock point to loopStart instead of entryBlockSplit
+      // make entryBlock point to loopStart
       entryBlock.moveBefore(loopStart);
       entryBlock.getTerminator()->eraseFromParent();
       builder.SetInsertPoint(&entryBlock);
@@ -157,31 +156,29 @@ namespace {
     }
 
     /*
-    ! пока плющим только блоки с branch
     todo: пропускать блоки с исключениями и indirectbr
-    todo: обрабатывать switch
      */
     PreservedAnalyses flattenCFG(Function &F, FunctionAnalysisManager &FAM) {
+      if (F.size() == 1) {
+        return PreservedAnalyses::all();
+      }
+
       LLVMContext &context = F.getContext();
       IRBuilder<> builder(context);
 
       BasicBlock &entryBlock = F.front();
       entryBlock.setName("entryBlock");
 
-      auto it = F.begin();
-      it++;
-      (*it).setName("if-else_1");
-      it++;
-      (*it).setName("while_%3");
-      it++;
-      (*it).setName("switch");
-
       // Split conditional branch in two
-      if (BranchInst *branch = dyn_cast<BranchInst>(entryBlock.getTerminator())) {
-        if (branch->isConditional()) {
-          this->splitBlockByConditionalBranch(entryBlock);
-        }
+      auto entryTerminator = entryBlock.getTerminator();
+      if (
+        dyn_cast<SwitchInst>(entryTerminator) ||
+        dyn_cast<BranchInst>(entryTerminator) && dyn_cast<BranchInst>(entryTerminator)->isConditional()
+      ) {
+        this->splitBlockByConditionalBranch(entryBlock);
       }
+
+      BasicBlock *entryBlockSuccessor = entryBlock.getTerminator()->getSuccessor(0);
 
       auto caseVar = this->initializeSwitchCaseVar(F, builder);
       auto [switchInst, loopEnd] = this->generateSwitchLoop(F, builder, caseVar);
@@ -189,6 +186,11 @@ namespace {
       // At this point, all blocks except the entryBlock are not reachable
 
       auto blockCaseIdxs = this->generateCaseBlockIdxs(F);
+
+      // set initial value of caseVar to point to entryBlock successor
+      auto entrySuccessorCaseIdx = blockCaseIdxs[entryBlockSuccessor];
+      builder.SetInsertPoint(entryBlock.getTerminator());
+      builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), entrySuccessorCaseIdx), caseVar);
 
       for (auto it = blockCaseIdxs.begin(); it != blockCaseIdxs.end(); it++) {
         auto block = it->first;
@@ -237,12 +239,14 @@ namespace {
             BasicBlock *caseBlock = switchCase.getCaseSuccessor();
             int caseIdx = blockCaseIdxs[caseBlock];
 
-            Value *icmpEq = builder.CreateICmpEQ(condition, caseValue, "case_eq");
+            // if condition value equals case value - update caseVar, otherwise don't change caseVar (load previous value)
+            LoadInst *varLoad = builder.CreateLoad(caseVar->getAllocatedType(), caseVar, "caseVar");
+
+            Value *icmpEq = builder.CreateICmpEQ(condition, caseValue);
             Value *selectInst = builder.CreateSelect(
               icmpEq,
               ConstantInt::get(Type::getInt32Ty(context), caseIdx),
-              ConstantInt::get(Type::getInt32Ty(context), defaultBlockIdx),
-              "casevar_case"
+              varLoad
             );
             builder.CreateStore(selectInst, caseVar);
           }

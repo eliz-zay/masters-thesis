@@ -1,0 +1,1 @@
+../../llvm-project/build/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -emit-llvm -O3 -S hello.c
