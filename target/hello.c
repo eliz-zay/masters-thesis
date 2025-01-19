@@ -11,15 +11,22 @@ char __attribute__((annotate("nookie:43"))) theNookie = 'a';
 __attribute__((annotate("flatten")))
 int main(int argc, char **argv) {
     int n = atoi(argv[1]);
+    // int n = argc;
+
+    // while (1) {
+    //     if (rand() % 2 < 1) {
+    //         break;
+    //     }
+    // }
 
     // if (n > 0) {
         // switch (n) {
         //     case 11: 
-        //         n = rand();
+        //         n = n % 11;
         //         break;
             
         //     case 22: 
-        //         n = rand() % 5;
+        //         n = n % 202;
         //         break;
             
         //     case 33: {n = 999; break;}
@@ -80,7 +87,6 @@ int main(int argc, char **argv) {
         iterations++;
     }
 
-    // Output the final value of n regardless of termination reason
     printf("Final value of n: %d\n", n);
 
     return 0;

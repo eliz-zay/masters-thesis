@@ -34,8 +34,9 @@ namespace {
       block.splitBasicBlock(lastInst, "entryBlockSplit");
     }
 
+    // Generates a map of function blocks and unique integers (will be used as switch case values).
+    // Skips `entryBlock`, `loopStart`, `loopEnd`, and `defaultSwitchBlock`
     std::map<BasicBlock *, int> generateCaseBlockIdxs(Function &F) const {
-      // Number of created blocks: entryBlockSplit, loopStart, loopEnd, defaultSwitchBlock
       const int generatedBlocksNum = 4;
 
       std::map<BasicBlock *, int> caseBlockIdxs;
@@ -51,6 +52,7 @@ namespace {
       return caseBlockIdxs;
     }
 
+    // Allocates a switch case variable (`caseVar`) for an infinite loop
     AllocaInst* allocateSwitchCaseVar(Function &F, IRBuilder<> &builder) const {
       LLVMContext &context = F.getContext();
       BasicBlock &entryBlock = F.front();
@@ -61,6 +63,7 @@ namespace {
       return caseVar;
     }
 
+    // Stores `initValue` in `caseVar` switch variable in an entry block
     void initSwitchCaseVar(Function &F, IRBuilder<> &builder, AllocaInst *caseVar, int initValue) const {
       LLVMContext &context = F.getContext();
       BasicBlock &entryBlock = F.front();
@@ -69,6 +72,8 @@ namespace {
       builder.CreateStore(ConstantInt::get(Type::getInt32Ty(context), initValue), caseVar);
     }
 
+    // Generates an infinite loop with a switch statement inside.
+    // Creates 3 blocks: `loopStart`, `loopEnd`, and `defaultSwitchBlock`
     SwitchLoop generateSwitchLoop(Function &F, IRBuilder<> &builder, AllocaInst *caseVar) const {
       LLVMContext &context = F.getContext();
       BasicBlock &entryBlock = F.front();
@@ -103,9 +108,12 @@ namespace {
       return {switchInst, loopEnd};
     }
 
+    // Parses terminating instruction to extract block successors and terminating condition,
+    // and stores the corresponding switch case index of the successor in `caseVar` variable under the same condition
     void storeBlockSuccessorInCaseVar(
-      LLVMContext &context, IRBuilder<> &builder, AllocaInst *caseVar, BasicBlock *block, std::map<BasicBlock *, int> blockCaseIdxs
-    ) {
+      LLVMContext &context, IRBuilder<> &builder,
+      AllocaInst *caseVar, BasicBlock *block, std::map<BasicBlock *, int> blockCaseIdxs
+    ) const {
       if (dyn_cast<ReturnInst>(block->getTerminator())) {
         return;
       }
@@ -128,8 +136,7 @@ namespace {
           Value *selectInst = builder.CreateSelect(
             branch->getCondition(),
             ConstantInt::get(Type::getInt32Ty(context), trueCaseIdx),
-            ConstantInt::get(Type::getInt32Ty(context), falseCaseIdx),
-            "casevar_branch"
+            ConstantInt::get(Type::getInt32Ty(context), falseCaseIdx)
           );
           builder.CreateStore(selectInst, caseVar);
         }
@@ -165,9 +172,10 @@ namespace {
         return;
       }
 
-      throw "Unknown branch type";
+      throw std::runtime_error("Unknown terminating instruction type");
     }
 
+    // Adds a block as a switch case with particular `caseIdx`
     void addBlockCase(
       LLVMContext &context, IRBuilder<> &builder, BasicBlock *block, int caseIdx, SwitchLoop switchLoop
     ) const {
@@ -183,6 +191,7 @@ namespace {
       switchLoop.switchInst->addCase(ConstantInt::get(Type::getInt32Ty(context), caseIdx), block);
     }
 
+    // Returns all phi nodes
     std::vector<PHINode *> getPHINodes(Function &F) const {
       std::vector<PHINode *> nodes;
 
@@ -197,6 +206,7 @@ namespace {
       return nodes;
     }
 
+    // Returns instructions referenced in multiple blocks
     std::vector<Instruction *> getInstructionReferencedInMultipleBlocks(Function &F) const {
       BasicBlock &entryBlock = F.front();
       std::vector<Instruction *> usedOutside;
@@ -235,17 +245,24 @@ namespace {
 
       errs() << "[flatten] Applying to: " << F.getName() << "\n";
 
-      this->flattenCFG(F, FAM);
+      try {
+        this->flattenCFG(F, FAM);
+      } catch (const std::runtime_error& e) {
+        errs() << "[flatten] ERROR: " << e.what() << "\n";
+      }
 
-      return PreservedAnalyses::all();
+      return PreservedAnalyses::none();
     }
 
-    /*
-    todo: пропускать блоки с исключениями и indirectbr
-     */
     PreservedAnalyses flattenCFG(Function &F, FunctionAnalysisManager &FAM) {
       if (F.size() == 1) {
         return PreservedAnalyses::all();
+      }
+
+      for (auto &block : F) {
+        if (block.isLandingPad() || isa<InvokeInst>(&block)) {
+          throw std::runtime_error("Exception invocation found. Unable to apply the pass");
+        }
       }
 
       LLVMContext &context = F.getContext();
@@ -302,7 +319,7 @@ namespace {
         DemotePHIToStack(phiNode);
       }
 
-      return PreservedAnalyses::all();
+      return PreservedAnalyses::none();
     }
   };
 } // namespace
