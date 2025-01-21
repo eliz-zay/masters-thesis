@@ -227,34 +227,7 @@ namespace {
       return usedOutside;
     }
 
-  public:
-    PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {
-      auto *MD = F.getMetadata("annotation");
-      if (!MD) {
-        return PreservedAnalyses::all();
-      }
-
-      auto *StringMD = dyn_cast<MDString>(MD->getOperand(0));
-      if (!StringMD) {
-        return PreservedAnalyses::all();
-      }
-
-      if (StringMD->getString() != this->annotationName) {
-        return PreservedAnalyses::all();
-      }
-
-      errs() << "[flatten] Applying to: " << F.getName() << "\n";
-
-      try {
-        this->flattenCFG(F, FAM);
-      } catch (const std::runtime_error& e) {
-        errs() << "[flatten] ERROR: " << e.what() << "\n";
-      }
-
-      return PreservedAnalyses::none();
-    }
-
-    PreservedAnalyses flattenCFG(Function &F, FunctionAnalysisManager &FAM) {
+    PreservedAnalyses flattenCFG(Function &F) {
       if (F.size() == 1) {
         return PreservedAnalyses::all();
       }
@@ -317,6 +290,33 @@ namespace {
       // `DemotePHIToStack` replaces `phi` instruction with a slot in the stack frame
       for (auto &phiNode: getPHINodes(F)) {
         DemotePHIToStack(phiNode);
+      }
+
+      return PreservedAnalyses::none();
+    }
+
+  public:
+    PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {
+      auto *MD = F.getMetadata("annotation");
+      if (!MD) {
+        return PreservedAnalyses::all();
+      }
+
+      auto *StringMD = dyn_cast<MDString>(MD->getOperand(0));
+      if (!StringMD) {
+        return PreservedAnalyses::all();
+      }
+
+      if (StringMD->getString() != this->annotationName) {
+        return PreservedAnalyses::all();
+      }
+
+      errs() << "[flatten] Applying to: " << F.getName() << "\n";
+
+      try {
+        this->flattenCFG(F);
+      } catch (const std::runtime_error& e) {
+        errs() << "[flatten] ERROR: " << e.what() << "\n";
       }
 
       return PreservedAnalyses::none();

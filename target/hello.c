@@ -13,26 +13,26 @@ int main(int argc, char **argv) {
     int n = atoi(argv[1]);
     // int n = argc;
 
-    // while (1) {
-    //     if (rand() % 2 < 1) {
-    //         break;
-    //     }
-    // }
+    while (1) {
+        if (rand() % 2 < 1) {
+            break;
+        }
+    }
 
-    // if (n > 0) {
-        // switch (n) {
-        //     case 11: 
-        //         n = n % 11;
-        //         break;
+    if (n > 0) {
+        switch (n) {
+            case 11: 
+                n = n % 11;
+                break;
             
-        //     case 22: 
-        //         n = n % 202;
-        //         break;
+            case 22: 
+                n = n % 202;
+                break;
             
-        //     case 33: {n = 999; break;}
-        //     default: {n = 888; break;}
-        // }
-    // }
+            case 33: {n = 999; break;}
+            default: {n = 888; break;}
+        }
+    }
     int iteration_limit = 1000; // Prevent infinite loops
     int iterations = 0;
 
@@ -89,5 +89,5 @@ int main(int argc, char **argv) {
 
     printf("Final value of n: %d\n", n);
 
-    return 0;
+    return n;
 }
