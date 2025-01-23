@@ -19,23 +19,14 @@ namespace {
   private:
     const std::string annotationName = "bogus-switch";
 
+    // A fraction of switch case blocks to duplicate (e.g. 0.7 means that 70% of switch blocks
+    // will be duplicated and added as new cases)
     const double switchCaseTargetPart = 0.7;
+
+    // A fraction of `store i32 caseValue, ptr %caseVar` instructions with case values of original blocks
+    // to be replaced by similar instructions with case values of duplicated blocks.
+    // A value is close to zero may lead to unreachable duplicated blocks (dead code)
     const double storeInstRemappingPart = 0.5;
-
-    // Generates a unique case value for a switch, plausible if possible
-    ConstantInt *generateCaseValue(LLVMContext &context, SwitchInst *switchInst) const {
-      ConstantInt *caseValue = ConstantInt::get(Type::getInt32Ty(context), switchInst->getNumCases());
-
-      // Check if there exists a case with plausible value (total number of cases)
-      if (switchInst->findCaseValue(caseValue) == switchInst->case_default()) {
-        // Randomize until a unique value is found
-        while (switchInst->findCaseValue(caseValue) != switchInst->case_default()) {
-          caseValue = ConstantInt::get(Type::getInt32Ty(context), rand());
-        }
-      }
-
-      return caseValue;
-    }
 
     // Changes some part of `store i32 targetCaseValue, ptr %caseVar` instructions
     // to `store i32 duplicateCaseValue, ptr %caseVar` instruction.
@@ -62,13 +53,42 @@ namespace {
 
       const int countToRemap = floor(storeInstructions.size() * this->storeInstRemappingPart);
 
-      errs() << targetCaseValue->getValue() << " => " << duplicateCaseValue->getValue() << " ==> " << countToRemap << "\n";
+      errs() << "[bogus-switch] Generating duplicate case #" << duplicateCaseValue->getValue()
+             << " for case #" << targetCaseValue->getValue()
+             << " and replacing " << countToRemap << " references\n";
 
       for (int i = 0; i < countToRemap; i++) {
         auto storeInst = storeInstructions[i];
-
         storeInst->setOperand(0, duplicateCaseValue);
       }
+    }
+
+    // Generates a unique case value for a switch, plausible if possible
+    ConstantInt *generateCaseValue(LLVMContext &context, SwitchInst *switchInst) const {
+      ConstantInt *caseValue = ConstantInt::get(Type::getInt32Ty(context), switchInst->getNumCases());
+
+      // Check if there exists a case with plausible value (total number of cases)
+      if (switchInst->findCaseValue(caseValue) == switchInst->case_default()) {
+        // Randomize until a unique value is found
+        while (switchInst->findCaseValue(caseValue) != switchInst->case_default()) {
+          caseValue = ConstantInt::get(Type::getInt32Ty(context), rand());
+        }
+      }
+
+      return caseValue;
+    }
+
+    // Returns switch case variable (condition) for the specific block.
+    // It is usually located in `load` instruction before the switch
+    Value* getSwitchCaseVar(BasicBlock &block, SwitchInst *switchInst) const {
+      Instruction *instBeforeSwitch = &*(std::prev(std::prev(block.end())));
+      LoadInst *loadInstBeforeSwitch = dyn_cast<LoadInst>(instBeforeSwitch);
+
+      if (loadInstBeforeSwitch == switchInst->getCondition()) {
+        return loadInstBeforeSwitch->getPointerOperand();
+      }
+
+      return nullptr;
     }
 
     PreservedAnalyses duplicateSwitchBlocks(Function &F) {
@@ -80,11 +100,9 @@ namespace {
           continue;
         }
 
-        Value *caseVar;
-        Instruction *instBeforeSwitch = &*(std::prev(std::prev(block.end())));
-
-        if (auto loadInst = dyn_cast<LoadInst>(instBeforeSwitch); loadInst == switchInst->getCondition()) {
-          caseVar = loadInst->getPointerOperand();
+        Value *caseVar = this->getSwitchCaseVar(block, switchInst);
+        if (caseVar == nullptr) {
+          continue;
         }
 
         unsigned targetCount = ceil(switchInst->getNumCases() * this->switchCaseTargetPart);
@@ -108,6 +126,7 @@ namespace {
           ConstantInt *duplicateCaseValue = this->generateCaseValue(context, switchInst);
           switchInst->addCase(duplicateCaseValue, duplicateBlock);
 
+          // Make duplicated block reachable
           this->remapCaseVarStoreInstructions(F, caseVar, targetCaseValue, duplicateCaseValue);
         }
       }
