@@ -1,3 +1,5 @@
+#include <map>
+
 #include "llvm/Pass.h"
 #include "llvm/PassRegistry.h"
 #include "llvm/IR/Function.h"
@@ -19,53 +21,61 @@ using namespace llvm;
 namespace {
   struct AnnotationPass : public PassInfoMixin<AnnotationPass> {
     PreservedAnalyses run(Module &M, ModuleAnalysisManager &FAM) {
-      LLVMContext &Ctx = M.getContext();
+      LLVMContext &context = M.getContext();
 
-      auto *Annotations = M.getNamedGlobal("llvm.global.annotations");
-      if (!Annotations || !Annotations->hasInitializer()) {
+      auto *annotations = M.getNamedGlobal("llvm.global.annotations");
+      if (!annotations || !annotations->hasInitializer()) {
         return PreservedAnalyses::all();
       }
 
-      auto *Array = dyn_cast<ConstantArray>(Annotations->getInitializer());
-      if (!Array) {
+      auto *initializer = dyn_cast<ConstantArray>(annotations->getInitializer());
+      if (!initializer) {
         return PreservedAnalyses::all();
       }
 
-      for (unsigned i = 0; i < Array->getNumOperands(); ++i) {
-        auto *Struct = dyn_cast<ConstantStruct>(Array->getOperand(i));
-        if (!Struct || Struct->getNumOperands() < 2) {
+      std::map<Function *, SmallVector<Metadata *>> valueAnnotationsMap;
+
+      for (unsigned i = 0; i < initializer->getNumOperands(); ++i) {
+        auto *operand = dyn_cast<ConstantStruct>(initializer->getOperand(i));
+        if (!operand || operand->getNumOperands() < 2) {
           continue;
         }
 
         // Get the annotated function or variable
-        auto *AnnotatedValue = dyn_cast<Value>(Struct->getOperand(0)->stripPointerCasts());
-        if (!AnnotatedValue) {
+        auto *value = dyn_cast<Value>(operand->getOperand(0)->stripPointerCasts());
+        if (!value) {
           continue;
         }
 
         // Get the annotation string
-        auto *AnnotationMD = dyn_cast<ConstantDataArray>(
-          cast<GlobalVariable>(Struct->getOperand(1)->stripPointerCasts())
+        auto *annotationMD = dyn_cast<ConstantDataArray>(
+          cast<GlobalVariable>(operand->getOperand(1)->stripPointerCasts())
               ->getInitializer());
-        if (!AnnotationMD) {
+        if (!annotationMD) {
           continue;
         }
 
-        StringRef Annotation = AnnotationMD->getAsString();
-
-        if (auto *F = dyn_cast<Function>(AnnotatedValue)) {
+        if (auto *F = dyn_cast<Function>(value)) {
           // Remove last element of the parsed string with ASCII code 0
-          std::string annotation = Annotation.str();
+          std::string annotation = annotationMD->getAsString().str();
           annotation.pop_back();
 
-          MDNode *AnnotationNode = MDNode::get(Ctx, MDString::get(Ctx, annotation));
-          F->setMetadata("annotation", AnnotationNode);
+          MDNode *mdNode = MDNode::get(context, MDString::get(context, annotation));
+          valueAnnotationsMap[F].push_back(mdNode);
 
           errs() << "[annotation] Attached annotation: " << F->getName()
                  << " -> " << annotation << "\n";
         } else {
-          errs() << "[annotation] No annotation: " << AnnotatedValue->getName() << "\n";
+          errs() << "[annotation] No annotation: " << value->getName() << "\n";
         }
+      }
+
+      for (auto valueAnnotations : valueAnnotationsMap) {
+        auto value = valueAnnotations.first;
+        auto annotations = valueAnnotations.second;
+
+        MDNode *annotationNode = MDNode::get(value->getContext(), annotations);
+        value->setMetadata("annotation", annotationNode);
       }
 
       return PreservedAnalyses::none();

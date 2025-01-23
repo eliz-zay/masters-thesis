@@ -136,20 +136,33 @@ namespace {
 
   public:
     PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {
-      auto *MD = F.getMetadata("annotation");
-      if (!MD) {
+      auto *md = F.getMetadata("annotation");
+      if (!md) {
         return PreservedAnalyses::all();
       }
 
-      auto *StringMD = dyn_cast<MDString>(MD->getOperand(0));
-      if (!StringMD) {
-        return PreservedAnalyses::all();
+      bool annotationFound = false;
+
+      for (auto &mdOperand : md->operands()) {
+        auto *mdNode = dyn_cast<MDNode>(mdOperand);
+        if (!mdNode) {
+          continue;
+        }
+
+        auto *mdString = dyn_cast<MDString>(mdNode->getOperand(0));
+        if (!mdString) {
+          continue;
+        }
+
+        if (mdString->getString() == this->annotationName) {
+          annotationFound = true;
+          break;
+        }
       }
 
-      // todo
-      // if (StringMD->getString() != this->annotationName) {
-      //   return PreservedAnalyses::all();
-      // }
+      if (!annotationFound) {
+        return PreservedAnalyses::all();
+      }
 
       errs() << "[bogus-switch] Applying to: " << F.getName() << "\n";
 

@@ -9,9 +9,10 @@ void foo() {
 char __attribute__((annotate("nookie:43"))) theNookie = 'a';
 
 __attribute__((annotate("flatten")))
+__attribute__((annotate("bogus-switch")))
 int main(int argc, char **argv) {
     int n = atoi(argv[1]);
-    // int n = argc;
+    // int n = rand();
 
     while (1) {
         if (rand() % 2 < 1) {
