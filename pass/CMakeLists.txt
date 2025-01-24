@@ -16,6 +16,7 @@ if (${LLVM_VERSION_MAJOR} VERSION_GREATER_EQUAL 10)
     set(CMAKE_CXX_STANDARD 14)
 endif ()
 
+add_subdirectory(base-annotated-pass)
 add_subdirectory(annotation)
 add_subdirectory(skeleton)
 add_subdirectory(flatten)

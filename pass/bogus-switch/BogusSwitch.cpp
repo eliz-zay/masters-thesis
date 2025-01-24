@@ -1,23 +1,20 @@
 #include <vector>
 #include <map>
 
-#include "llvm/Pass.h"
 #include "llvm/PassRegistry.h"
 #include "llvm/IR/Function.h"
-#include "llvm/IR/PassManager.h"
-#include "llvm/Support/raw_ostream.h"
-#include "llvm/Support/CommandLine.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
-#include "llvm/Transforms/Utils/Local.h"
 #include "llvm/Transforms/Utils/Cloning.h"
+
+#include "BaseAnnotatedPass.cpp"
 
 using namespace llvm;
 
 namespace {
-  struct BogusSwitchPass : public PassInfoMixin<BogusSwitchPass> {
+  class BogusSwitchPass : public BaseAnnotatedPass<BogusSwitchPass> {
   private:
-    const std::string annotationName = "bogus-switch";
+    static constexpr const char *annotationName = "bogus-switch";
 
     // A fraction of switch case blocks to duplicate (e.g. 0.7 means that 70% of switch blocks
     // will be duplicated and added as new cases)
@@ -32,9 +29,10 @@ namespace {
     // to `store i32 duplicateCaseValue, ptr %caseVar` instruction.
     // Here, `caseVar` is a variable used in switch condition. `targetCaseValue` and `duplicateCaseValue` refer to
     // the original and duplicated switch case blocks respectively
-    void remapCaseVarStoreInstructions(Function &F, Value *caseVar, ConstantInt *targetCaseValue, ConstantInt *duplicateCaseValue) {
+    void remapCaseVarStoreInstructions(
+      Function &F, Value *caseVar, ConstantInt *targetCaseValue, ConstantInt *duplicateCaseValue
+    ) const {
       LLVMContext &context = F.getContext();
-      IRBuilder<> builder(context);
 
       std::vector<StoreInst *> storeInstructions = {};
 
@@ -53,7 +51,7 @@ namespace {
 
       const int countToRemap = floor(storeInstructions.size() * this->storeInstRemappingPart);
 
-      errs() << "[bogus-switch] Generating duplicate case #" << duplicateCaseValue->getValue()
+      errs() << "[" << BogusSwitchPass::annotationName << "] Generating duplicate case #" << duplicateCaseValue->getValue()
              << " for case #" << targetCaseValue->getValue()
              << " and replacing " << countToRemap << " references\n";
 
@@ -91,7 +89,7 @@ namespace {
       return nullptr;
     }
 
-    PreservedAnalyses duplicateSwitchBlocks(Function &F) {
+    PreservedAnalyses applyPass(Function &F) const override {
       LLVMContext &context = F.getContext();
 
       for (auto &block : F) {
@@ -135,45 +133,7 @@ namespace {
     }
 
   public:
-    PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {
-      auto *md = F.getMetadata("annotation");
-      if (!md) {
-        return PreservedAnalyses::all();
-      }
-
-      bool annotationFound = false;
-
-      for (auto &mdOperand : md->operands()) {
-        auto *mdNode = dyn_cast<MDNode>(mdOperand);
-        if (!mdNode) {
-          continue;
-        }
-
-        auto *mdString = dyn_cast<MDString>(mdNode->getOperand(0));
-        if (!mdString) {
-          continue;
-        }
-
-        if (mdString->getString() == this->annotationName) {
-          annotationFound = true;
-          break;
-        }
-      }
-
-      if (!annotationFound) {
-        return PreservedAnalyses::all();
-      }
-
-      errs() << "[bogus-switch] Applying to: " << F.getName() << "\n";
-
-      try {
-        this->duplicateSwitchBlocks(F);
-      } catch (const std::runtime_error& e) {
-        errs() << "[bogus-switch] ERROR: " << e.what() << "\n";
-      }
-
-      return PreservedAnalyses::none();
-    }
+    BogusSwitchPass() : BaseAnnotatedPass(BogusSwitchPass::annotationName) {}
   };
 } // namespace
 
