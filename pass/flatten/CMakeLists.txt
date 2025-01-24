@@ -1,6 +1,6 @@
-add_library(FlattenPass MODULE
-    Flatten.cpp
-)
+add_library(FlattenPass MODULE Flatten.cpp)
+
+target_link_libraries(FlattenPass PRIVATE BaseAnnotatedPass)
 
 set_target_properties(FlattenPass PROPERTIES
     COMPILE_FLAGS "-fno-rtti -std=c++20"

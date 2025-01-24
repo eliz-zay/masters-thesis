@@ -1,6 +1,6 @@
-add_library(BogusSwitchPass MODULE
-    BogusSwitch.cpp
-)
+add_library(BogusSwitchPass MODULE BogusSwitch.cpp)
+
+target_link_libraries(BogusSwitchPass PRIVATE BaseAnnotatedPass)
 
 set_target_properties(BogusSwitchPass PROPERTIES
     COMPILE_FLAGS "-fno-rtti -std=c++20"
@@ -13,5 +13,3 @@ if(APPLE)
         LINK_FLAGS "-undefined dynamic_lookup"
     )
 endif(APPLE)
-
-target_link_libraries(BogusSwitchPass PRIVATE BaseAnnotatedPass)

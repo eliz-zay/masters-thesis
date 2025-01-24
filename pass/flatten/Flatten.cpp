@@ -1,15 +1,11 @@
 #include <vector>
 #include <map>
 
-#include "llvm/Pass.h"
-#include "llvm/PassRegistry.h"
-#include "llvm/IR/Function.h"
-#include "llvm/IR/PassManager.h"
-#include "llvm/Support/raw_ostream.h"
-#include "llvm/Support/CommandLine.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Transforms/Utils/Local.h"
+
+#include "BaseAnnotatedPass.cpp"
 
 using namespace llvm;
 
@@ -19,9 +15,9 @@ namespace {
     BasicBlock *loopEnd;
   };
 
-  struct FlattenPass : public PassInfoMixin<FlattenPass> {
+  class FlattenPass : public BaseAnnotatedPass<FlattenPass> {
   private:
-    const std::string annotationName = "flatten";
+    static constexpr const char *annotationName = "flatten";
 
     // Splits basic block by the last two instructions and returns a new block (the second part)
     void splitBlockByConditionalBranch(BasicBlock &block) const {
@@ -227,7 +223,7 @@ namespace {
       return usedOutside;
     }
 
-    PreservedAnalyses flattenCFG(Function &F) {
+    PreservedAnalyses applyPass(Function &F) const override {
       if (F.size() == 1) {
         return PreservedAnalyses::all();
       }
@@ -296,45 +292,7 @@ namespace {
     }
 
   public:
-    PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM) {
-      auto *md = F.getMetadata("annotation");
-      if (!md) {
-        return PreservedAnalyses::all();
-      }
-
-      bool annotationFound = false;
-
-      for (auto &mdOperand : md->operands()) {
-        auto *mdNode = dyn_cast<MDNode>(mdOperand);
-        if (!mdNode) {
-          continue;
-        }
-
-        auto *mdString = dyn_cast<MDString>(mdNode->getOperand(0));
-        if (!mdString) {
-          continue;
-        }
-
-        if (mdString->getString() == this->annotationName) {
-          annotationFound = true;
-          break;
-        }
-      }
-
-      if (!annotationFound) {
-        return PreservedAnalyses::all();
-      }
-
-      errs() << "[flatten] Applying to: " << F.getName() << "\n";
-
-      try {
-        this->flattenCFG(F);
-      } catch (const std::runtime_error& e) {
-        errs() << "[flatten] ERROR: " << e.what() << "\n";
-      }
-
-      return PreservedAnalyses::none();
-    }
+    FlattenPass() : BaseAnnotatedPass(FlattenPass::annotationName) {}
   };
 } // namespace
 

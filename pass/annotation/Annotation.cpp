@@ -1,25 +1,14 @@
 #include <map>
 
-#include "llvm/Pass.h"
-#include "llvm/PassRegistry.h"
-#include "llvm/IR/Function.h"
-#include "llvm/IR/PassManager.h"
-#include "llvm/IR/GlobalVariable.h"
-#include "llvm/IR/Instructions.h"
-#include "llvm/IR/Metadata.h"
-#include "llvm/IR/Attributes.h"
-#include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Module.h"
-#include "llvm/Support/raw_ostream.h"
-#include "llvm/Support/CommandLine.h"
-#include "llvm/Support/ErrorHandling.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
 
 using namespace llvm;
 
 namespace {
-  struct AnnotationPass : public PassInfoMixin<AnnotationPass> {
+  class AnnotationPass : public PassInfoMixin<AnnotationPass> {
+  public:
     PreservedAnalyses run(Module &M, ModuleAnalysisManager &FAM) {
       LLVMContext &context = M.getContext();
 

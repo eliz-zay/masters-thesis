@@ -18,6 +18,5 @@ endif ()
 
 add_subdirectory(base-annotated-pass)
 add_subdirectory(annotation)
-add_subdirectory(skeleton)
 add_subdirectory(flatten)
 add_subdirectory(bogus-switch)

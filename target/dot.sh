@@ -1,7 +1,6 @@
 #!/bin/bash
 ../../llvm-project/build/bin/opt \
   -load-pass-plugin="/Users/elizaveta/Documents/uni/thesis/thesis/pass/build/annotation/libAnnotationPass.so" \
-  -load-pass-plugin="/Users/elizaveta/Documents/uni/thesis/thesis/pass/build/skeleton/libSkeletonPass.so" \
   -load-pass-plugin="/Users/elizaveta/Documents/uni/thesis/thesis/pass/build/flatten/libFlattenPass.so" \
   -load-pass-plugin="/Users/elizaveta/Documents/uni/thesis/thesis/pass/build/bogus-switch/libBogusSwitchPass.so" \
   -passes="module(annotation),function(flatten),function(bogus-switch)" \

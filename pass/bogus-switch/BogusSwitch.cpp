@@ -1,8 +1,6 @@
 #include <vector>
 #include <map>
 
-#include "llvm/PassRegistry.h"
-#include "llvm/IR/Function.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Transforms/Utils/Cloning.h"
