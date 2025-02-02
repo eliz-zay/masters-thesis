@@ -9,7 +9,7 @@ using namespace llvm;
 namespace {
   class AnnotationPass : public PassInfoMixin<AnnotationPass> {
   public:
-    PreservedAnalyses run(Module &M, ModuleAnalysisManager &FAM) {
+    PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
       LLVMContext &context = M.getContext();
 
       auto *annotations = M.getNamedGlobal("llvm.global.annotations");
