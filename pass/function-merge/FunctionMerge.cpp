@@ -19,8 +19,8 @@ namespace {
   };
 
   struct MergedFunction {
-    Function *mergedFunction;
-    std::map<Function *, FunctionInfo> targetFunctions;
+    Function *mergedFunc;
+    std::map<Function *, FunctionInfo> targetFuncs;
   };
 
   class FunctionMergePass : public PassInfoMixin<FunctionMergePass> {
@@ -132,24 +132,24 @@ namespace {
       switchInst->addCase(ConstantInt::get(Type::getInt32Ty(context), funcInfo.caseIdx), &*clonedEntryBlock);
     }
 
-    void merge(Module &M, std::vector<Function *> targetFunctions) const {
+    MergedFunction merge(Module &M, std::vector<Function *> targetFuncs) const {
       LLVMContext &context = M.getContext();
 
-      std::map<Function *, FunctionInfo> targetFunctionsInfo;
+      std::map<Function *, FunctionInfo> targetFuncsInfo;
 
       // Merged function args start with an integer (switch case variable)
       std::vector<Type *> argTypes = {Type::getInt32Ty(context)};
       int argOffset = 1;
       int caseIdx = 0;
 
-      for (auto &f : targetFunctions) {
+      for (auto &f : targetFuncs) {
         int argNum = 0;
         for (auto &arg : f->args()) {
           argTypes.push_back(arg.getType());
           argNum++;
         }
 
-        targetFunctionsInfo[f] = {caseIdx, argOffset, argNum};
+        targetFuncsInfo[f] = {caseIdx, argOffset, argNum};
         argOffset += argNum;
         caseIdx++;
       }
@@ -157,10 +157,15 @@ namespace {
       auto mergedFunc = this->createVoidFunction(M, argTypes);
       auto switchInst = this->createSwitchCase(mergedFunc);
 
-      for (auto &f : targetFunctions) {
-        auto info = targetFunctionsInfo[f];
+      for (auto &f : targetFuncs) {
+        auto info = targetFuncsInfo[f];
         this->addCase(mergedFunc, switchInst, f, info);
       }
+
+      return {mergedFunc, targetFuncsInfo};
+    }
+
+    void updateFunctionReferences(Module &M, Function *mergedFunc, std::map<Function *, FunctionInfo> targetFuncs) const {
     }
 
   public:
@@ -168,15 +173,15 @@ namespace {
       todo: process non-void functions
     */
     PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) const {
-      auto targetFunctions = this->getTargetFunctions(M);
+      auto targetFuncs = this->getTargetFunctions(M);
 
-      if (targetFunctions.size() < 2) {
+      if (targetFuncs.size() < 2) {
         return PreservedAnalyses::all();
       }
 
-      this->merge(M, targetFunctions);
+      auto [mergedFunc, targetFuncsInfo] = this->merge(M, targetFuncs);
 
-      // this->updateFunctionReferences(mergedFunctions);
+      this->updateFunctionReferences(M, mergedFunc, targetFuncsInfo);
 
       return PreservedAnalyses::none();
     }
