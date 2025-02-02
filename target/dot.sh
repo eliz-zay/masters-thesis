@@ -10,3 +10,6 @@
 ../../llvm-project/build/bin/opt -passes=dot-cfg hello2.ll -o /dev/null
 dot -Tpng .main.dot -o main2.png
 dot -Tpng .foo.dot -o foo2.png
+dot -Tpng .baz.dot -o baz.png
+dot -Tpng .bar.dot -o bar.png
+dot -Tpng .merged.dot -o merged.png

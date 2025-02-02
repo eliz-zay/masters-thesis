@@ -13,12 +13,12 @@ using namespace llvm;
 
 namespace {
   struct FunctionInfo {
-    // Function *function;
     int caseIdx;
-    int paramOffset;
+    int argOffset;
+    int argNum;
   };
 
-  struct MergedFunctions {
+  struct MergedFunction {
     Function *mergedFunction;
     std::map<Function *, FunctionInfo> targetFunctions;
   };
@@ -26,13 +26,6 @@ namespace {
   class FunctionMergePass : public PassInfoMixin<FunctionMergePass> {
   private:
     static constexpr const char *annotationName = "function-merge";
-
-    PreservedAnalyses applyPass(Function &F) const {
-      LLVMContext &context = F.getContext();
-
-
-      return PreservedAnalyses::none();
-    }
 
     std::vector<Function *> getTargetFunctions(Module &M) const {
       std::vector<Function *> annotatedFunctions;
@@ -83,8 +76,91 @@ namespace {
       return annotatedFunctions;
     }
 
-    MergedFunctions merge(std::vector<Function *> targetFunctions) const {
+    Function* createVoidFunction(Module &M, std::vector<Type *> &argTypes) const {
+      LLVMContext &context = M.getContext();
 
+      FunctionType *funcType = FunctionType::get(Type::getVoidTy(context), argTypes, false);
+
+      Function *newFunc = Function::Create(funcType, GlobalValue::LinkageTypes::InternalLinkage, "merged", M);
+
+      return newFunc;
+    }
+
+    SwitchInst* createSwitchCase(Function *mergedFunc) const {
+      LLVMContext &context = mergedFunc->getContext();
+
+      BasicBlock *entryBlock = BasicBlock::Create(context, "entry", mergedFunc);
+
+      IRBuilder<> builder(entryBlock);
+
+      SwitchInst *switchInst = builder.CreateSwitch(mergedFunc->getArg(0), nullptr);
+
+      BasicBlock *defaultBlock = BasicBlock::Create(context, "defaultSwitchBlock", mergedFunc);
+      ReturnInst::Create(context, defaultBlock);
+      switchInst->setDefaultDest(defaultBlock);
+
+      return switchInst;
+    }
+
+    void addCase(
+      Function *mergedFunc,
+      SwitchInst *switchInst,
+      Function *func,
+      FunctionInfo &funcInfo
+    ) const {
+      LLVMContext &context = mergedFunc->getContext();
+
+      // Argument references during function cloning are updated according to the `vMap` argument mapping
+      ValueToValueMapTy vMap;
+      for (int i = 0; i < funcInfo.argNum; i++) {
+        Value *srcArg = func->getArg(i);
+        Value *dstArg = mergedFunc->getArg(funcInfo.argOffset + i);
+
+        vMap[srcArg] = dstArg;
+      }
+
+      BasicBlock *lastBlock = &(mergedFunc->back());
+
+      SmallVector<ReturnInst *, 8> returns;
+      CloneFunctionInto(mergedFunc, func, vMap, CloneFunctionChangeType::LocalChangesOnly, returns);
+
+      auto clonedEntryBlock = lastBlock->getIterator()++;
+      while (clonedEntryBlock != mergedFunc->end() && !clonedEntryBlock->hasNPredecessors(0)) {
+        ++clonedEntryBlock;
+      }
+
+      switchInst->addCase(ConstantInt::get(Type::getInt32Ty(context), funcInfo.caseIdx), &*clonedEntryBlock);
+    }
+
+    void merge(Module &M, std::vector<Function *> targetFunctions) const {
+      LLVMContext &context = M.getContext();
+
+      std::map<Function *, FunctionInfo> targetFunctionsInfo;
+
+      // Merged function args start with an integer (switch case variable)
+      std::vector<Type *> argTypes = {Type::getInt32Ty(context)};
+      int argOffset = 1;
+      int caseIdx = 0;
+
+      for (auto &f : targetFunctions) {
+        int argNum = 0;
+        for (auto &arg : f->args()) {
+          argTypes.push_back(arg.getType());
+          argNum++;
+        }
+
+        targetFunctionsInfo[f] = {caseIdx, argOffset, argNum};
+        argOffset += argNum;
+        caseIdx++;
+      }
+
+      auto mergedFunc = this->createVoidFunction(M, argTypes);
+      auto switchInst = this->createSwitchCase(mergedFunc);
+
+      for (auto &f : targetFunctions) {
+        auto info = targetFunctionsInfo[f];
+        this->addCase(mergedFunc, switchInst, f, info);
+      }
     }
 
   public:
@@ -98,18 +174,7 @@ namespace {
         return PreservedAnalyses::all();
       }
 
-      /**
-        void merged(int fidx, f1_1, f1_2, ..., fn_k) {
-          switch (fidx) {
-            case m: {
-              doo_stuff_with(fm_1, ..., fm_k);
-              break;
-            }
-            ...
-          }
-        }
-       */
-      // auto mergedFunctions = this->merge(targetFunctions);
+      this->merge(M, targetFunctions);
 
       // this->updateFunctionReferences(mergedFunctions);
 
