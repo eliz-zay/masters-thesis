@@ -165,7 +165,50 @@ namespace {
       return {mergedFunc, targetFuncsInfo};
     }
 
-    void updateFunctionReferences(Module &M, Function *mergedFunc, std::map<Function *, FunctionInfo> targetFuncs) const {
+    void updateFunctionReferences(Function *mergedFunc, std::map<Function *, FunctionInfo> &targetFuncs) const {
+      LLVMContext &context = mergedFunc->getContext();
+      IRBuilder<> builder(context);
+
+      int mergedArgNum = std::distance(mergedFunc->arg_begin(), mergedFunc->arg_end());
+
+      for (auto &[targetFunc, targetFuncInfo] : targetFuncs) {
+        const int argOffset = targetFuncInfo.argOffset;
+        const int argNum = targetFuncInfo.argNum;
+        errs() << " *** " << targetFunc->getName() << " *** \n";
+
+        for (auto &use : targetFunc->uses()) {
+          auto user = use.getUser();
+
+          auto *callInst = dyn_cast<CallInst>(user);
+          if (!callInst) {
+            errs() << "not call\n";
+            continue;
+          }
+
+          errs() << "call\n";
+
+          builder.SetInsertPoint(callInst);
+
+          std::vector<Value *> args = {ConstantInt::get(Type::getInt32Ty(context), targetFuncInfo.caseIdx)};
+
+          auto callInstArg = callInst->arg_begin();
+          
+          for (int i = 1; i < mergedArgNum; i++) {
+            if (i < argOffset || i >= argOffset + argNum) {
+              args.push_back(Constant::getNullValue(mergedFunc->getArg(i)->getType()));
+            } else {
+              args.push_back(*callInstArg);
+              callInstArg++;
+            }
+          }
+
+          builder.CreateCall(mergedFunc, args);
+
+          // call->replaceAllUsesWith(builder.CreateLoad(result->getAllocatedType(), result));
+
+          // callInst->eraseFromParent();
+        }
+      }
     }
 
   public:
@@ -181,7 +224,7 @@ namespace {
 
       auto [mergedFunc, targetFuncsInfo] = this->merge(M, targetFuncs);
 
-      this->updateFunctionReferences(M, mergedFunc, targetFuncsInfo);
+      this->updateFunctionReferences(mergedFunc, targetFuncsInfo);
 
       return PreservedAnalyses::none();
     }
