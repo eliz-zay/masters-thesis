@@ -3,6 +3,7 @@
 
 #include "llvm/IR/Module.h"
 #include "llvm/IR/Function.h"
+#include "llvm/IR/Attributes.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Transforms/Utils/Cloning.h"
@@ -16,6 +17,7 @@ namespace {
     int caseIdx;
     int argOffset;
     int argNum;
+    Type *returnType;
   };
 
   struct MergedFunction {
@@ -64,7 +66,6 @@ namespace {
           || F.isDeclaration()
           || F.isIntrinsic()
           || F.getLinkage() != GlobalValue::LinkageTypes::InternalLinkage
-          || !F.getReturnType()->isVoidTy()
         ) {
           continue;
         }
@@ -112,24 +113,59 @@ namespace {
 
       // Argument references during function cloning are updated according to the `vMap` argument mapping
       ValueToValueMapTy vMap;
-      for (int i = 0; i < funcInfo.argNum; i++) {
+      // First argument stands for return value
+      for (int i = 0; i < funcInfo.argNum - 1; i++) {
         Value *srcArg = func->getArg(i);
-        Value *dstArg = mergedFunc->getArg(funcInfo.argOffset + i);
+        Value *dstArg = mergedFunc->getArg(funcInfo.argOffset + 1 + i);
 
         vMap[srcArg] = dstArg;
       }
 
       BasicBlock *lastBlock = &(mergedFunc->back());
 
+      // func->getAttributes().removeRetAttribute(func->getContext(), Attribute::Range);
+
+      AttributeList attrs = func->getAttributes();
+      AttributeList newAttrs = attrs.removeFnAttributes(func->getContext());
+      func->setAttributes(newAttrs);
+
+      attrs = mergedFunc->getAttributes();
+      newAttrs = attrs.removeFnAttributes(mergedFunc->getContext());
+      func->setAttributes(newAttrs);
+
+
       SmallVector<ReturnInst *, 8> returns;
       CloneFunctionInto(mergedFunc, func, vMap, CloneFunctionChangeType::LocalChangesOnly, returns);
 
       auto clonedEntryBlock = lastBlock->getIterator()++;
       while (clonedEntryBlock != mergedFunc->end() && !clonedEntryBlock->hasNPredecessors(0)) {
-        ++clonedEntryBlock;
+        clonedEntryBlock++;
       }
 
       switchInst->addCase(ConstantInt::get(Type::getInt32Ty(context), funcInfo.caseIdx), &*clonedEntryBlock);
+
+      IRBuilder<> builder(context);
+
+      // set return variable and create return void
+      for (auto block = clonedEntryBlock->getIterator(); block != mergedFunc->end(); block++) {
+        auto returnInst = dyn_cast<ReturnInst>(block->getTerminator());
+        if (!returnInst) {
+          continue;
+        }
+
+        Value *returnValue = returnInst->getReturnValue();
+        // void return instructions are already valid
+        if (!returnValue) {
+          continue;
+        }
+
+        // Copy return value to the argument with a result pointer
+        builder.SetInsertPoint(returnInst);
+        builder.CreateStore(returnValue, mergedFunc->getArg(funcInfo.argOffset));
+        builder.CreateRetVoid();
+
+        returnInst->eraseFromParent();
+      }
     }
 
     MergedFunction merge(Module &M, std::vector<Function *> targetFuncs) const {
@@ -143,13 +179,16 @@ namespace {
       int caseIdx = 0;
 
       for (auto &f : targetFuncs) {
-        int argNum = 0;
+        int argNum = 1;
+
+        argTypes.push_back(PointerType::get(f->getReturnType(), 0));
+
         for (auto &arg : f->args()) {
           argTypes.push_back(arg.getType());
           argNum++;
         }
 
-        targetFuncsInfo[f] = {caseIdx, argOffset, argNum};
+        targetFuncsInfo[f] = {caseIdx, argOffset, argNum, f->getReturnType()};
         argOffset += argNum;
         caseIdx++;
       }
@@ -165,56 +204,81 @@ namespace {
       return {mergedFunc, targetFuncsInfo};
     }
 
-    void updateFunctionReferences(Function *mergedFunc, std::map<Function *, FunctionInfo> &targetFuncs) const {
+    void updateFunctionReferences(Function *mergedFunc, Function *func, FunctionInfo &funcInfo) const {
       LLVMContext &context = mergedFunc->getContext();
       IRBuilder<> builder(context);
 
       int mergedArgNum = std::distance(mergedFunc->arg_begin(), mergedFunc->arg_end());
+      const auto [caseIdx, argOffset, argNum, returnType] = funcInfo;
 
-      for (auto &[targetFunc, targetFuncInfo] : targetFuncs) {
-        const int argOffset = targetFuncInfo.argOffset;
-        const int argNum = targetFuncInfo.argNum;
-        errs() << " *** " << targetFunc->getName() << " *** \n";
+      errs() << " --- " << func->getName() << " --- \n";
 
-        for (auto &use : targetFunc->uses()) {
-          auto user = use.getUser();
+      bool hasInvokeRefs = false;
+      std::vector<CallInst *> callInstToDelete;
 
-          auto *callInst = dyn_cast<CallInst>(user);
-          if (!callInst) {
-            errs() << "not call\n";
-            continue;
-          }
+      for (auto &use : func->uses()) {
+        auto user = use.getUser();
 
-          errs() << "call\n";
-
-          builder.SetInsertPoint(callInst);
-
-          std::vector<Value *> args = {ConstantInt::get(Type::getInt32Ty(context), targetFuncInfo.caseIdx)};
-
-          auto callInstArg = callInst->arg_begin();
-          
-          for (int i = 1; i < mergedArgNum; i++) {
-            if (i < argOffset || i >= argOffset + argNum) {
-              args.push_back(Constant::getNullValue(mergedFunc->getArg(i)->getType()));
-            } else {
-              args.push_back(*callInstArg);
-              callInstArg++;
-            }
-          }
-
-          builder.CreateCall(mergedFunc, args);
-
-          // call->replaceAllUsesWith(builder.CreateLoad(result->getAllocatedType(), result));
-
-          // callInst->eraseFromParent();
+        if (dyn_cast<InvokeInst>(user)) {
+          hasInvokeRefs = true;
+          continue;
         }
+
+        auto *callInst = dyn_cast<CallInst>(user);
+        if (!callInst) {
+          errs() << "not call\n";
+          continue;
+        }
+
+        errs() << "call\n";
+
+        builder.SetInsertPoint(callInst);
+
+        Value *resultVar = !returnType->isVoidTy()
+          ? builder.CreateAlloca(returnType, nullptr)
+          : nullptr;
+
+        std::vector<Value *> args = {ConstantInt::get(Type::getInt32Ty(context), caseIdx)};
+
+        auto callInstArg = callInst->arg_begin();          
+        for (int i = 1; i < mergedArgNum; i++) {
+          // Pass pointer to return var if it's not a void function
+          if (i == argOffset) {
+            if (!returnType->isVoidTy()) {
+              args.push_back(resultVar);
+            } else {
+              args.push_back(Constant::getNullValue(mergedFunc->getArg(i)->getType()));
+            }
+          // Add mock arguments on positions of other merged functions
+          } else if (i < argOffset || i >= argOffset + argNum) {
+            args.push_back(Constant::getNullValue(mergedFunc->getArg(i)->getType()));
+          // Copy actual arguments
+          } else {
+            args.push_back(*callInstArg);
+            callInstArg++;
+          }
+        }
+
+        builder.CreateCall(mergedFunc, args);
+
+        if (!returnType->isVoidTy()) {
+          callInst->replaceAllUsesWith(builder.CreateLoad(returnType, resultVar));
+        }
+
+        // Delete later to avoid modifying `uses()` iterator in for loop
+        callInstToDelete.push_back(callInst);
       }
-    }
+
+      for (auto &callInst : callInstToDelete) {
+        callInst->eraseFromParent();
+      }
+
+      if (!hasInvokeRefs) {
+        // The function can be deleted
+      }
+  }
 
   public:
-    /*
-      todo: process non-void functions
-    */
     PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) const {
       auto targetFuncs = this->getTargetFunctions(M);
 
@@ -222,9 +286,11 @@ namespace {
         return PreservedAnalyses::all();
       }
 
-      auto [mergedFunc, targetFuncsInfo] = this->merge(M, targetFuncs);
+      auto [mergedFunc, targetFuncsInfoMap] = this->merge(M, targetFuncs);
 
-      this->updateFunctionReferences(mergedFunc, targetFuncsInfo);
+      for (auto &[func, funcInfo] : targetFuncsInfoMap) {
+        this->updateFunctionReferences(mergedFunc, func, funcInfo);
+      }
 
       return PreservedAnalyses::none();
     }
