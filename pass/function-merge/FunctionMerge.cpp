@@ -123,19 +123,16 @@ namespace {
 
       BasicBlock *lastBlock = &(mergedFunc->back());
 
-      // func->getAttributes().removeRetAttribute(func->getContext(), Attribute::Range);
-
-      AttributeList attrs = func->getAttributes();
-      AttributeList newAttrs = attrs.removeFnAttributes(func->getContext());
-      func->setAttributes(newAttrs);
-
-      attrs = mergedFunc->getAttributes();
-      newAttrs = attrs.removeFnAttributes(mergedFunc->getContext());
-      func->setAttributes(newAttrs);
-
+      // `CloneFunctionInto` copies function and its attributes, which may conflict with the merged function.
+      // To avoid this, the initial attributes are temporarily removed from the function during cloning
+      AttributeList funcAttrs = func->getAttributes();
+      func->setAttributes(AttributeList());
 
       SmallVector<ReturnInst *, 8> returns;
       CloneFunctionInto(mergedFunc, func, vMap, CloneFunctionChangeType::LocalChangesOnly, returns);
+
+      // Restore function attributes
+      func->setAttributes(funcAttrs);
 
       auto clonedEntryBlock = lastBlock->getIterator()++;
       while (clonedEntryBlock != mergedFunc->end() && !clonedEntryBlock->hasNPredecessors(0)) {
