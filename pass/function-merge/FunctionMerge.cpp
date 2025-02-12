@@ -201,33 +201,62 @@ namespace {
       return {mergedFunc, targetFuncsInfo};
     }
 
-    void updateFunctionReferences(Function *mergedFunc, Function *func, FunctionInfo &funcInfo) const {
+    void removeAnnotation(Module &M, Function *func) const {
+      GlobalVariable *annotations = M.getNamedGlobal("llvm.global.annotations");
+      if (!annotations) {
+        return;
+      }
+
+      auto *initializer = dyn_cast<ConstantArray>(annotations->getInitializer());
+      if (!initializer) {
+        return;
+      }
+
+      std::vector<Constant *> annotationsToSave;
+
+      for (unsigned i = 0; i < initializer->getNumOperands(); ++i) {
+        auto *operand = dyn_cast<ConstantStruct>(initializer->getOperand(i));
+        if (operand && operand->getOperand(0) != func) {
+          annotationsToSave.push_back(operand);
+        }
+      }
+
+      ArrayType *annotationType = ArrayType::get(
+        initializer->getType()->getArrayElementType(),
+        annotationsToSave.size()
+      );
+
+      GlobalVariable *newAnnotations = new GlobalVariable(
+        M, annotationType, annotations->isConstant(), annotations->getLinkage(),
+        ConstantArray::get(annotationType, annotationsToSave), ""
+      );
+
+      newAnnotations->copyAttributesFrom(annotations);
+
+      annotations->replaceAllUsesWith(newAnnotations);
+      annotations->eraseFromParent();
+
+      newAnnotations->setName("llvm.global.annotations");
+
+      func->removeDeadConstantUsers();
+    }
+
+    void replaceFunctionUses(Function *mergedFunc, Function *func, FunctionInfo &funcInfo) const {
       LLVMContext &context = mergedFunc->getContext();
       IRBuilder<> builder(context);
 
       int mergedArgNum = std::distance(mergedFunc->arg_begin(), mergedFunc->arg_end());
       const auto [caseIdx, argOffset, argNum, returnType] = funcInfo;
 
-      errs() << " --- " << func->getName() << " --- \n";
-
-      bool hasInvokeRefs = false;
       std::vector<CallInst *> callInstToDelete;
 
       for (auto &use : func->uses()) {
         auto user = use.getUser();
 
-        if (dyn_cast<InvokeInst>(user)) {
-          hasInvokeRefs = true;
-          continue;
-        }
-
         auto *callInst = dyn_cast<CallInst>(user);
         if (!callInst) {
-          errs() << "not call\n";
           continue;
         }
-
-        errs() << "call\n";
 
         builder.SetInsertPoint(callInst);
 
@@ -269,11 +298,23 @@ namespace {
       for (auto &callInst : callInstToDelete) {
         callInst->eraseFromParent();
       }
+    }
 
-      if (!hasInvokeRefs) {
-        // The function can be deleted
+    void deleteFunctionIfNoUses(Module &M, Function *func) const {
+      for (auto &use : func->uses()) {
+        if (dyn_cast<InvokeInst>(use.getUser())) {
+          return;
+        }
       }
-  }
+
+      this->removeAnnotation(M, func);
+
+      if (!func->use_empty()) {
+        return;
+      }
+
+      func->eraseFromParent();
+    }
 
   public:
     PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) const {
@@ -286,7 +327,8 @@ namespace {
       auto [mergedFunc, targetFuncsInfoMap] = this->merge(M, targetFuncs);
 
       for (auto &[func, funcInfo] : targetFuncsInfoMap) {
-        this->updateFunctionReferences(mergedFunc, func, funcInfo);
+        this->replaceFunctionUses(mergedFunc, func, funcInfo);
+        this->deleteFunctionIfNoUses(M, func);
       }
 
       return PreservedAnalyses::none();
