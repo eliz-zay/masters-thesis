@@ -1,0 +1,5 @@
+#!/bin/bash
+# Vizualize CFG
+../../llvm-project/build/bin/opt -passes=dot-cfg exec/orig.ll
+dot -Tpng .main.dot -o out/main.orig.png
+rm .*.dot

@@ -4,18 +4,8 @@
 __attribute__((noinline))
 __attribute__((annotate("function-merge")))
 static int foo(int n) {
-  switch (n) {
-      case 11: 
-          n = n % 11;
-          break;
-      
-      case 22: 
-          n = n % 202;
-          break;
-      
-      case 33: {n = 999; break;}
-      case 44: {n = rand(); break;}
-      default: {n = 888; break;}
+  if (n < 107) {
+    return 4;
   }
 
   return n;

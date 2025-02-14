@@ -71,3 +71,7 @@ and cannot be accessed directly from values. To solve this, the Annotation modul
 modifies the IR by attaching 'annotation' metadata directly to the annotated values. The subsequent function passes can access this data
 directly from metadata. Important note: the annotation pass does not modify the IR .ll file unless explicitly specified to, but it modifies
 the intermediate representation of the code shared between passes.
+
+## Validation
+- [FFT with test cases](https://lloydrochester.com/post/c/example-fft/)
+- [AES with tests](https://github.com/kokke/tiny-AES-c)
