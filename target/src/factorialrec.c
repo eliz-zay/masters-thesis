@@ -15,7 +15,7 @@ __attribute__((noinline))
 __attribute__((annotate("function-merge")))
 static int factorialrec(int argc, char* argv[]) {
   if (argc < 2) {
-    printf("Usage: %s <number>\n", argv[0]);
+    printf("Usage: lli a.ll <number>\n");
     return 1; 
   }
   int num,f;

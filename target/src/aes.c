@@ -634,7 +634,7 @@ void print_hex_array(const uint8_t *array, size_t length) {
 
 int main(int argc, char *argv[]) {
   if (argc != 3) {
-    printf("Usage: %s \"<key>\" \"<plaintext>\"\n", argv[0]);
+    printf("Usage: lli a.ll \"<key>\" \"<plaintext>\"\n");
     return 1;
   }
 

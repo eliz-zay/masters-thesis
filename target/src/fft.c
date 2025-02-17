@@ -85,7 +85,7 @@ void printArray(float *arr, int size) {
 
 int main(int argc, char *argv[]) {
   if (argc < 3) {
-    printf("Usage: %s <size> <array1_elements> <array2_elements>\n", argv[0]);
+    printf("Usage: lli a.ll <size> <array1_elements> <array2_elements>\n");
     return 1;
   }
   
