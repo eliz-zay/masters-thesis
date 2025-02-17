@@ -14,11 +14,19 @@ static int fact(int n){
 __attribute__((noinline))
 __attribute__((annotate("function-merge")))
 static int factorialrec(int argc, char* argv[]) {
-  if (argc < 2) return 1;
+  if (argc < 2) {
+    printf("Usage: %s <number>\n", argv[0]);
+    return 1; 
+  }
   int num,f;
   num = atoi(argv[1]);
+  if (num > 16) {
+    printf("Number must not be above 16\n");
+    return 1; 
+  }
+
   f=fact(num);
-  printf("Factorial: %d", f);
+  printf("Factorial: %d\n", f);
   return 0;
 }
 

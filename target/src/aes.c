@@ -593,15 +593,18 @@ void AES_CTR_xcrypt_buffer(struct AES_ctx* ctx, uint8_t* buf, size_t length)
 
 #endif // #if defined(CTR) && (CTR == 1)
 
+/**
+  INPUT/OUTPUT HELPER FUNCTIONS
+ */
 
 size_t count_hex_values(const char *hex_str) {
-    size_t count = 1;
-    for (const char *p = hex_str; *p; p++) {
-        if (*p == ',') {
-            count++;
-        }
+  size_t count = 1;
+  for (const char *p = hex_str; *p; p++) {
+    if (*p == ',') {
+      count++;
     }
-    return count;
+  }
+  return count;
 }
 
 // Function to convert a comma-separated hex string to a uint8_t array
@@ -636,20 +639,26 @@ int main(int argc, char *argv[]) {
   }
 
   size_t key_len = count_hex_values(argv[1]);
-  size_t out_len = count_hex_values(argv[2]);
+  size_t plaintext_len = count_hex_values(argv[2]);
 
   uint8_t key[key_len];
-  uint8_t out[out_len];
+  uint8_t plaintext[plaintext_len];
 
   parse_hex_string(argv[1], key);
-  parse_hex_string(argv[2], out);
+  parse_hex_string(argv[2], plaintext);
 
   struct AES_ctx ctx;
 
   AES_init_ctx(&ctx, key);
-  AES_ECB_encrypt(&ctx, out);
+  AES_ECB_encrypt(&ctx, plaintext);
 
-  print_hex_array(out, out_len);
+  printf("Encrypted: ");
+  print_hex_array(plaintext, plaintext_len);
+
+  AES_ECB_decrypt(&ctx, plaintext);
+
+  printf("Decrypted: ");
+  print_hex_array(plaintext, plaintext_len);
 
   return 0;
 }
