@@ -17,12 +17,12 @@ exec2=exec/obf.ll
 # inputs=(0 2 5 10 11 18 19 20 101 203 239 444 809)
 
 # FFT
-inputs=(
-    "8 0 1 2 3 4 5 6 7 7 6 5 4 3 2 1 0"
-    "8 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
-    "8 1 -1 1 -1 1 -1 1 -1 -1 1 -1 1 -1 1 -1 1"
-    "4 1 2 3 4 0 0 0 0"
-)
+# inputs=(
+#     "8 0 1 2 3 4 5 6 7 7 6 5 4 3 2 1 0"
+#     "8 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
+#     "8 1 -1 1 -1 1 -1 1 -1 -1 1 -1 1 -1 1 -1 1"
+#     "4 1 2 3 4 0 0 0 0"
+# )
 
 # AES
 # inputs=(
@@ -46,6 +46,9 @@ inputs=(
 #     "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"
 #     "!@#$%^&*()\n"
 # )
+
+# cinnabar (RSA)
+inputs=('')
 
 SHA256_tmpfile=$(mktemp)
 

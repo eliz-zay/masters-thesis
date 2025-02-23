@@ -73,6 +73,7 @@ directly from metadata. Important note: the annotation pass does not modify the 
 the intermediate representation of the code shared between passes.
 
 ## Validation
-- [FFT with tests](https://lloydrochester.com/post/c/example-fft/)
-- [AES with tests](https://github.com/kokke/tiny-AES-c)
+- [FFT](https://lloydrochester.com/post/c/example-fft/)
+- [AES](https://github.com/kokke/tiny-AES-c)
 - [SHA 256](https://github.com/EddieEldridge/SHA256-in-C)
+- [RSA (cinnabar)](https://github.com/PascalLG/cinnabar-c)
