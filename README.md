@@ -1,3 +1,17 @@
+# Thesis
+
+## Docker
+- `docker build -t thesis-v20 .`
+- `docker run -it thesis-v20 /bin/bash`
+
+### Inside Docker container
+Compile, obfuscate and execute C program, e.g. [roman.c](target/src/roman.c):
+- `cd target`
+- `./clang.docker.sh src/roman.c`
+- `./opt.docker.sh`
+- `./validate.docker.sh 42` - executes both original and obfuscated version a given input and compares the result
+- `./lli.docker.sh 42` - executes only obfuscated version
+
 ## Install llvm, build clang and lli
 
 https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm
@@ -18,7 +32,7 @@ https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-l
 - `make` - build LLVM and `clang`
 - `./bin/clang --version` - verify `clang`
 - `./bin/lli --version` - verify `lli`
-
+- `./bin/llvm-config  --version` - check LLVM version
 
 ## Compiling
 

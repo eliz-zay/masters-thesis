@@ -1,5 +1,6 @@
 #include <vector>
 #include <map>
+#include <cmath>
 
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"

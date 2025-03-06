@@ -12,9 +12,10 @@ separate_arguments(LLVM_DEFINITIONS_LIST NATIVE_COMMAND ${LLVM_DEFINITIONS})
 add_definitions(${LLVM_DEFINITIONS})
 include_directories(${LLVM_INCLUDE_DIRS})
 link_directories(${LLVM_LIBRARY_DIRS})
-if (${LLVM_VERSION_MAJOR} VERSION_GREATER_EQUAL 10)
-    set(CMAKE_CXX_STANDARD 14)
-endif ()
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED YES)
+set(CMAKE_CXX_EXTENSIONS NO)
 
 add_subdirectory(base-annotated-pass)
 add_subdirectory(annotation)
