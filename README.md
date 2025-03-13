@@ -2,12 +2,14 @@
 
 ## Docker
 - `docker build -t thesis-v20 .`
-- `docker run -it thesis-v20 /bin/bash`
+- `docker run -it thesis-v20`
 
 ### Inside Docker container
 
 - `./docker/gen-binary.sh <C file> <output file>` - obfuscate and generate a binary
 - `./docker/validate.sh <input list>` - executes both original and obfuscated version a given input and compares the result
+
+`python3 annotate.py src/roman.c src/roman_annotated.c 'flatten:foo,bar;bogus-switch:bar,baz'`
 
 - Add dockerfile entry point which accepts C file and produces executables (llc?)
 - Add a script which parses docker input, copies source file, add the annotations to C file based on the input, and then feeds it to the obfuscator
