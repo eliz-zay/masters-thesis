@@ -5,12 +5,13 @@
 - `docker run -it thesis-v20 /bin/bash`
 
 ### Inside Docker container
-Compile, obfuscate and execute C program, e.g. [roman.c](target/src/roman.c):
-- `cd target`
-- `./clang.docker.sh src/roman.c`
-- `./opt.docker.sh`
-- `./validate.docker.sh 42` - executes both original and obfuscated version a given input and compares the result
-- `./lli.docker.sh 42` - executes only obfuscated version
+
+- `./docker/gen-binary.sh <C file> <output file>` - obfuscate and generate a binary
+- `./docker/validate.sh <input list>` - executes both original and obfuscated version a given input and compares the result
+
+- Add dockerfile entry point which accepts C file and produces executables (llc?)
+- Add a script which parses docker input, copies source file, add the annotations to C file based on the input, and then feeds it to the obfuscator
+`docker run -it thesis-v20 <source path> <output path> "flatten:KeyExpansion,main;bogus-switch:KeyExpansion"`
 
 ## Install llvm, build clang and lli
 

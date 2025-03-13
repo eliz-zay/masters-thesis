@@ -44,8 +44,8 @@ RUN mkdir build && \
 
 # Make scripts executable
 WORKDIR /app/target
-RUN chmod a+x *.sh
+RUN chmod a+x docker/*.sh
 
-WORKDIR /app
+WORKDIR /app/target
 
 CMD ["/bin/bash"]
