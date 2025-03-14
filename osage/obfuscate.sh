@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
@@ -11,12 +12,16 @@ fi
 SRC_FILE=$1
 OUT_FILE=$2
 
+echo -e "${BLUE}Compiling...${NC}"
+
 # Compile
 /opt/llvm-project/build/bin/clang \
   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk \
   -emit-llvm -O3 -S \
-  -o exec/orig.ll \
+  -o build/orig.ll \
   "$SRC_FILE"
+
+echo -e "${BLUE}Obfuscating...${NC}"
 
 # Apply obfuscations using optimizer
 /opt/llvm-project/build/bin/opt \
@@ -25,11 +30,13 @@ OUT_FILE=$2
   -load-pass-plugin="/app/pass/build/bogus-switch/libBogusSwitchPass.so" \
   -load-pass-plugin="/app/pass/build/function-merge/libFunctionMergePass.so" \
   -passes="module(annotation),function(flatten),function(bogus-switch),module(function-merge)" \
-  -o exec/obf.ll -S \
-  exec/orig.ll
+  -o build/obf.ll -S \
+  build/orig.ll
+
+echo -e "${BLUE}Compiling IR to binary...${NC}"
 
 # Convert IR file to a binary
-/opt/llvm-project/build/bin/clang exec/obf.ll -o "$OUT_FILE"
+/opt/llvm-project/build/bin/clang -static build/obf.ll -o "$OUT_FILE"
 
 if [ $? -eq 0 ]; then
   echo -e "${BLUE}Executable created: $OUT_FILE${NC}"

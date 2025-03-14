@@ -2,18 +2,38 @@
 
 ## Docker
 - `docker build -t thesis-v20 .`
-- `docker run -it thesis-v20`
+- ```shell
+    docker run \
+      -v <host_path_to_input_C_file>:/app/in/target.c \
+      -v <host_path_to_output_dir>:/app/out \
+      -it thesis-v20 \
+      <obfuscation_modes> <output_file_name.out>
+  ```
+  Target C file is copied from host to `/app/in/target.c` inside a container. Host output directory is linked
+  to `/app/out` inside a Docker container, and **a binary is generated in <host_path_to_output_dir>/<output_file_name.out>**.
+  For example, this command obfuscates `$(pwd)/target/src/foo-bar-baz.test.c` and produces `$(pwd)/host_out/o.out`:
+  ```shell
+    docker run \
+      -v $(pwd)/target/src/foo-bar-baz.test.c:/app/in/target.c \
+      -v $(pwd)/host_out:/app/out \
+      -it thesis-v20 \
+      'flatten:foo,bar;bogus-switch:bar,baz' o.out
+  ```
+
+### Obfuscation names
+- `flatten` - Control-Flow-Flattening
+- `bogus-switch` - bogus control flow for `switch` statements. *It complements Control-Flow-Flattening. Use either `flatten`, or `flatten` and then `bogus-switch`.* This obfuscation is useless when used without `flatten`
+- `function-merge` - function merging, specify for multiple functions at once
+
+Usage examples with functions `foo`, `bar`, `baz`:
+- `flatten:foo,bar`
+- `flatten:foo,bar,baz;bogus-switch:foo,bar`
+- `function-merge:foo,bar,baz`
+- `flatten:foo;bogus-switch:foo;function-merge:foo,bar,baz`
 
 ### Inside Docker container
 
-- `./docker/gen-binary.sh <C file> <output file>` - obfuscate and generate a binary
 - `./docker/validate.sh <input list>` - executes both original and obfuscated version a given input and compares the result
-
-`python3 annotate.py src/roman.c src/roman_annotated.c 'flatten:foo,bar;bogus-switch:bar,baz'`
-
-- Add dockerfile entry point which accepts C file and produces executables (llc?)
-- Add a script which parses docker input, copies source file, add the annotations to C file based on the input, and then feeds it to the obfuscator
-`docker run -it thesis-v20 <source path> <output path> "flatten:KeyExpansion,main;bogus-switch:KeyExpansion"`
 
 ## Install llvm, build clang and lli
 

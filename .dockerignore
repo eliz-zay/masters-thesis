@@ -1,2 +1,4 @@
 .git/
+.gitignore
 pass/build/
+out/

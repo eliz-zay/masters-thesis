@@ -42,10 +42,9 @@ RUN mkdir build && \
   LLVM_HOME=/opt/llvm-project/build cmake .. && \
   make
 
+WORKDIR /app/osage
+
 # Make scripts executable
-WORKDIR /app/target
-RUN chmod a+x docker/*.sh
+RUN chmod a+x *.sh
 
-WORKDIR /app/target
-
-CMD ["/bin/bash"]
+ENTRYPOINT ["/app/osage/run.sh"]
