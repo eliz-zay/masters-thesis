@@ -19,6 +19,8 @@ namespace {
   private:
     static constexpr const char *annotationName = "flatten";
 
+    const std::string flattenedSwitchAnnotation = "flatten-case-var";
+
     // Splits basic block by the last two instructions and returns a new block (the second part)
     void splitBlockByConditionalBranch(BasicBlock &block) const {
       // Move `icmp` instruction that preceeds terminating instruction
@@ -57,6 +59,14 @@ namespace {
       AllocaInst *caseVar = new AllocaInst(Type::getInt32Ty(context), 0, "caseVar", entryBlock.getFirstInsertionPt());
 
       return caseVar;
+    }
+
+    void annotateSwitchInst(Function &F, SwitchInst *switchInst) const {
+      LLVMContext &context = F.getContext();
+
+      MDNode *mdNode = MDNode::get(context, MDString::get(context, this->flattenedSwitchAnnotation));
+      MDNode *annotationNode = MDNode::get(context, mdNode);
+      switchInst->setMetadata("annotation", annotationNode);
     }
 
     // Stores `initValue` in `caseVar` switch variable in an entry block
@@ -229,7 +239,7 @@ namespace {
       }
 
       for (auto &block : F) {
-        if (block.isLandingPad() || isa<InvokeInst>(&block)) {
+        if (block.isLandingPad() || isa<InvokeInst>(block.getTerminator())) {
           throw std::runtime_error("Exception invocation found. Unable to apply the pass");
         }
       }
@@ -269,7 +279,8 @@ namespace {
         this->storeBlockSuccessorInCaseVar(context, builder, caseVar, block, blockCaseIdxs);
       }
 
-      // Make each block a case inside a switch (except for the entry block)
+      // Make each block a case inside a switch (except for the entry block).
+      // Note: iterating a map of pointers leads to indeterministic order of case statements in the switch
       for (auto it = blockCaseIdxs.begin(); it != blockCaseIdxs.end(); it++) {
         auto block = it->first;
         auto caseIdx = it->second;
@@ -287,6 +298,9 @@ namespace {
       for (auto &phiNode: getPHINodes(F)) {
         DemotePHIToStack(phiNode);
       }
+      
+      // Annotate switch for bogus flow pass
+      this->annotateSwitchInst(F, switchLoop.switchInst);
 
       return PreservedAnalyses::none();
     }

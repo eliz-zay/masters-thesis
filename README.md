@@ -35,6 +35,12 @@ Usage examples with functions `foo`, `bar`, `baz`:
 
 - `./docker/validate.sh <input list>` - executes both original and obfuscated version a given input and compares the result
 
+## TODO
+
+> передавать параметры bogus в атрибуте
+> учитывать последовательность пассов (?)
+> вынести получение annotation и удаление фи нод в либу
+
 ## Install llvm, build clang and lli
 
 https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm
@@ -71,25 +77,12 @@ https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-l
 - `clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -emit-llvm -O3 -S hello.c` - compile to `.ll`. `-O3` flag indicates that LLVM optimizer can perform optimizations and transformations
 - `opt -disable-output hello.ll -passes=helloworld` - perform passes using optimizer
 
-
 ## Passes
 
 ### Build the pass
 - `cd ./thesis/pass/build`
 - `LLVM_HOME=/Users/elizaveta/Documents/uni/thesis/llvm-project/build cmake ..`
 - `make`
-
-### Run
-- `cd ./thesis/target`
-- ```shell
-  opt \
-    -disable-output \
-    -load-pass-plugin="/Users/elizaveta/Documents/uni/thesis/thesis/pass/build/annotation/libAnnotationPass.so" \
-    -load-pass-plugin="/Users/elizaveta/Documents/uni/thesis/thesis/pass/build/skeleton/libSkeletonPass.so" \
-    -load-pass-plugin="/Users/elizaveta/Documents/uni/thesis/thesis/pass/build/flatten/libFlattenPass.so" \
-    -passes="module(annotation),function(skeleton),function(flatten)" \
-    hello.ll
-  ```
 
 To forward output to a new file, replace `-disable-output` with `-o hello2.ll`.
 
@@ -101,13 +94,6 @@ Prerequisite: `brew install graphviz`
 - `opt -passes=dot-cfg hello.ll` - generate `.main.dot`
 - `dot -Tpng .main.dot -o main.png` - generate `main.png`
 Works for every function in the program.
-
-## Implementation
-LLVM IR does not keep annotations attached to functions and variables directly. Instead, the annotations are kept in the global section
-and cannot be accessed directly from values. To solve this, the Annotation module pass iterates over all annotations in the module
-modifies the IR by attaching 'annotation' metadata directly to the annotated values. The subsequent function passes can access this data
-directly from metadata. Important note: the annotation pass does not modify the IR .ll file unless explicitly specified to, but it modifies
-the intermediate representation of the code shared between passes.
 
 ## Validation
 - [FFT](https://lloydrochester.com/post/c/example-fft/)
