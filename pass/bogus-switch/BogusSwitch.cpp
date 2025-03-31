@@ -115,6 +115,10 @@ namespace {
         }
       }
 
+      errs() << "[" << BogusSwitchPass::annotationName
+             << "] Generating duplicate case #" << duplicateCaseValue->getValue()
+             << " for case #" << caseValue->getValue();
+
       return caseValue;
     }
 
@@ -167,11 +171,6 @@ namespace {
 
           // Add duplicated block as a switch case
           ConstantInt *duplicateCaseValue = this->generateCaseValue(context, switchInst);
-
-          errs() << "[" << BogusSwitchPass::annotationName
-                 << "] Generating duplicate case #" << duplicateCaseValue->getValue()
-                 << " for case #" << targetCaseValue->getValue();
-
           switchInst->addCase(duplicateCaseValue, duplicateBlock);
 
           // Make duplicated block reachable
