@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-__attribute__((noinline))
-__attribute__((annotate("function-merge")))
 static int foo(int n) {
   if (n < 107) {
     return 4;
@@ -11,14 +9,13 @@ static int foo(int n) {
   return n;
 }
 
-__attribute__((noinline))
-__attribute__((annotate("function-merge")))
 static void bar(int n) {
   printf("%i", n);
 }
 
 __attribute__((noinline))
-__attribute__((annotate("function-merge")))
+__attribute__((annotate("flatten")))
+__attribute__((annotate("bogus-switch")))
 static void baz(int n, char *c) {
   switch (n) {
       case 11: 
@@ -34,12 +31,14 @@ static void baz(int n, char *c) {
       default: {n = 888; break;}
   }
 
+  // printf("%i", n);
+
   bar(n);
 }
 
 int main(int argc, char *argv[]) {
-    int n = rand();
-    int res1 = foo(n);
-    baz(res1, "b");
-    return foo(res1);
+    int n;
+    scanf("%d", &n);
+    baz(n, "b");
+    return 0;
 }
