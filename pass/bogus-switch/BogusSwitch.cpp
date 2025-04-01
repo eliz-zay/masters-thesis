@@ -5,7 +5,6 @@
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Transforms/Utils/Cloning.h"
-#include "llvm/Transforms/Utils/Local.h"
 
 #include "BaseAnnotatedPass.cpp"
 
@@ -26,21 +25,6 @@ namespace {
     // to be replaced by similar instructions with case values of duplicated blocks.
     // A value is close to zero may lead to unreachable duplicated blocks (dead code)
     const double storeInstRemappingPart = 0.5;
-    
-    // Returns all phi nodes
-    std::vector<PHINode *> getPHINodes(Function &F) const {
-      std::vector<PHINode *> nodes;
-
-      for (auto &block: F) {
-        for (auto &inst: block) {
-          if (isa<PHINode>(&inst)) {
-            nodes.push_back(cast<PHINode>(&inst));
-          }
-        }
-      }
-
-      return nodes;
-    }
 
     // Checks if the switch was annotated by control-flow flattening pass, indicating
     // that it is safe to remap cases to their duplicated versions
@@ -132,8 +116,6 @@ namespace {
     PreservedAnalyses applyPass(Function &F) const override {
       LLVMContext &context = F.getContext();
 
-      bool isFunctionModified = false;
-
       for (auto &block : F) {
         auto switchInst = dyn_cast<SwitchInst>(block.getTerminator());
         if (!switchInst) {
@@ -144,8 +126,6 @@ namespace {
         if (!this->checkIfSwitchFlattened(F, switchInst)) {
           continue;
         }
-
-        isFunctionModified = true;
 
         Value *caseVar = this->getSwitchCaseVar(block, switchInst);
         if (caseVar == nullptr) {
@@ -182,14 +162,6 @@ namespace {
           }
 
           errs() << "\n";
-        }
-      }
-
-      // There may be a phi node with switch cases as predecessors, which will be invalidated when new
-      // case blocks are added. phi nodes must be demoted to a slot on the stack frame
-      if (isFunctionModified) {
-        for (auto &phiNode: getPHINodes(F)) {
-          DemotePHIToStack(phiNode);
         }
       }
 
