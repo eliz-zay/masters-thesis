@@ -12,7 +12,9 @@ fi
 OBFUSCATION_MODES=$1
 OUT_FILE="/app/out/$2"
 
-mkdir -p build
+mkdir -p build/src
 
-python3 annotate.py /app/in/target.c build/target.c $OBFUSCATION_MODES
-./obfuscate.sh build/target.c "$OUT_FILE"
+cp /app/in/includes.h build/includes.h
+
+python3 annotate.py /app/in/target.c build/src/target.c $OBFUSCATION_MODES
+./obfuscate.sh build/src/target.c "$OUT_FILE"

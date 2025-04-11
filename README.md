@@ -1,23 +1,26 @@
 # Thesis
 
-## Docker
+## OSAGE and Docker
 - `docker build -t thesis-v20 .`
+- `OSAGE_DIR=<full_path_to_OSAGE>` - host path to OSAGE directory   
 - ```shell
     docker run \
-      -v <host_path_to_input_C_file>:/app/in/target.c \
-      -v <host_path_to_output_dir>:/app/out \
+      -v $OSAGE_DIR/<path_to_src_file.c>:/app/in/target.c \
+      -v $OSAGE_DIR/<path_to_includes.h>:/app/in/includes.h \
+      -v $OSAGE_DIR/<path_to_output_dir>:/app/out \
       -it thesis-v20 \
-      <obfuscation_modes> <output_file_name.out>
+      <obfuscation_modes> <output_file.out>
   ```
   Target C file is copied from host to `/app/in/target.c` inside a container. Host output directory is linked
-  to `/app/out` inside a Docker container, and **a binary is generated in <host_path_to_output_dir>/<output_file_name.out>**.
-  For example, this command obfuscates `$(pwd)/target/src/foo-bar-baz.test.c` and produces `$(pwd)/host_out/o.out`:
+  to `/app/out` inside a Docker container, and **a binary is generated in <path_to_output_dir>/<output_file.out>**.
+  For example, this command obfuscates `anagram.c` and generates `my-obfuscator/out.out`:
   ```shell
     docker run \
-      -v $(pwd)/target/src/foo-bar-baz.test.c:/app/in/target.c \
-      -v $(pwd)/host_out:/app/out \
+      -v $OSAGE_DIR/src_strings/anagram/anagram.c:/app/in/target.c \
+      -v $OSAGE_DIR/src_strings/includes.h:/app/in/includes.h \
+      -v $OSAGE_DIR/my-obfuscator:/app/out \
       -it thesis-v20 \
-      'flatten:foo,bar;bogus-switch:bar,baz' o.out
+      'flatten:checkAnagram' out.out
   ```
 
 ### Obfuscation names
@@ -37,7 +40,6 @@ Usage examples with functions `foo`, `bar`, `baz`:
 
 ## TODO
 
-> передавать параметры bogus в атрибуте   
 > учитывать последовательность пассов (?)   
 > вынести получение annotation и удаление фи нод в либу   
 
