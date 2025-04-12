@@ -29,7 +29,8 @@ echo -e "${BLUE}Obfuscating...${NC}"
   -load-pass-plugin="/app/pass/build/flatten/libFlattenPass.so" \
   -load-pass-plugin="/app/pass/build/bogus-switch/libBogusSwitchPass.so" \
   -load-pass-plugin="/app/pass/build/function-merge/libFunctionMergePass.so" \
-  -passes="module(annotation),function(flatten),function(bogus-switch),module(function-merge)" \
+  -load-pass-plugin="/app/pass/build/mba/libMBAPass.so" \
+  -passes="module(annotation),function(flatten),function(bogus-switch),module(function-merge),function(mba)" \
   -o build/obf.ll -S \
   build/orig.ll
 

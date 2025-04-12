@@ -5,7 +5,8 @@
   -load-pass-plugin="../pass/build/flatten/libFlattenPass.so" \
   -load-pass-plugin="../pass/build/bogus-switch/libBogusSwitchPass.so" \
   -load-pass-plugin="../pass/build/function-merge/libFunctionMergePass.so" \
-  -passes="module(annotation),function(flatten),function(bogus-switch),module(function-merge)" \
+  -load-pass-plugin="../pass/build/mba/libMBAPass.so" \
+  -passes="module(annotation),function(flatten),function(bogus-switch),module(function-merge),function(mba)" \
   -o exec/obf.ll -S \
   exec/orig.ll
 
