@@ -1,10 +1,8 @@
 #include <vector>
-#include <map>
-#include <cmath>
+#include <cstdlib>
 
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
-#include "llvm/Transforms/Utils/Cloning.h"
 
 #include "BaseAnnotatedPass.cpp"
 
@@ -15,34 +13,53 @@ namespace {
   private:
     static constexpr const char *annotationName = "mba";
 
-    // Inserts MBA: 'x > 0' => '3 - (((x - 1) >> 31) ^ 1) ^ 2 == 0'
-    Value *insertXsgtZeroMBA(IRBuilder<> &builder, Value* x) const {
-      Value *sub1 = builder.CreateSub(x, builder.getInt32(1));
-      Value *ashr = builder.CreateAShr(sub1, builder.getInt32(31));
-      Value *xor1 = builder.CreateXor(ashr, builder.getInt32(1));
-      Value *xor2 = builder.CreateXor(xor1, builder.getInt32(2));
-      Value *sub3 = builder.CreateSub(builder.getInt32(3), xor2);
-      Value *eq0 = builder.CreateICmpEQ(sub3, builder.getInt32(0));
-      return eq0;
+    // Inserts MBA: 'x > 0' => '(3 - ((x >> 31) ^ 1) ^ 2 == 0) && x != 0'
+    Value *insertXsgtZeroMBA_V1(IRBuilder<> &builder, Value* x) const {
+      errs() << "[" << this->annotationName << "] x > 0: v1\n";
+
+      Type *xType = x->getType();
+      Value *shiftedX = builder.CreateLShr(x, ConstantInt::get(xType, 31));
+      Value *xorResult = builder.CreateXor(shiftedX, ConstantInt::get(xType, 1));
+      Value *subResult = builder.CreateSub(ConstantInt::get(xType, 3), xorResult);
+      Value *finalXor = builder.CreateXor(subResult, ConstantInt::get(xType, 2));
+      Value *isFinalZero = builder.CreateICmpEQ(finalXor, Constant::getNullValue(xType));
+
+      Value *isNonZeroX = builder.CreateICmpNE(x, Constant::getNullValue(xType));
+      Value *finalResult = builder.CreateAnd(isFinalZero, isNonZeroX);
+
+      return finalResult;
     }
 
-    // Inserts MBA: 'x > 0' => '(((-(1 - x) >> 16) ^ 0xCFD00FAA >> 14) & (1 << 1)) == 0'
-    // -(1 - x) --> ensure that 0 corresponds to sign bit 1
+    // Inserts MBA: 'x > 0' => '(((x >> 16) ^ 0xCFD00FAA >> 14) & (1 << 1)) == 0) && x != 0'
     // >> 16 --> shifts sign bit to 15th position
     // ^ 0xCFD00FAA --> does nothing, does not affect sign bit
     // >> 14 --> shifts sign bit to 2nd position
     // & (1 << 1) --> makes zero all bits except for the 2nd
     Value *insertXsgtZeroMBA_V2(IRBuilder<> &builder, Value* x) const {
-      Value *one = builder.getInt32(1);
-      Value *negOneMinusX = builder.CreateSub(one, x);
-      Value *negResult = builder.CreateNeg(negOneMinusX);
-      Value *shifted16 = builder.CreateLShr(negResult, builder.getInt32(16));
-      Value *xorValue = builder.getInt32(0xCFD00FAA);
-      Value *xorResult = builder.CreateXor(shifted16, xorValue);
-      Value *shifted14 = builder.CreateLShr(xorResult, builder.getInt32(14));
-      Value *andResult = builder.CreateAnd(shifted14, builder.CreateShl(builder.getInt32(1), builder.getInt32(1)));
-      Value *isEqualZero = builder.CreateICmpEQ(andResult, builder.getInt32(0));
-      return isEqualZero;
+      errs() << "[" << this->annotationName << "] x > 0: v2\n";
+
+      Type *xType = x->getType();
+      int shift;
+      if (xType->isIntegerTy(32)) {
+        shift = 16;
+      } else if (xType->isIntegerTy(64)) {
+        shift = 48;
+      } else {
+        errs() << "[" << this->annotationName << "] Unknown operand type: " << xType << "\n";
+      }
+
+      Value *shifted16 = builder.CreateLShr(x, ConstantInt::get(xType, 16));
+      Value *xorConst = ConstantInt::get(xType, 0xCFD00FAA);
+      Value *xorResult = builder.CreateXor(shifted16, xorConst);
+      Value *shifted14 = builder.CreateLShr(xorResult, ConstantInt::get(xType, 14));
+      Value *bitMask = builder.CreateShl(ConstantInt::get(xType, 1), ConstantInt::get(xType, 1));
+      Value *andResult = builder.CreateAnd(shifted14, bitMask);
+      Value *cmp = builder.CreateICmpEQ(andResult, ConstantInt::get(xType, 0));
+
+      Value *isNonZeroX = builder.CreateICmpNE(x, Constant::getNullValue(xType));
+      Value *finalResult = builder.CreateAnd(cmp, isNonZeroX);
+
+      return finalResult;
     }
 
     int getZeroOperandIdx(ICmpInst* icmpInst) const {
@@ -84,7 +101,15 @@ namespace {
           if (this->isXsgtZero(icmpInst)) {
             builder.SetInsertPoint(icmpInst);
 
-            Value *mba = this->insertXsgtZeroMBA_V2(builder, icmpInst->getOperand(0));
+            Value *mba;
+            switch (rand() % 2) {
+              case 0:
+                mba = this->insertXsgtZeroMBA_V1(builder, icmpInst->getOperand(0));
+                break;
+              case 1:
+                mba = this->insertXsgtZeroMBA_V2(builder, icmpInst->getOperand(0));
+                break;
+            }
 
             icmpInst->replaceAllUsesWith(mba);
             instToDelete.push_back(icmpInst);
