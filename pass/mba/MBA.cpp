@@ -18,6 +18,7 @@ namespace {
       errs() << "[" << this->annotationName << "] x > 0: v1\n";
 
       Type *xType = x->getType();
+
       Value *shiftedX = builder.CreateLShr(x, ConstantInt::get(xType, 31));
       Value *xorResult = builder.CreateXor(shiftedX, ConstantInt::get(xType, 1));
       Value *subResult = builder.CreateSub(ConstantInt::get(xType, 3), xorResult);
@@ -105,18 +106,54 @@ namespace {
       return cmp;
     }
 
-    int getZeroOperandIdx(ICmpInst* icmpInst) const {
-      Value *op1 = icmpInst->getOperand(0);
-      Value *op2 = icmpInst->getOperand(1);
+    // x = 0 => ((x >> 6) < 5001) && (x >= 0) && (((x << 2) ^ 3) - 3 == 0)
+    // ((x << 2) ^ 3) - 3 == 0 - checks that every bit of (x << 2) is zero
+    // x >= 0 - checks that left bit is zero
+    // (x >> 6) < 5001 - checks that second left bit is zero, otherwise x is much
+    //                   larger that 5001
+    Value *insertXeqZeroMBA_v3(IRBuilder<> &builder, Value* x) const {
+      errs() << "[" << this->annotationName << "] x == 0: v3\n";
 
-      if (dyn_cast<ConstantInt>(op1) && dyn_cast<ConstantInt>(op1)->isZero())  {
-        return 0;
-      }
-      if (dyn_cast<ConstantInt>(op2) && dyn_cast<ConstantInt>(op2)->isZero())  {
-        return 1;
-      }
+      Type *xType = x->getType();
 
-      return -1;
+      Value *const5001 = ConstantInt::get(xType, 5001);
+      Value *const0 = ConstantInt::get(xType, 0);
+      Value *const2 = ConstantInt::get(xType, 2);
+      Value *const3 = ConstantInt::get(xType, 3);
+
+      Value *shr = builder.CreateLShr(x, 6);
+      Value *cond1 = builder.CreateICmpULT(shr, const5001);
+
+      Value *cond2 = builder.CreateICmpSGE(x, const0);
+
+      Value *shl = builder.CreateShl(x, const2);
+      Value *xor1 = builder.CreateXor(shl, const3);
+      Value *sub = builder.CreateSub(xor1, const3);
+      Value *cond3 = builder.CreateICmpEQ(sub, const0);
+
+      Value *andCond = builder.CreateAnd(cond1, builder.CreateAnd(cond2, cond3));
+
+      return andCond;
+    }
+
+    Value *pickAndInsertXsgtZeroMBA(IRBuilder<> &builder, Value *x) const {
+      switch (rand() % 2) {
+        case 0:
+          return this->insertXsgtZeroMBA_v1(builder, x);
+        case 1:
+          return this->insertXsgtZeroMBA_v2(builder, x);
+      }
+    }
+
+    Value *pickAndInsertXeqZeroMBA(IRBuilder<> &builder, Value *x) const {
+      switch (rand() % 3) {
+        case 0:
+          return this->insertXeqZeroMBA_v1(builder, x);
+        case 1:
+          return this->insertXeqZeroMBA_v2(builder, x);
+        case 2:
+          return this->insertXeqZeroMBA_v3(builder, x);
+      }
     }
 
     bool isXsgtZero(ICmpInst* icmpInst) const {
@@ -137,16 +174,6 @@ namespace {
       );
     }
 
-    unsigned int hashString(const char *str) const {
-      unsigned int hash = 5381; // A common seed used in djb2
-      int c;
-
-      while ((c = *str++))
-        hash = ((hash << 5) + hash) + c; // hash * 33 + c
-
-      return hash;
-    }
-
     PreservedAnalyses applyPass(Function &F) const override {
       LLVMContext &context = F.getContext();
       IRBuilder<> builder(context);
@@ -163,36 +190,24 @@ namespace {
           builder.SetInsertPoint(icmpInst);
 
           if (this->isXsgtZero(icmpInst)) {
-            Value *mba;
-            switch (rand() % 2) {
-              case 0:
-                mba = this->insertXsgtZeroMBA_v1(builder, icmpInst->getOperand(0));
-                break;
-              case 1:
-                mba = this->insertXsgtZeroMBA_v2(builder, icmpInst->getOperand(0));
-                break;
-            }
+            Value *mba = this->pickAndInsertXsgtZeroMBA(builder, icmpInst->getOperand(0));
+            
             if (mba != nullptr) {
               icmpInst->replaceAllUsesWith(mba);
               instToDelete.push_back(icmpInst);
             }
+
             continue;
           }
 
           if (this->isXeqZero(icmpInst)) {
-            Value *mba;
-            switch (rand() % 2) {
-              case 0:
-                mba = this->insertXeqZeroMBA_v1(builder, icmpInst->getOperand(0));
-                break;
-              case 1:
-                mba = this->insertXeqZeroMBA_v2(builder, icmpInst->getOperand(0));
-                break;
-            }
+            Value *mba = this->pickAndInsertXeqZeroMBA(builder, icmpInst->getOperand(0));
+
             if (mba != nullptr) {
               icmpInst->replaceAllUsesWith(mba);
               instToDelete.push_back(icmpInst);
             }
+
             continue;
           }
         }
