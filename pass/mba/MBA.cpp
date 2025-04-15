@@ -13,8 +13,8 @@ namespace {
   private:
     static constexpr const char *annotationName = "mba";
 
-    // Inserts MBA: 'x > 0' => '(3 - ((x >> 31) ^ 1) ^ 2 == 0) && x != 0'
-    Value *insertXsgtZeroMBA_v1(IRBuilder<> &builder, Value* x) const {
+    // x > 0 => (3 - ((x >> 31) ^ 1) ^ 2 == 0) && x != 0
+    Value *insertXsgtZero_v1(IRBuilder<> &builder, Value* x) const {
       errs() << "[" << this->annotationName << "] x > 0: v1\n";
 
       Type *xType = x->getType();
@@ -31,12 +31,12 @@ namespace {
       return finalResult;
     }
 
-    // Inserts MBA: 'x > 0' => '(((x >> 16) ^ 0xCFD00FAA >> 14) & (1 << 1)) == 0) && x != 0'
+    // x > 0 => (((x >> 16) ^ 0xCFD00FAA >> 14) & (1 << 1)) == 0) && x != 0
     // >> 16 --> shifts sign bit to 15th position
     // ^ 0xCFD00FAA --> does nothing, does not affect sign bit
     // >> 14 --> shifts sign bit to 2nd position
     // & (1 << 1) --> makes zero all bits except for the 2nd, with sign bit
-    Value *insertXsgtZeroMBA_v2(IRBuilder<> &builder, Value* x) const {
+    Value *insertXsgtZero_v2(IRBuilder<> &builder, Value* x) const {
       errs() << "[" << this->annotationName << "] x > 0: v2\n";
 
       Type *xType = x->getType();
@@ -64,9 +64,9 @@ namespace {
       return finalResult;
     }
 
-    // Inserts MBA: x = 0 => 56 ^ x ^ 72 = 112
+    // x == 0 => 56 ^ x ^ 72 = 112
     // 56 ^ 72 equal 112, thus every bit of x must be zero
-    Value *insertXeqZeroMBA_v1(IRBuilder<> &builder, Value* x) const {
+    Value *insertXeqZero_v1(IRBuilder<> &builder, Value* x) const {
       errs() << "[" << this->annotationName << "] x == 0: v1\n";
 
       Type *xType = x->getType();
@@ -82,11 +82,11 @@ namespace {
       return cmp;
     }
 
-    // x = 0 => 76 ^ ~(x ^ ~x) ^ 40 ^ x == 100
+    // x == 0 => 76 ^ ~(x ^ ~x) ^ 40 ^ x == 100
     // 76 ^ 40 = 100
     // ^ ~(x ^ ~x) makes no changes
     // ^ x checks that every bit of x is zero
-    Value *insertXeqZeroMBA_v2(IRBuilder<> &builder, Value* x) const {
+    Value *insertXeqZero_v2(IRBuilder<> &builder, Value* x) const {
       errs() << "[" << this->annotationName << "] x == 0: v2\n";
 
       Type *xType = x->getType();
@@ -106,12 +106,12 @@ namespace {
       return cmp;
     }
 
-    // x = 0 => ((x >> 6) < 5001) && (x >= 0) && (((x << 2) ^ 3) - 3 == 0)
+    // x == 0 => ((x >> 6) < 5001) && (x >= 0) && (((x << 2) ^ 3) - 3 == 0)
     // ((x << 2) ^ 3) - 3 == 0 - checks that every bit of (x << 2) is zero
     // x >= 0 - checks that left bit is zero
     // (x >> 6) < 5001 - checks that second left bit is zero, otherwise x is much
     //                   larger that 5001
-    Value *insertXeqZeroMBA_v3(IRBuilder<> &builder, Value* x) const {
+    Value *insertXeqZero_v3(IRBuilder<> &builder, Value* x) const {
       errs() << "[" << this->annotationName << "] x == 0: v3\n";
 
       Type *xType = x->getType();
@@ -136,23 +136,165 @@ namespace {
       return andCond;
     }
 
-    Value *pickAndInsertXsgtZeroMBA(IRBuilder<> &builder, Value *x) const {
+    // x == 0 => (x << 1) ^ x == 0
+    // for 100...0 left shift is compensated by x
+    Value *insertXeqZero_v4(IRBuilder<> &builder, Value* x) const {
+      errs() << "[" << this->annotationName << "] x == 0: v4\n";
+
+      Type *xType = x->getType();
+
+      Value *const0 = ConstantInt::get(xType, 0);
+
+      Value *shl = builder.CreateShl(x, 1);
+      Value *xor1 = builder.CreateXor(shl, x);
+      Value *cond2 = builder.CreateICmpEQ(xor1, const0);
+
+      return cond2;
+    }
+
+    // x + y => (x & y) + (y | x)
+    Value *insertXaddY_v1(IRBuilder<> &builder, Value* x, Value* y) const {
+      errs() << "[" << this->annotationName << "] x + y: v1\n";
+
+      Value *andXY = builder.CreateAnd(x, y);
+      Value *orXY = builder.CreateOr(y, x);
+      Value *sum = builder.CreateAdd(andXY, orXY);
+
+      return sum;
+    }
+
+    // x + y => ((y | x) & (y | y)) + x
+    Value *insertXaddY_v2(IRBuilder<> &builder, Value* x, Value* y) const {
+      errs() << "[" << this->annotationName << "] x + y: v2\n";
+
+      Value *orYX = builder.CreateOr(y, x);
+      Value *orYY = builder.CreateOr(y, y);
+      Value *andResult = builder.CreateAnd(orYX, orYY);
+      Value *sum = builder.CreateAdd(andResult, x);
+
+      return sum;
+    }
+
+    // x + y => y + ((y & x ^ ~y) & (x ^ y ^ y))
+    Value *insertXaddY_v3(IRBuilder<> &builder, Value* x, Value* y) const {
+      errs() << "[" << this->annotationName << "] x + y: v3\n";
+
+      Value *notY = builder.CreateNot(y);
+      Value *andYX = builder.CreateAnd(y, x);
+      Value *xor1 = builder.CreateXor(andYX, notY);
+      Value *xor2 = builder.CreateXor(x, y);
+      Value *xor3 = builder.CreateXor(xor2, y);
+      Value *andFinal = builder.CreateAnd(xor1, xor3);
+      Value *sum = builder.CreateAdd(y, andFinal);
+
+      return sum;
+    }
+
+    // x + y => (~(y | y) ^ y ^ ~x) + y
+    Value *insertXaddY_v4(IRBuilder<> &builder, Value* x, Value* y) const {
+      errs() << "[" << this->annotationName << "] x + y: v4\n";
+
+      Value *orYY = builder.CreateOr(y, y);
+      Value *notOrYY = builder.CreateNot(orYY);
+      Value *notX = builder.CreateNot(x);
+      Value *xor1 = builder.CreateXor(notOrYY, y);
+      Value *xor2 = builder.CreateXor(xor1, notX);
+      Value *sum = builder.CreateAdd(xor2, y);
+      
+      return sum;
+    }
+
+    // x + y => (~y ^ x ^ y & y ^ (x | x) ^ ~(y & x | x ^ x)) + (~x ^ ~x | y | x | x | x)
+    Value *insertXaddY_v5(IRBuilder<> &builder, Value* x, Value* y) const {
+      errs() << "[" << this->annotationName << "] x + y: v5\n";
+
+      Value *notY = builder.CreateNot(y);
+      Value *notX = builder.CreateNot(x);
+
+      Value *andYY = builder.CreateAnd(y, y);
+      Value *xor1 = builder.CreateXor(notY, x);
+      Value *xor2 = builder.CreateXor(xor1, andYY);
+
+      Value *orXX = builder.CreateOr(x, x);
+      Value *andYX = builder.CreateAnd(y, x);
+      Value *xorXX = builder.CreateXor(x, x);
+      Value *orInner = builder.CreateOr(andYX, xorXX);
+      Value *notOrInner = builder.CreateNot(orInner);
+      Value *xor3 = builder.CreateXor(orXX, notOrInner);
+
+      Value *left = builder.CreateXor(xor2, xor3);
+
+      Value *notX_x2 = builder.CreateXor(notX, notX);
+      Value *or1 = builder.CreateOr(notX_x2, y);
+      Value *or2 = builder.CreateOr(or1, x);
+      Value *or3 = builder.CreateOr(or2, x);
+      Value *or4 = builder.CreateOr(or3, x);
+
+      Value *sum = builder.CreateAdd(left, or4);
+
+      return sum;
+    }
+
+    // x + y => (x | (~x | ~x) & (y ^ y | y ^ y) ^ x & (~x ^ (y | x))) + y;
+    Value *insertXaddY_v6(IRBuilder<> &builder, Value* x, Value* y) const {
+      errs() << "[" << this->annotationName << "] x + y: v6\n";
+
+      Value *notX = builder.CreateNot(x);
+      Value *notX_or = builder.CreateOr(notX, notX);
+      Value *xorYY_1 = builder.CreateXor(y, y);
+      Value *xorYY_2 = builder.CreateXor(y, y);
+      Value *orYY = builder.CreateOr(xorYY_1, xorYY_2);
+      Value *and1 = builder.CreateAnd(notX_or, orYY);
+      Value *xor1 = builder.CreateXor(and1, x);
+
+      Value *orYX = builder.CreateOr(y, x);
+      Value *xorNX_orYX = builder.CreateXor(notX, orYX);
+      Value *and2 = builder.CreateAnd(x, xorNX_orYX);
+
+      Value *orLeft = builder.CreateOr(x, xor1);
+      Value *finalLeft = builder.CreateOr(orLeft, and2);
+
+      Value *sum = builder.CreateAdd(finalLeft, y);
+
+      return sum;
+    }
+
+    Value *pickAndInsertXsgtZero(IRBuilder<> &builder, Value *x) const {
       switch (rand() % 2) {
         case 0:
-          return this->insertXsgtZeroMBA_v1(builder, x);
+          return this->insertXsgtZero_v1(builder, x);
         case 1:
-          return this->insertXsgtZeroMBA_v2(builder, x);
+          return this->insertXsgtZero_v2(builder, x);
       }
     }
 
-    Value *pickAndInsertXeqZeroMBA(IRBuilder<> &builder, Value *x) const {
-      switch (rand() % 3) {
+    Value *pickAndInsertXeqZero(IRBuilder<> &builder, Value *x) const {
+      switch (rand() % 4) {
         case 0:
-          return this->insertXeqZeroMBA_v1(builder, x);
+          return this->insertXeqZero_v1(builder, x);
         case 1:
-          return this->insertXeqZeroMBA_v2(builder, x);
+          return this->insertXeqZero_v2(builder, x);
         case 2:
-          return this->insertXeqZeroMBA_v3(builder, x);
+          return this->insertXeqZero_v3(builder, x);
+        case 3:
+          return this->insertXeqZero_v4(builder, x);
+      }
+    }
+
+    Value *pickAndInsertXaddY(IRBuilder<> &builder, Value *x, Value *y) const {
+      switch (rand() % 6) {
+        case 0:
+          return this->insertXaddY_v1(builder, x, y);
+        case 1:
+          return this->insertXaddY_v2(builder, x, y);
+        case 2:
+          return this->insertXaddY_v3(builder, x, y);
+        case 3:
+          return this->insertXaddY_v4(builder, x, y);
+        case 4:
+          return this->insertXaddY_v5(builder, x, y);
+        case 5:
+          return this->insertXaddY_v6(builder, x, y);
       }
     }
 
@@ -174,41 +316,35 @@ namespace {
       );
     }
 
+    bool isXaddY(Instruction &inst) const {
+      return inst.getOpcode() == Instruction::Add;
+    }
+
     PreservedAnalyses applyPass(Function &F) const override {
       LLVMContext &context = F.getContext();
       IRBuilder<> builder(context);
 
-      std::vector<ICmpInst *> instToDelete;
+      std::vector<Instruction *> instToDelete;
 
       for (auto &block : F) {
         for (auto &instruction : block) {
-          auto icmpInst = dyn_cast<ICmpInst>(&instruction);
-          if (!icmpInst) {
-            continue;
+          builder.SetInsertPoint(&instruction);
+
+          Value *mba = nullptr;
+          
+          if (auto icmpInst = dyn_cast<ICmpInst>(&instruction)) {
+            if (this->isXsgtZero(icmpInst)) {
+              mba = this->pickAndInsertXsgtZero(builder, icmpInst->getOperand(0));
+            } else if (this->isXeqZero(icmpInst)) {
+              mba = this->pickAndInsertXeqZero(builder, icmpInst->getOperand(0));
+            }
+          } else if (this->isXaddY(instruction)) {
+            mba = this->pickAndInsertXaddY(builder, instruction.getOperand(0), instruction.getOperand(1));
           }
 
-          builder.SetInsertPoint(icmpInst);
-
-          if (this->isXsgtZero(icmpInst)) {
-            Value *mba = this->pickAndInsertXsgtZeroMBA(builder, icmpInst->getOperand(0));
-            
-            if (mba != nullptr) {
-              icmpInst->replaceAllUsesWith(mba);
-              instToDelete.push_back(icmpInst);
-            }
-
-            continue;
-          }
-
-          if (this->isXeqZero(icmpInst)) {
-            Value *mba = this->pickAndInsertXeqZeroMBA(builder, icmpInst->getOperand(0));
-
-            if (mba != nullptr) {
-              icmpInst->replaceAllUsesWith(mba);
-              instToDelete.push_back(icmpInst);
-            }
-
-            continue;
+          if (mba != nullptr) {
+            instruction.replaceAllUsesWith(mba);
+            instToDelete.push_back(&instruction);
           }
         }
       }

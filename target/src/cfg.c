@@ -2,7 +2,9 @@
 #include <stdlib.h>
 
 __attribute__((noinline))
-__attribute__((annotate("function-merge")))
+__attribute__((annotate("flatten")))
+__attribute__((annotate("bogus-switch")))
+__attribute__((annotate("mba")))
 static void checkNumber(int num) {
     if (num > 0) {
       switch (num % rand()) {

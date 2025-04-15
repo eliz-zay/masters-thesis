@@ -17,6 +17,7 @@ __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("bogus-switch")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static void
 rearrange(float data_re[],float data_im[],const unsigned int N);
 
@@ -25,6 +26,7 @@ __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("bogus-switch")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static void
 compute(float data_re[],float data_im[],const unsigned int N);
 

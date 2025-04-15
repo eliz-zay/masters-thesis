@@ -11,10 +11,11 @@ exec1=exec/orig.ll
 exec2=exec/obf.ll
 
 # Factorial
-# inputs=(0 1 2 3 4 8 10 16 20)
+inputs=(0 1 2 3 4 8 10 16 20)
 
 # Roman
 # inputs=(0 2 5 10 11 18 19 20 101 203 239 444 809)
+# inputs=(1 42 100 1023020 2147483647 0 -1 -12313 -2147483648)
 
 # FFT
 # inputs=(
@@ -55,7 +56,10 @@ SHA256_tmpfile=$(mktemp)
 for i in "${!inputs[@]}"; do
     input="${inputs[$i]}"
 
-    echo $input > "$SHA256_tmpfile"
+    # echo $input > "$SHA256_tmpfile"
+
+    # output1=$(eval ../../llvm-project/build/bin/lli $exec1 $SHA256_tmpfile)
+    # output2=$(eval ../../llvm-project/build/bin/lli $exec2 $SHA256_tmpfile)
 
     output1=$(eval ../../llvm-project/build/bin/lli $exec1 $input)
     output2=$(eval ../../llvm-project/build/bin/lli $exec2 $input)

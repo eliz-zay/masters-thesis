@@ -117,6 +117,7 @@ __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("bogus-switch")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static void calculateHash(FILE *file)
 {   
     // Variables
@@ -271,6 +272,7 @@ __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("bogus-switch")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static int fillMessageBlock(FILE *file, union messageBlock *msgBlock, enum status *state, __uint64_t *numBits)
 {   
     // Variables
@@ -385,6 +387,7 @@ __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("bogus-switch")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static void printFileContents(FILE *fileForPrinting)
 {
     // Variables
@@ -424,6 +427,7 @@ static void printFileContents(FILE *fileForPrinting)
 // Simple function that calcuates the size of a file
 __attribute__((noinline))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static int calcFileSize(FILE *file)
 {
     int prev=ftell(file);
@@ -435,6 +439,7 @@ static int calcFileSize(FILE *file)
 
 __attribute__((noinline))
 __attribute__((annotate("flatten")))
+__attribute__((annotate("mba")))
 static void endianCheckPrint()
 {
     int num = 1;
@@ -447,6 +452,7 @@ static void endianCheckPrint()
 
 __attribute__((noinline))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static _Bool endianCheck()
 {
     int num = 1 ;

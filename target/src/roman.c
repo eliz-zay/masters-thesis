@@ -6,6 +6,7 @@ int i=0;
 
 __attribute__((noinline))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static void predigits(char c1,char c2){
     roman_Number[i++] = c1;
     roman_Number[i++] = c2;
@@ -13,6 +14,7 @@ static void predigits(char c1,char c2){
 
 __attribute__((noinline))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static void postdigits(char c,int n){
     int j;
     for(j=0;j<n;j++)
@@ -24,13 +26,12 @@ __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("bogus-switch")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static int roman(int argc, char* argv[]) {
   if(argc < 2) return 1;
   int j;
   long int number;
   
-//    printf("Enter any natural number: ");
-//    scanf("%d",&number);
   number = atoi(argv[1]);
   
   if(number <= 0){

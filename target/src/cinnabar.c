@@ -178,6 +178,7 @@ __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("bogus-switch")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static void sha256_process(CTX_SHA256 * ctx, const uint8_t * data) {
     uint32_t A = ctx->state[0];
     uint32_t B = ctx->state[1];
@@ -277,6 +278,7 @@ __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("bogus-switch")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static void sha256_update(CTX_SHA256 * ctx, const void * data, size_t length) {
 	uint8_t * ptr = (uint8_t *) data;
 	uint64_t rem = ctx->count & 63;
@@ -307,6 +309,7 @@ __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("bogus-switch")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 static void sha256(void * digest, const void * data, size_t length) {
     CTX_SHA256 ctx;
     ctx.count = 0;
@@ -1098,6 +1101,7 @@ static void message_encode(uint8_t * em, size_t key_length, const void * documen
 __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 CnbrStatus CnbrSignature(CNBR_SIGNATURE * signature, const void * document_data, size_t document_length, const char * pem_private_key) {
     if (!signature) {
         return CnbrInvalidParameter;
@@ -1140,6 +1144,7 @@ CnbrStatus CnbrSignature(CNBR_SIGNATURE * signature, const void * document_data,
 __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 CnbrStatus CnbrVerifySignature(const uint8_t * signature_data, size_t signature_length, const void * document_data, size_t document_length, const char * pem_public_key) {
     if (!signature_data || !pem_public_key || (!document_data && document_length > 0)) {
         return CnbrInvalidParameter;
@@ -1182,6 +1187,7 @@ CnbrStatus CnbrVerifySignature(const uint8_t * signature_data, size_t signature_
 
 __attribute__((noinline))
 __attribute__((annotate("function-merge")))
+__attribute__((annotate("mba")))
 CnbrStatus CnbrEraseSignature(CNBR_SIGNATURE * signature) {
     if (!signature) {
         return CnbrInvalidParameter;
