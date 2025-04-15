@@ -175,9 +175,23 @@ namespace {
       return sum;
     }
 
-    // x + y => y + ((y & x ^ ~y) & (x ^ y ^ y))
+    // x + y => (~(y | y) ^ y ^ ~x) + y
     Value *insertXaddY_v3(IRBuilder<> &builder, Value* x, Value* y) const {
       errs() << "[" << this->annotationName << "] x + y: v3\n";
+
+      Value *orYY = builder.CreateOr(y, y);
+      Value *notOrYY = builder.CreateNot(orYY);
+      Value *notX = builder.CreateNot(x);
+      Value *xor1 = builder.CreateXor(notOrYY, y);
+      Value *xor2 = builder.CreateXor(xor1, notX);
+      Value *sum = builder.CreateAdd(xor2, y);
+      
+      return sum;
+    }
+
+    // x + y => y + ((y & x ^ ~y) & (x ^ y ^ y))
+    Value *insertXaddY_v4(IRBuilder<> &builder, Value* x, Value* y) const {
+      errs() << "[" << this->annotationName << "] x + y: v4\n";
 
       Value *notY = builder.CreateNot(y);
       Value *andYX = builder.CreateAnd(y, x);
@@ -187,20 +201,6 @@ namespace {
       Value *andFinal = builder.CreateAnd(xor1, xor3);
       Value *sum = builder.CreateAdd(y, andFinal);
 
-      return sum;
-    }
-
-    // x + y => (~(y | y) ^ y ^ ~x) + y
-    Value *insertXaddY_v4(IRBuilder<> &builder, Value* x, Value* y) const {
-      errs() << "[" << this->annotationName << "] x + y: v4\n";
-
-      Value *orYY = builder.CreateOr(y, y);
-      Value *notOrYY = builder.CreateNot(orYY);
-      Value *notX = builder.CreateNot(x);
-      Value *xor1 = builder.CreateXor(notOrYY, y);
-      Value *xor2 = builder.CreateXor(xor1, notX);
-      Value *sum = builder.CreateAdd(xor2, y);
-      
       return sum;
     }
 
@@ -235,7 +235,7 @@ namespace {
       return sum;
     }
 
-    // x + y => (x | (~x | ~x) & (y ^ y | y ^ y) ^ x & (~x ^ (y | x))) + y;
+    // x + y => (x | (~x | ~x) & (y ^ y | y ^ y) ^ x & (~x ^ (y | x))) + y
     Value *insertXaddY_v6(IRBuilder<> &builder, Value* x, Value* y) const {
       errs() << "[" << this->annotationName << "] x + y: v6\n";
 
