@@ -27,12 +27,13 @@
 - `flatten` - Control-Flow-Flattening
 - `bogus-switch` - bogus control flow for `switch` statements. *It complements Control-Flow-Flattening. Use either `flatten`, or `flatten` and then `bogus-switch`.* This obfuscation is useless when used without `flatten`
 - `function-merge` - function merging, specify for multiple functions at once
+- `mba` - instruction equivalence, Mixed Boolean-Arithmetic expressions
 
 Usage examples with functions `foo`, `bar`, `baz`:
 - `flatten:foo,bar`
-- `flatten:foo,bar,baz;bogus-switch:foo,bar`
+- `flatten:foo,bar,baz;bogus-switch:foo,bar;mba:foo,bar`
 - `function-merge:foo,bar,baz`
-- `flatten:foo;bogus-switch:foo;function-merge:foo,bar,baz`
+- `flatten:foo;bogus-switch:foo;function-merge:foo,bar,baz;mba:foo,bar,baz`
 
 ### Inside Docker container
 
