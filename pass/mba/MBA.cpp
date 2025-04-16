@@ -50,9 +50,9 @@ namespace {
         return nullptr;
       }
 
-      Value *shifted16 = builder.CreateLShr(x, ConstantInt::get(xType, 16));
+      Value *shifted = builder.CreateLShr(x, ConstantInt::get(xType, shift));
       Value *xorConst = ConstantInt::get(xType, 0xCFD00FAA);
-      Value *xorResult = builder.CreateXor(shifted16, xorConst);
+      Value *xorResult = builder.CreateXor(shifted, xorConst);
       Value *shifted14 = builder.CreateLShr(xorResult, ConstantInt::get(xType, 14));
       Value *bitMask = builder.CreateShl(ConstantInt::get(xType, 1), ConstantInt::get(xType, 1));
       Value *andResult = builder.CreateAnd(shifted14, bitMask);
