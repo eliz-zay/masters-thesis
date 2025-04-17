@@ -67,7 +67,7 @@ namespace {
     // x == 0 => 56 ^ x ^ 72 = 112
     // 56 ^ 72 equal 112, thus every bit of x must be zero
     Value *insertXeqZero_v1(IRBuilder<> &builder, Value* x) const {
-      errs() << "[" << this->annotationName << "] x == 0: v1\n";
+      errs() << "[" << this->annotationName << "] x = 0: v1\n";
 
       Type *xType = x->getType();
 
@@ -87,7 +87,7 @@ namespace {
     // ^ ~(x ^ ~x) makes no changes
     // ^ x checks that every bit of x is zero
     Value *insertXeqZero_v2(IRBuilder<> &builder, Value* x) const {
-      errs() << "[" << this->annotationName << "] x == 0: v2\n";
+      errs() << "[" << this->annotationName << "] x = 0: v2\n";
 
       Type *xType = x->getType();
 
@@ -112,7 +112,7 @@ namespace {
     // (x >> 6) < 5001 - checks that second left bit is zero, otherwise x is much
     //                   larger that 5001
     Value *insertXeqZero_v3(IRBuilder<> &builder, Value* x) const {
-      errs() << "[" << this->annotationName << "] x == 0: v3\n";
+      errs() << "[" << this->annotationName << "] x = 0: v3\n";
 
       Type *xType = x->getType();
 
@@ -139,7 +139,7 @@ namespace {
     // x == 0 => (x << 1) ^ x == 0
     // for 100...0 left shift is compensated by x
     Value *insertXeqZero_v4(IRBuilder<> &builder, Value* x) const {
-      errs() << "[" << this->annotationName << "] x == 0: v4\n";
+      errs() << "[" << this->annotationName << "] x = 0: v4\n";
 
       Type *xType = x->getType();
 
