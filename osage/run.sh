@@ -14,7 +14,7 @@ OUT_FILE="/app/out/$2"
 
 mkdir -p build/src
 
-cp /app/in/includes.h build/includes.h
+touch build/includes.h
 
 python3 annotate.py /app/in/target.c build/src/target.c $OBFUSCATION_MODES
 ./obfuscate.sh build/src/target.c "$OUT_FILE"

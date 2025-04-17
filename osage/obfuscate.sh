@@ -15,8 +15,8 @@ OUT_FILE=$2
 echo -e "${BLUE}Compiling...${NC}"
 
 # Compile
-/opt/llvm-project/build/bin/clang \
-  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk \
+zig cc \
+  -target x86_64-linux-gnu \
   -emit-llvm -O3 -S \
   -o build/orig.ll \
   "$SRC_FILE"
@@ -37,7 +37,7 @@ echo -e "${BLUE}Obfuscating...${NC}"
 echo -e "${BLUE}Compiling IR to binary...${NC}"
 
 # Convert IR file to a binary
-/opt/llvm-project/build/bin/clang -static build/obf.ll -o "$OUT_FILE"
+zig cc -target x86_64-linux-gnu build/obf.ll -o "$OUT_FILE"
 
 if [ $? -eq 0 ]; then
   echo -e "${BLUE}Executable created: $OUT_FILE${NC}"
