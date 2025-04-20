@@ -18,11 +18,18 @@ def annotate_c_file(input_c_file_path, output_c_file_path, annotation_string):
   annotations = parse_annotations(annotation_string)
   print(f'Input: {annotations}')
   
-  # Read and modify file content
   with open(output_c_file_path, 'r') as file:
     lines = file.readlines()
+
+  i = 0
+  while i < len(lines):
+    if lines[i].strip().endswith((',', '(', ')')):
+      lines[i] = lines[i].replace('\n', ' ') + lines[i + 1]
+      lines.pop(i + 1)
+    else:
+      i += 1
   
-  function_pattern = re.compile(r'\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\([^;{]*\)\s*{')  # Matches function declarations
+  function_pattern = re.compile(r'\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\([^;{]*\)\s*{')
   
   modified_lines = []
   noinline_functions = set()
@@ -40,6 +47,7 @@ def annotate_c_file(input_c_file_path, output_c_file_path, annotation_string):
             annotations_to_add.append(f'__attribute__((noinline))\n')
 
           annotations_to_add.append(f'__attribute__((annotate("{ann}")))\n')
+          print(f'Match: {function_name}')
 
       if annotations_to_add:
         modified_lines.extend(annotations_to_add)

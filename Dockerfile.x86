@@ -36,7 +36,7 @@ RUN make
 ENV ZIG_VERSION=0.14.0
 ENV ZIG_DIR=/opt/zig
 
-# Install Zig (TODO: remove, not used)
+# Install Zig
 RUN apt-get update && apt-get install -y curl
 
 RUN curl -LO https://ziglang.org/download/${ZIG_VERSION}/zig-linux-x86_64-${ZIG_VERSION}.tar.xz && \
@@ -46,21 +46,39 @@ RUN curl -LO https://ziglang.org/download/${ZIG_VERSION}/zig-linux-x86_64-${ZIG_
   rm zig-linux-x86_64-${ZIG_VERSION}.tar.xz
 
 # Install x86 toolchain
-RUN apt update && apt install -y \
-    gcc-x86-64-linux-gnu \
-    libc6-dev-amd64-cross \
-    libgcc-12-dev-amd64-cross
+# RUN apt update && apt install -y \
+#     gcc-x86-64-linux-gnu \
+#     libc6-dev-amd64-cross \
+#     libgcc-12-dev-amd64-cross
 
-ENV x86_SYSROOT_DIR=/opt/sysroot-x86_64-linux-gnu
+# ENV x86_SYSROOT_DIR=/opt/sysroot-x86_64-linux-gnu
 
-RUN mkdir -p \
-    $x86_SYSROOT_DIR/usr/include \
-    $x86_SYSROOT_DIR/usr/lib \
-    $x86_SYSROOT_DIR/usr/lib/gcc
+# RUN mkdir -p \
+#     $x86_SYSROOT_DIR/usr/include \
+#     $x86_SYSROOT_DIR/usr/lib \
+#     $x86_SYSROOT_DIR/lib64 \
+#     $x86_SYSROOT_DIR/usr/lib/gcc \
+#     $x86_SYSROOT_DIR/usr/x86_64-linux-gnu/lib \
+#     $x86_SYSROOT_DIR/usr/x86_64-linux-gnu/lib64
 
-RUN cp -r /usr/x86_64-linux-gnu/include $x86_SYSROOT_DIR/usr/
-RUN cp -r /usr/lib/gcc-cross/x86_64-linux-gnu $x86_SYSROOT_DIR/usr/lib/gcc/
-RUN cp -r /usr/x86_64-linux-gnu/lib $x86_SYSROOT_DIR/usr/lib/
+# RUN cp -r /usr/x86_64-linux-gnu/include $x86_SYSROOT_DIR/usr/
+# RUN cp -r /usr/lib/gcc-cross/x86_64-linux-gnu $x86_SYSROOT_DIR/usr/lib/gcc/
+# RUN cp -r /usr/x86_64-linux-gnu/lib $x86_SYSROOT_DIR/usr/lib/
+
+# RUN cp /usr/x86_64-linux-gnu/lib/libgcc_s.so.1 $x86_SYSROOT_DIR/usr/lib/
+# RUN cp /usr/x86_64-linux-gnu/lib/libgcc_s.so.1 $x86_SYSROOT_DIR/lib64/
+# RUN cp /usr/x86_64-linux-gnu/lib/Scrt1.o    $x86_SYSROOT_DIR/usr/lib/
+# RUN cp /usr/x86_64-linux-gnu/lib/crti.o     $x86_SYSROOT_DIR/usr/lib/
+# RUN cp /usr/x86_64-linux-gnu/lib/crtn.o     $x86_SYSROOT_DIR/usr/lib/
+
+# RUN cp /usr/x86_64-linux-gnu/lib/libc.so* $x86_SYSROOT_DIR/usr/lib/
+# RUN cp /usr/x86_64-linux-gnu/lib/ld-linux-x86-64.so* $x86_SYSROOT_DIR/usr/lib/
+# RUN cp /usr/x86_64-linux-gnu/lib/libc.so.6 $x86_SYSROOT_DIR/usr/x86_64-linux-gnu/lib/
+# RUN cp /usr/x86_64-linux-gnu/lib/libc_nonshared.a $x86_SYSROOT_DIR/usr/x86_64-linux-gnu/lib/
+# RUN cp /usr/x86_64-linux-gnu/lib64/ld-linux-x86-64.so.2 $x86_SYSROOT_DIR/usr/x86_64-linux-gnu/lib64/
+
+# # Set the sysroot path for linking
+# ENV LD_LIBRARY_PATH=$x86_SYSROOT_DIR/usr/lib:$LD_LIBRARY_PATH
 
 WORKDIR /app
 COPY . /app
