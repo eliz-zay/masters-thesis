@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_23_19_32_59/prog_myobf-latest-bogus
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_23_19_32_59/prog_myobf-latest-bogus/entropy.
+[2K[DEBUG] There are 9 functions.
+
+real	0m58.074s
+user	0m8.751s
+sys	0m0.737s

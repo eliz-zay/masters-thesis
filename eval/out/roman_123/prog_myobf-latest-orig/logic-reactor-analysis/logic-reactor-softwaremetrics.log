@@ -1,0 +1,6 @@
+/opt/samplegenerator/out/run_2025_04_23_19_32_59/prog_myobf-latest-orig
+[0;34m[INFO][0m: Calculating software metrics for /opt/samplegenerator/out/run_2025_04_23_19_32_59/prog_myobf-latest-orig/logic-reactor.
+
+real	0m28.889s
+user	0m6.922s
+sys	0m0.405s

@@ -1,0 +1,6 @@
+,exit_code,stdout,real_time,cpu_time
+prog_myobf-latest-bogus,0,b'Roman: CMXXIV\n',0.025095916003920138,0.013026914999999972
+prog_myobf-latest-flatten,0,b'Roman: CMXXIV\n',0.01871324999956414,0.0039119999999999155
+prog_myobf-latest-mba,0,b'Roman: CMXXIV\n',0.018820792000042275,0.0029177499999999412
+prog_myobf-latest-merge,0,b'Roman: CMXXIV\n',0.018298041992238723,0.0027192910000000126
+prog_myobf-latest-orig,0,b'Roman: CMXXIV\n',0.018720167005085386,0.002684125000000037

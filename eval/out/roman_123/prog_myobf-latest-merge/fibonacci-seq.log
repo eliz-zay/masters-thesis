@@ -1,0 +1,27 @@
+cat: /opt/samplegenerator/src_roman_3/fibonacci-seq/fibonacci-seq.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_3/fibonacci-seq/fibonacci-seq.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_22_14_30/prog_myobf-latest-merge:/app/out   --rm   thesis-v20-x86   'function-merge:compute_fibonacci,analyze_sequence,aggregate_metrics,transform_sequence,validate_input,build_sequence,process_sequence,main' fibonacci-seq
+Input: {'function-merge': ['compute_fibonacci', 'analyze_sequence', 'aggregate_metrics', 'transform_sequence', 'validate_input', 'build_sequence', 'process_sequence', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> function-merge
+[annotation] Attached annotation: process_sequence -> function-merge
+[annotation] Attached annotation: validate_input -> function-merge
+[annotation] Attached annotation: build_sequence -> function-merge
+[annotation] Attached annotation: analyze_sequence -> function-merge
+[annotation] Attached annotation: aggregate_metrics -> function-merge
+[annotation] Attached annotation: compute_fibonacci -> function-merge
+[annotation] Attached annotation: transform_sequence -> function-merge
+[function-merge] Applying to: process_sequence
+[function-merge] Applying to: validate_input
+[function-merge] Applying to: build_sequence
+[function-merge] Applying to: analyze_sequence
+[function-merge] Applying to: aggregate_metrics
+[function-merge] Applying to: compute_fibonacci
+[function-merge] Applying to: transform_sequence
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/fibonacci-seq[0m
+
+real	0m56.696s
+user	0m0.872s
+sys	0m0.214s

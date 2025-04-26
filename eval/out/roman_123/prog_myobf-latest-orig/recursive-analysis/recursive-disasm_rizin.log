@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_25_17_11_45_roman_2/prog_myobf-latest-orig
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_17_11_45_roman_2/prog_myobf-latest-orig/recursive.
+[2K[DEBUG] There are 12 functions.
+
+real	0m24.108s
+user	0m4.440s
+sys	0m0.371s

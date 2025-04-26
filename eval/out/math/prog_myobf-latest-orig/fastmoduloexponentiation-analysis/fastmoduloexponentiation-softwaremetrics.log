@@ -1,0 +1,6 @@
+/opt/samplegenerator/out/run_2025_04_24_21_09_09/prog_myobf-latest-orig
+[0;34m[INFO][0m: Calculating software metrics for /opt/samplegenerator/out/run_2025_04_24_21_09_09/prog_myobf-latest-orig/fastmoduloexponentiation.
+
+real	0m20.386s
+user	0m4.613s
+sys	0m0.240s

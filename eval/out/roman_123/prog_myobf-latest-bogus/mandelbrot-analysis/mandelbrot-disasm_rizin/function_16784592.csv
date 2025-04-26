@@ -1,0 +1,11 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,val
+16784592,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16784592,16784621,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.map'],"[{'addr': 16784048, 'type': 'CALL'}, {'addr': 16784159, 'type': 'CALL'}, {'addr': 16784357, 'type': 'CALL'}, {'addr': 16784468, 'type': 'CALL'}]",
+16784593,"rsp,rbp,=",False,16784592,16784619,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,
+16784596,,False,16784592,16784618,4,"subsd xmm0, xmm1","subsd xmm0, xmm1",f20f5cc1,sse,null,False,0,0,,,
+16784600,,False,16784592,16784618,4,"subsd xmm4, xmm3","subsd xmm4, xmm3",f20f5ce3,sse,null,False,0,0,,,
+16784604,"xmm4,xmm0,*=",False,16784592,16784618,4,"mulsd xmm0, xmm4","mulsd xmm0, xmm4",f20f59c4,sse,mul,False,20,0,,,
+16784608,,False,16784592,16784618,4,"subsd xmm2, xmm1","subsd xmm2, xmm1",f20f5cd1,sse,null,False,0,0,,,
+16784612,,False,16784592,16784618,4,"divsd xmm0, xmm2","divsd xmm0, xmm2",f20f5ec2,sse,null,False,0,0,,,
+16784616,"xmm3,xmm0,+=",False,16784592,16784618,4,"addsd xmm0, xmm3","addsd xmm0, xmm3",f20f58c3,sse,add,False,17,0,,,125.0
+16784620,"rsp,[8],8,rsp,+=,rbp,=",False,16784592,16784621,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,
+16784621,"rsp,[8],rip,=,8,rsp,+=",False,16784592,16784621,1,ret,ret,c3,cpu,ret,False,5,0,,,

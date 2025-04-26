@@ -1,0 +1,23 @@
+cat: /opt/samplegenerator/src_roman/cfg/cfg.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman/cfg/cfg.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_22_23_54_57/prog_myobf-latest-merge:/app/out   --rm   thesis-v20-x86   'function-merge:run,recursive_logic,function_a,function_b,function_c,main' cfg
+Input: {'function-merge': ['run', 'recursive_logic', 'function_a', 'function_b', 'function_c', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> function-merge
+[annotation] Attached annotation: run -> function-merge
+[annotation] Attached annotation: function_a -> function-merge
+[annotation] Attached annotation: function_b -> function-merge
+[annotation] Attached annotation: function_c -> function-merge
+[annotation] Attached annotation: recursive_logic -> function-merge
+[function-merge] Applying to: run
+[function-merge] Applying to: function_a
+[function-merge] Applying to: function_b
+[function-merge] Applying to: function_c
+[function-merge] Applying to: recursive_logic
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/cfg[0m
+
+real	1m0.167s
+user	0m0.952s
+sys	0m0.270s

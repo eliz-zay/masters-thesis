@@ -1,0 +1,17 @@
+/opt/samplegenerator/out/run_2025_04_24_07_37_18_math/prog_myobf-latest-mba
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_24_07_37_18_math/prog_myobf-latest-mba/.DS_Store.
+/usr/share/rizin/magic/archive, 139: Warning: New continuation level 2 is more than one larger than current level 0
+Warning: Duplicate magic entry `xar archive'
+*unknown*, 243: > 0 string,=xar!,"xar archive"]
+*unknown*, 253: > 0 string,=xar!,"xar archive"]
+Warning: Duplicate magic entry `Squashfs filesystem, little endian,'
+*unknown*, 1236: > 0 string,=hsqt,"Squashfs filesystem, little endian,"]
+*unknown*, 1250: > 0 string,=hsqt,"Squashfs filesystem, little endian,"]
+Warning: Duplicate magic entry `SE Linux policy'
+*unknown*, 160: > 0 lelong&,=-109248628,"SE Linux policy"]
+*unknown*, 202: > 0 lelong&,=-109248628,"SE Linux policy"]
+[2K[DEBUG] There are 1 functions.
+
+real	0m19.148s
+user	0m3.673s
+sys	0m0.339s

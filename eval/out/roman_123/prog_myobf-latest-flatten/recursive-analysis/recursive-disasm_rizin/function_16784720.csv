@@ -1,0 +1,16 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,val
+16784720,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16784720,16784755,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.apply_gate'],"[{'addr': 16783785, 'type': 'CALL'}, {'addr': 16783836, 'type': 'CALL'}, {'addr': 16783887, 'type': 'CALL'}, {'addr': 16783938, 'type': 'CALL'}]",
+16784721,"rsp,rbp,=",False,16784720,16784753,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,
+16784724,"32,esi,~,32,0x4,rdi,+,[4],~,*,DUP,esi,=,esi,-,?{,1,1,}{,0,0,},cf,:=,of,:=",False,16784720,16784752,4,"imul esi, dword [rdi + 4]","imul esi, dword [rdi + 4]",0faf7704,cpu,mul,False,20,0,,,
+16784728,"32,3,~,32,0x8,rdi,+,[4],~,*,DUP,eax,=,eax,-,?{,1,1,}{,0,0,},cf,:=,of,:=",False,16784720,16784752,4,"imul eax, dword [rdi + 8], 3","imul eax, dword [rdi + 8], 3",6b470803,cpu,mul,False,20,0,,,
+16784732,"esi,eax,+=,31,$o,of,:=,31,$s,sf,:=,$z,zf,:=,31,$c,cf,:=,$p,pf,:=,3,$c,af,:=",False,16784720,16784754,2,"add eax, esi","add eax, esi",01f0,cpu,add,False,17,0,,,
+16784734,"0xc,rdi,+,[4],eax,+=,31,$o,of,:=,31,$s,sf,:=,$z,zf,:=,31,$c,cf,:=,$p,pf,:=,3,$c,af,:=",True,16784720,16784753,3,"add eax, dword [rdi + 0xc]","add eax, dword [rdi + 0xc]",03470c,cpu,add,False,17,0,,,
+16784737,"9,rcx,=",False,16784720,16784751,5,"mov ecx, 9","mov ecx, 9",b909000000,cpu,mov,False,9,0,,,9.0
+16784742,"0,edx,=,31,eax,>>,?{,0xffffffff,edx,=,}",False,16784720,16784755,1,cdq,cdq,99,cpu,null,False,0,0,,,
+16784743,"32,ecx,~,32,edx,<<,eax,+,~%,32,ecx,~,32,edx,<<,eax,+,~/,eax,=,edx,=",False,16784720,16784754,2,idiv ecx,idiv ecx,f7f9,cpu,div,False,21,0,,,
+16784745,"edx,rax,=",False,16784720,16784754,2,"mov eax, edx","mov eax, edx",89d0,cpu,mov,False,9,0,,,
+16784747,"eax,rdx,=",False,16784720,16784754,2,"mov edx, eax","mov edx, eax",89c2,cpu,mov,False,9,0,,,
+16784749,"edx,!,!,cf,:=,edx,0xffffffff,^,1,+,edx,=,$z,zf,:=,0,of,:=,31,$s,sf,:=,31,$o,pf,:=",False,16784720,16784754,2,neg edx,neg edx,f7da,cpu,sub,False,18,0,,,
+16784751,"sf,!,?{,edx,eax,=,}",False,16784720,16784753,3,"cmovns eax, edx","cmovns eax, edx",0f49c2,cpu,cmov,False,2147483657,0,,,
+16784754,"rsp,[8],8,rsp,+=,rbp,=",False,16784720,16784755,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,
+16784755,"rsp,[8],rip,=,8,rsp,+=",False,16784720,16784755,1,ret,ret,c3,cpu,ret,False,5,0,,,

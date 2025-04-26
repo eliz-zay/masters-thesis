@@ -1,0 +1,20 @@
+cat: /opt/samplegenerator/src_math/volumecylinder/volumecylinder.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_math/volumecylinder/volumecylinder.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_19_07_37_18/prog_myobf-latest-bogus:/app/out   --rm   thesis-v20-x86   'flatten:main,volume_cylinder;bogus-switch:main,volume_cylinder' volumecylinder
+Input: {'flatten': ['main', 'volume_cylinder'], 'bogus-switch': ['main', 'volume_cylinder']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: volume_cylinder -> flatten
+[annotation] Attached annotation: volume_cylinder -> bogus-switch
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: main -> bogus-switch
+[flatten] Applying to: volume_cylinder
+[flatten] Applying to: main
+[bogus-switch] Applying to: volume_cylinder
+[bogus-switch] Applying to: main
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/volumecylinder[0m
+
+real	1m5.549s
+user	0m1.390s
+sys	0m0.423s

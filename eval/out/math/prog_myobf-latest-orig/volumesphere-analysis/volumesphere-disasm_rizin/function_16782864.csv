@@ -1,0 +1,15 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,ptr,xrefs_from,jump,fail
+16782864,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16782864,16782922,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.volume_sphere'],"[{'addr': 16782973, 'type': 'CALL'}]",,,,
+16782865,"rsp,rbp,=",False,16782864,16782920,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,,,,
+16782868,,False,16782864,16782919,4,"cvtsi2ss xmm0, edi","cvtsi2ss xmm0, edi",f30f2ac7,sse,null,False,0,0,,,,,,
+16782872,,False,16782864,16782919,4,"cvtss2sd xmm0, xmm0","cvtss2sd xmm0, xmm0",f30f5ac0,sse,null,False,0,0,,,,,,
+16782876,"0x1134,rip,-,[8],xmm1,=",True,16782864,16782915,8,"movsd xmm1, qword [rip - 0x1134]","movsd xmm1, qword [data.010004f0]",f20f100dcceeffff,sse,mov,False,9,0,,,16778480.0,"[{'addr': 16778480, 'type': 'DATA'}]",,
+16782884,"16783184,rip,8,rsp,-=,rsp,=[],rip,=",False,16782864,16782918,5,call 0x1001750,call sym.imp.pow,e827010000,cpu,call,False,3,0,,,,"[{'addr': 16783184, 'type': 'CALL'}]",16783184.0,16782889.0
+16782889,"0x1149,rip,-,[8],xmm1,=",True,16782864,16782915,8,"movsd xmm1, qword [rip - 0x1149]","movsd xmm1, qword [data.010004e8]",f20f100db7eeffff,sse,mov,False,9,0,,,16778472.0,"[{'addr': 16778472, 'type': 'DATA'}]",,
+16782897,"xmm1,xmm0,*=",False,16782864,16782919,4,"mulsd xmm0, xmm1","mulsd xmm0, xmm1",f20f59c1,sse,mul,False,20,0,,,,,,
+16782901,"0x114d,rip,-,[8],xmm1,=",True,16782864,16782915,8,"movsd xmm1, qword [rip - 0x114d]","movsd xmm1, qword [data.010004f0]",f20f100db3eeffff,sse,mov,False,9,0,,,16778480.0,"[{'addr': 16778480, 'type': 'DATA'}]",,
+16782909,,False,16782864,16782919,4,"divsd xmm0, xmm1","divsd xmm0, xmm1",f20f5ec1,sse,null,False,0,0,,,,,,
+16782913,,False,16782864,16782919,4,"cvtsd2ss xmm0, xmm0","cvtsd2ss xmm0, xmm0",f20f5ac0,sse,null,False,0,0,,,,,,
+16782917,,False,16782864,16782919,4,"cvttss2si eax, xmm0","cvttss2si eax, xmm0",f30f2cc0,sse,null,False,0,0,,,,,,
+16782921,"rsp,[8],8,rsp,+=,rbp,=",False,16782864,16782922,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,,,,
+16782922,"rsp,[8],rip,=,8,rsp,+=",False,16782864,16782922,1,ret,ret,c3,cpu,ret,False,5,0,,,,,,

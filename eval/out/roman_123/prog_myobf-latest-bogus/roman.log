@@ -1,0 +1,56 @@
+cat: /opt/samplegenerator/src_roman/roman/roman.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman/roman/roman.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_22_23_54_57/prog_myobf-latest-bogus:/app/out   --rm   thesis-v20-x86   'flatten:main,predigits,postdigits,roman;bogus-switch:main,predigits,postdigits,roman' roman
+Input: {'flatten': ['main', 'predigits', 'postdigits', 'roman'], 'bogus-switch': ['main', 'predigits', 'postdigits', 'roman']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: main -> bogus-switch
+[annotation] Attached annotation: roman -> flatten
+[annotation] Attached annotation: roman -> bogus-switch
+[annotation] Attached annotation: postdigits -> flatten
+[annotation] Attached annotation: postdigits -> bogus-switch
+[annotation] Attached annotation: predigits -> flatten
+[annotation] Attached annotation: predigits -> bogus-switch
+[flatten] Applying to: main
+[flatten] Applying to: roman
+[flatten] Applying to: postdigits
+[flatten] Applying to: predigits
+[bogus-switch] Applying to: main
+[bogus-switch] Applying to: roman
+[bogus-switch] Generated duplicate case #35 for case #34, replacing 1 references
+[bogus-switch] Generated duplicate case #36 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #37 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #38 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #39 for case #31, replacing 1 references
+[bogus-switch] Generated duplicate case #40 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #41 for case #30, replacing 5 references
+[bogus-switch] Generated duplicate case #42 for case #5, replacing 0 references
+[bogus-switch] Generated duplicate case #43 for case #6, replacing 0 references
+[bogus-switch] Generated duplicate case #44 for case #7, replacing 0 references
+[bogus-switch] Generated duplicate case #45 for case #10, replacing 0 references
+[bogus-switch] Generated duplicate case #46 for case #8, replacing 0 references
+[bogus-switch] Generated duplicate case #47 for case #9, replacing 0 references
+[bogus-switch] Generated duplicate case #48 for case #11, replacing 0 references
+[bogus-switch] Generated duplicate case #49 for case #14, replacing 0 references
+[bogus-switch] Generated duplicate case #50 for case #12, replacing 0 references
+[bogus-switch] Generated duplicate case #51 for case #13, replacing 0 references
+[bogus-switch] Generated duplicate case #52 for case #15, replacing 0 references
+[bogus-switch] Generated duplicate case #53 for case #18, replacing 0 references
+[bogus-switch] Generated duplicate case #54 for case #16, replacing 0 references
+[bogus-switch] Generated duplicate case #55 for case #17, replacing 0 references
+[bogus-switch] Generated duplicate case #56 for case #19, replacing 0 references
+[bogus-switch] Generated duplicate case #57 for case #22, replacing 0 references
+[bogus-switch] Generated duplicate case #58 for case #20, replacing 0 references
+[bogus-switch] Generated duplicate case #59 for case #21, replacing 0 references
+[bogus-switch] Applying to: postdigits
+[bogus-switch] Generated duplicate case #3 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #4 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #5 for case #2, replacing 1 references
+[bogus-switch] Applying to: predigits
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/roman[0m
+
+real	0m58.758s
+user	0m0.947s
+sys	0m0.244s

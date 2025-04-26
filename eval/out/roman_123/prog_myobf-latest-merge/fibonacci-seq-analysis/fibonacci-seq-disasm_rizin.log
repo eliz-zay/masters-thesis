@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-merge
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-merge/fibonacci-seq.
+[2K[DEBUG] There are 8 functions.
+
+real	0m36.474s
+user	0m5.585s
+sys	0m0.478s

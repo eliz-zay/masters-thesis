@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_23_19_32_59/prog_myobf-latest-mba
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_23_19_32_59/prog_myobf-latest-mba/mutation.
+[2K[DEBUG] There are 9 functions.
+
+real	0m48.210s
+user	0m7.230s
+sys	0m0.577s

@@ -1,0 +1,6 @@
+/opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-flatten
+[0;34m[INFO][0m: Calculating software metrics for /opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-flatten/mandelbrot.
+
+real	0m34.986s
+user	0m7.097s
+sys	0m0.421s

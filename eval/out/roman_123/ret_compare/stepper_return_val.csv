@@ -1,0 +1,6 @@
+,exit_code,stdout,real_time,cpu_time
+prog_myobf-latest-bogus,0,b'Final output: \n77 48 11 16 21 82 13 68 \n',0.02158133299963083,0.0032045000000000545
+prog_myobf-latest-flatten,0,b'Final output: \n77 48 11 16 21 82 13 68 \n',0.02051591700001154,0.0027294170000000673
+prog_myobf-latest-mba,0,b'Final output: \n77 48 11 16 21 82 13 68 \n',0.023360166000202298,0.0030397079999999743
+prog_myobf-latest-merge,0,b'Final output: \n77 48 11 16 21 82 13 68 \n',0.02145520900376141,0.002816376000000176
+prog_myobf-latest-orig,0,b'Final output: \n77 48 11 16 21 82 13 68 \n',0.03185733300051652,0.008473333000000194

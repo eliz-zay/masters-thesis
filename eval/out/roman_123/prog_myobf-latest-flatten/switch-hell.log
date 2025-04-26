@@ -1,0 +1,26 @@
+cat: /opt/samplegenerator/src_roman_2/switch-hell/switch-hell.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/switch-hell/switch-hell.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-flatten:/app/out   --rm   thesis-v20-x86   'flatten:process_input,calculate_checksum,perform_operations,transform_data,modify_flags,filter_and_modify,analyze_and_transform,main' switch-hell
+Input: {'flatten': ['process_input', 'calculate_checksum', 'perform_operations', 'transform_data', 'modify_flags', 'filter_and_modify', 'analyze_and_transform', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: perform_operations -> flatten
+[annotation] Attached annotation: transform_data -> flatten
+[annotation] Attached annotation: modify_flags -> flatten
+[annotation] Attached annotation: filter_and_modify -> flatten
+[annotation] Attached annotation: analyze_and_transform -> flatten
+[annotation] Attached annotation: calculate_checksum -> flatten
+[flatten] Applying to: main
+[flatten] Applying to: perform_operations
+[flatten] Applying to: transform_data
+[flatten] Applying to: modify_flags
+[flatten] Applying to: filter_and_modify
+[flatten] Applying to: analyze_and_transform
+[flatten] Applying to: calculate_checksum
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/switch-hell[0m
+
+real	1m7.062s
+user	0m0.936s
+sys	0m0.207s

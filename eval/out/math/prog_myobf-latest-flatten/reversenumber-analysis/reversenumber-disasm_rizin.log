@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_24_07_37_18_math/prog_myobf-latest-flatten
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_24_07_37_18_math/prog_myobf-latest-flatten/reversenumber.
+[2K[DEBUG] There are 9 functions.
+
+real	0m23.057s
+user	0m3.985s
+sys	0m0.280s

@@ -1,0 +1,10 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to
+16785056,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16785056,16785073,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.aggregate_metrics'],"[{'addr': 16783884, 'type': 'CALL'}]"
+16785057,"rsp,rbp,=",False,16785056,16785071,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,
+16785060,"rdi,[4],rcx,=",True,16785056,16785072,2,"mov ecx, dword [rdi]","mov ecx, dword [rdi]",8b0f,cpu,mov,False,9,0,,
+16785062,"0x4,rdi,+,[4],rax,=",True,16785056,16785071,3,"mov eax, dword [rdi + 4]","mov eax, dword [rdi + 4]",8b4704,cpu,mov,False,9,0,,
+16785065,"0,1,!,!,?{,1,1,-,eax,<<,0x80000000,&,!,!,^,},1,eax,<<=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,cf,=",False,16785056,16785072,2,"shl eax, 1","shl eax, 1",d1e0,cpu,shl,False,23,0,,
+16785067,"ecx,eax,+=,31,$o,of,:=,31,$s,sf,:=,$z,zf,:=,31,$c,cf,:=,$p,pf,:=,3,$c,af,:=",False,16785056,16785072,2,"add eax, ecx","add eax, ecx",01c8,cpu,add,False,17,0,,
+16785069,"0x8,rdi,+,[4],eax,-=,0x8,rdi,+,[4],0x80000000,-,!,31,$o,^,of,:=,31,$s,sf,:=,$z,zf,:=,$p,pf,:=,32,$b,cf,:=,3,$b,af,:=",True,16785056,16785071,3,"sub eax, dword [rdi + 8]","sub eax, dword [rdi + 8]",2b4708,cpu,sub,False,18,0,,
+16785072,"rsp,[8],8,rsp,+=,rbp,=",False,16785056,16785073,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,
+16785073,"rsp,[8],rip,=,8,rsp,+=",False,16785056,16785073,1,ret,ret,c3,cpu,ret,False,5,0,,

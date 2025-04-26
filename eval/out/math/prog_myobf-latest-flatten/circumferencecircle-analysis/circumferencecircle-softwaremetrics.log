@@ -1,0 +1,6 @@
+/opt/samplegenerator/out/run_2025_04_24_07_37_18_math/prog_myobf-latest-flatten
+[0;34m[INFO][0m: Calculating software metrics for /opt/samplegenerator/out/run_2025_04_24_07_37_18_math/prog_myobf-latest-flatten/circumferencecircle.
+
+real	0m20.982s
+user	0m5.023s
+sys	0m0.260s

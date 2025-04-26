@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_24_21_09_09/prog_myobf-latest-orig
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_24_21_09_09/prog_myobf-latest-orig/roots.
+[2K[DEBUG] There are 9 functions.
+
+real	0m11.882s
+user	0m3.610s
+sys	0m0.290s

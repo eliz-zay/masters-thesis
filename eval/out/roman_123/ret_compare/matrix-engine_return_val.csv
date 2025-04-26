@@ -1,0 +1,6 @@
+,exit_code,stdout,real_time,cpu_time
+prog_myobf-latest-bogus,0,b'Column Summary:\n24 0 0 0 15 41 7 128 \nComparison Result: 4\n',0.022627541999099776,0.003157666999999975
+prog_myobf-latest-flatten,0,b'Column Summary:\n24 0 0 0 15 41 7 128 \nComparison Result: 4\n',0.022242207996896468,0.002619083000000133
+prog_myobf-latest-mba,0,b'Column Summary:\n24 0 0 0 15 41 7 128 \nComparison Result: 4\n',0.02262695800163783,0.0026768340000000723
+prog_myobf-latest-merge,0,b'Column Summary:\n24 0 0 0 15 41 7 128 \nComparison Result: 4\n',0.021969709006953053,0.0026097489999998835
+prog_myobf-latest-orig,0,b'Column Summary:\n24 0 0 0 15 41 7 128 \nComparison Result: 4\n',0.02166212500014808,0.0026706249999999265

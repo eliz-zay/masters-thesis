@@ -1,0 +1,27 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,val,jump,fail,xrefs_from,ptr
+16783328,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16783328,16783425,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,"['main', 'sym.main', 'dbg.main']","[{'addr': 16782829, 'type': 'DATA'}]",,,,,
+16783329,"rsp,rbp,=",False,16783328,16783423,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,,,,,
+16783332,"16,rsp,-=,16,0x8000000000000000,-,!,63,$o,^,of,:=,63,$s,sf,:=,$z,zf,:=,$p,pf,:=,64,$b,cf,:=,3,$b,af,:=",False,16783328,16783422,4,"sub rsp, 0x10","sub rsp, 0x10",4883ec10,cpu,sub,False,18,0,,,16.0,,,,
+16783336,"0x8,rsi,+,[8],rdi,=",True,16783328,16783422,4,"mov rdi, qword [rsi + 8]","mov rdi, qword [rsi + 8]",488b7e08,cpu,mov,False,9,0,,,,,,,
+16783340,"eax,rax,^,0xffffffff,&,rax,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16783328,16783424,2,"xor eax, eax","xor eax, eax",31c0,cpu,xor,False,28,0,,,,,,,
+16783342,"eax,rsi,=",False,16783328,16783424,2,"mov esi, eax","mov esi, eax",89c6,cpu,mov,False,9,0,,,,,,,
+16783344,"16783584,rip,8,rsp,-=,rsp,=[],rip,=",False,16783328,16783421,5,call 0x10018e0,call sym.imp.strtod,e8eb000000,cpu,call,False,3,0,,,,16783584.0,16783349.0,"[{'addr': 16783584, 'type': 'CALL'}]",
+16783349,,False,16783328,16783422,4,"cvtsd2ss xmm0, xmm0","cvtsd2ss xmm0, xmm0",f20f5ac0,sse,null,False,0,0,,,,,,,
+16783353,,False,16783328,16783422,4,"cvttss2si edi, xmm0","cvttss2si edi, xmm0",f30f2cf8,sse,null,False,0,0,,,,,,,
+16783357,"16782848,rip,8,rsp,-=,rsp,=[],rip,=",False,16783328,16783421,5,call 0x1001600,call dbg.square_root,e8fefdffff,cpu,call,False,3,0,,,,16782848.0,16783362.0,"[{'addr': 16782848, 'type': 'CALL'}]",
+16783362,,False,16783328,16783421,5,"cvttsd2si rax, xmm0","cvttsd2si rax, xmm0",f2480f2cc0,sse,null,False,0,0,,,,,,,
+16783367,"eax,rcx,=",False,16783328,16783424,2,"mov ecx, eax","mov ecx, eax",89c1,cpu,mov,False,9,0,,,,,,,
+16783369,"ecx,0x4,rbp,-,=[4]",True,16783328,16783423,3,"mov dword [rbp - 4], ecx","mov dword [result], ecx",894dfc,cpu,mov,False,268435465,0,,,,,,,
+16783372,"0x1324,rip,-,rdi,=",True,16783328,16783419,7,"lea rdi, [rip - 0x1324]","lea rdi, str.You_loose",488d3ddcecffff,cpu,lea,False,33,0,,,,,,"[{'addr': 16778479, 'type': 'DATA'}]",16778479.0
+16783379,"0x1334,rip,-,rax,=",True,16783328,16783419,7,"lea rax, [rip - 0x1334]","lea rax, str.You_win",488d05ccecffff,cpu,lea,False,33,0,,,,,,"[{'addr': 16778470, 'type': 'DATA'}]",16778470.0
+16783386,"5878,ecx,==,$z,zf,:=,32,$b,cf,:=,$p,pf,:=,31,$s,sf,:=,5878,0x80000000,-,!,31,$o,^,of,:=,3,$b,af,:=",False,16783328,16783420,6,"cmp ecx, 0x16f6","cmp ecx, 0x16f6",81f9f6160000,cpu,cmp,False,15,0,,,5878.0,,,,5878.0
+16783392,"zf,?{,rax,rdi,=,}",False,16783328,16783422,4,"cmove rdi, rax","cmove rdi, rax",480f44f8,cpu,cmov,False,2147483657,0,,,,,,,
+16783396,"16783600,rip,8,rsp,-=,rsp,=[],rip,=",False,16783328,16783421,5,call 0x10018f0,call sym.imp.puts,e8c7000000,cpu,call,False,3,0,,,,16783600.0,16783401.0,"[{'addr': 16783600, 'type': 'CALL'}]",
+16783401,"0x4,rbp,-,[4],rsi,=",True,16783328,16783423,3,"mov esi, dword [rbp - 4]","mov esi, dword [result]",8b75fc,cpu,mov,False,9,0,,,,,,,
+16783404,"0x135b,rip,-,rdi,=",True,16783328,16783419,7,"lea rdi, [rip - 0x135b]","lea rdi, [0x010004d8]",488d3da5ecffff,cpu,lea,False,33,0,,,,,,"[{'addr': 16778456, 'type': 'DATA'}]",16778456.0
+16783411,"0,al,=",False,16783328,16783424,2,"mov al, 0","mov al, 0",b000,cpu,mov,False,9,0,,,0.0,,,,
+16783413,"16783616,rip,8,rsp,-=,rsp,=[],rip,=",False,16783328,16783421,5,call 0x1001900,call sym.imp.printf,e8c6000000,cpu,call,False,3,0,,,,16783616.0,16783418.0,"[{'addr': 16783616, 'type': 'CALL'}]",
+16783418,"eax,rax,^,0xffffffff,&,rax,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16783328,16783424,2,"xor eax, eax","xor eax, eax",31c0,cpu,xor,False,28,0,,,,,,,
+16783420,"16,rsp,+=,63,$o,of,:=,63,$s,sf,:=,$z,zf,:=,63,$c,cf,:=,$p,pf,:=,3,$c,af,:=",False,16783328,16783422,4,"add rsp, 0x10","add rsp, 0x10",4883c410,cpu,add,False,17,0,,,16.0,,,,
+16783424,"rsp,[8],8,rsp,+=,rbp,=",False,16783328,16783425,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,,,,,
+16783425,"rsp,[8],rip,=,8,rsp,+=",False,16783328,16783425,1,ret,ret,c3,cpu,ret,False,5,0,,,,,,,

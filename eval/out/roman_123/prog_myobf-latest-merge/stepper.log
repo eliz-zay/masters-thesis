@@ -1,0 +1,37 @@
+cat: /opt/samplegenerator/src_roman_2/stepper/stepper.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/stepper/stepper.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-merge:/app/out   --rm   thesis-v20-x86   'function-merge:step1,step2,step3,step4,step5,step6,step7,step8,step9,step10,step11,step12,main' stepper
+Input: {'function-merge': ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> function-merge
+[annotation] Attached annotation: step1 -> function-merge
+[annotation] Attached annotation: step2 -> function-merge
+[annotation] Attached annotation: step3 -> function-merge
+[annotation] Attached annotation: step4 -> function-merge
+[annotation] Attached annotation: step5 -> function-merge
+[annotation] Attached annotation: step6 -> function-merge
+[annotation] Attached annotation: step7 -> function-merge
+[annotation] Attached annotation: step8 -> function-merge
+[annotation] Attached annotation: step9 -> function-merge
+[annotation] Attached annotation: step10 -> function-merge
+[annotation] Attached annotation: step11 -> function-merge
+[annotation] Attached annotation: step12 -> function-merge
+[function-merge] Applying to: step1
+[function-merge] Applying to: step2
+[function-merge] Applying to: step3
+[function-merge] Applying to: step4
+[function-merge] Applying to: step5
+[function-merge] Applying to: step6
+[function-merge] Applying to: step7
+[function-merge] Applying to: step8
+[function-merge] Applying to: step9
+[function-merge] Applying to: step10
+[function-merge] Applying to: step11
+[function-merge] Applying to: step12
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/stepper[0m
+
+real	1m2.824s
+user	0m0.891s
+sys	0m0.180s

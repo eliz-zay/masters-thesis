@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_25_22_14_30_/prog_myobf-latest-bogus
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_22_14_30_/prog_myobf-latest-bogus/array-trans.
+[2K[DEBUG] There are 12 functions.
+
+real	0m7.678s
+user	0m3.067s
+sys	0m0.281s

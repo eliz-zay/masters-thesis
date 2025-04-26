@@ -1,0 +1,61 @@
+cat: /opt/samplegenerator/src_roman_2/logic-reactor/logic-reactor.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/logic-reactor/logic-reactor.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_23_19_32_59/prog_myobf-latest-bogus:/app/out   --rm   thesis-v20-x86   'flatten:recursive_modulation,evaluate_conditions,simulate_loops,run_logic_reactor,main;bogus-switch:recursive_modulation,evaluate_conditions,simulate_loops,run_logic_reactor,main' logic-reactor
+Input: {'flatten': ['recursive_modulation', 'evaluate_conditions', 'simulate_loops', 'run_logic_reactor', 'main'], 'bogus-switch': ['recursive_modulation', 'evaluate_conditions', 'simulate_loops', 'run_logic_reactor', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: main -> bogus-switch
+[annotation] Attached annotation: run_logic_reactor -> flatten
+[annotation] Attached annotation: run_logic_reactor -> bogus-switch
+[annotation] Attached annotation: recursive_modulation -> flatten
+[annotation] Attached annotation: recursive_modulation -> bogus-switch
+[annotation] Attached annotation: evaluate_conditions -> flatten
+[annotation] Attached annotation: evaluate_conditions -> bogus-switch
+[annotation] Attached annotation: simulate_loops -> flatten
+[annotation] Attached annotation: simulate_loops -> bogus-switch
+[flatten] Applying to: main
+[flatten] Applying to: run_logic_reactor
+[flatten] Applying to: recursive_modulation
+[flatten] Applying to: evaluate_conditions
+[flatten] Applying to: simulate_loops
+[bogus-switch] Applying to: main
+[bogus-switch] Generated duplicate case #4 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #5 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #6 for case #3, replacing 2 references
+[bogus-switch] Applying to: run_logic_reactor
+[bogus-switch] Generated duplicate case #11 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #14 for case #10, replacing 2 references
+[bogus-switch] Generated duplicate case #15 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #16 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #17 for case #5, replacing 2 references
+[bogus-switch] Generated duplicate case #18 for case #6, replacing 0 references
+[bogus-switch] Applying to: recursive_modulation
+[bogus-switch] Generated duplicate case #5 for case #0, replacing 1 references
+[bogus-switch] Generated duplicate case #6 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #7 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #8 for case #1, replacing 0 references
+[bogus-switch] Applying to: evaluate_conditions
+[bogus-switch] Generated duplicate case #8 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #7, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #2, replacing 1 references
+[bogus-switch] Generated duplicate case #12 for case #6, replacing 1 references
+[bogus-switch] Generated duplicate case #13 for case #3, replacing 0 references
+[bogus-switch] Applying to: simulate_loops
+[bogus-switch] Generated duplicate case #11 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #14 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #15 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #16 for case #6, replacing 0 references
+[bogus-switch] Generated duplicate case #17 for case #5, replacing 0 references
+[bogus-switch] Generated duplicate case #18 for case #8, replacing 0 references
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/logic-reactor[0m
+
+real	0m59.492s
+user	0m0.906s
+sys	0m0.184s

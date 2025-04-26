@@ -1,0 +1,16 @@
+cat: /opt/samplegenerator/src_math/circumferencecircle/circumferencecircle.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_math/circumferencecircle/circumferencecircle.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_19_07_37_18/prog_myobf-latest-mba:/app/out   --rm   thesis-v20-x86   'mba:main,circumference' circumferencecircle
+Input: {'mba': ['main', 'circumference']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: circumference -> mba
+[annotation] Attached annotation: main -> mba
+[mba] Applying to: circumference
+[mba] Applying to: main
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/circumferencecircle[0m
+
+real	0m55.278s
+user	0m0.911s
+sys	0m0.226s

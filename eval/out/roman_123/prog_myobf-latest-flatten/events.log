@@ -1,0 +1,22 @@
+cat: /opt/samplegenerator/src_roman_2/events/events.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/events/events.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-flatten:/app/out   --rm   thesis-v20-x86   'flatten:evaluate_event,complex_rule,process_events,handle_event,main' events
+Input: {'flatten': ['evaluate_event', 'complex_rule', 'process_events', 'handle_event', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: process_events -> flatten
+[annotation] Attached annotation: handle_event -> flatten
+[annotation] Attached annotation: evaluate_event -> flatten
+[annotation] Attached annotation: complex_rule -> flatten
+[flatten] Applying to: main
+[flatten] Applying to: process_events
+[flatten] Applying to: handle_event
+[flatten] Applying to: evaluate_event
+[flatten] Applying to: complex_rule
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/events[0m
+
+real	1m2.775s
+user	0m0.956s
+sys	0m0.211s

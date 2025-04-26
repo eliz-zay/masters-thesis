@@ -1,0 +1,19 @@
+cat: /opt/samplegenerator/src_rroman/averagesum/averagesum.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_rroman/averagesum/averagesum.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_24_20_25_14/prog_myobf-latest-mba:/app/out   --rm   thesis-v20-x86   'mba:main,average_sum' averagesum
+Input: {'mba': ['main', 'average_sum']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: average_sum -> mba
+[annotation] Attached annotation: main -> mba
+[mba] Applying to: average_sum
+[mba] x + y: v2
+[mba] x + y: v5
+[mba] x + y: v4
+[mba] Applying to: main
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/averagesum[0m
+
+real	1m2.858s
+user	0m0.871s
+sys	0m0.177s

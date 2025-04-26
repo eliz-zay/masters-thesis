@@ -1,0 +1,16 @@
+cat: /opt/samplegenerator/src_rroman/squarearray/squarearray.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_rroman/squarearray/squarearray.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_24_20_19_52/prog_myobf-latest-flatten:/app/out   --rm   thesis-v20-x86   'flatten:main,square_array' squarearray
+Input: {'flatten': ['main', 'square_array']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: square_array -> flatten
+[annotation] Attached annotation: main -> flatten
+[flatten] Applying to: square_array
+[flatten] Applying to: main
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/squarearray[0m
+
+real	0m58.134s
+user	0m0.861s
+sys	0m0.205s

@@ -1,0 +1,19 @@
+cat: /opt/samplegenerator/src_roman/roman/roman.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman/roman/roman.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_22_23_54_57/prog_myobf-latest-merge:/app/out   --rm   thesis-v20-x86   'function-merge:main,predigits,postdigits,roman' roman
+Input: {'function-merge': ['main', 'predigits', 'postdigits', 'roman']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> function-merge
+[annotation] Attached annotation: roman -> function-merge
+[annotation] Attached annotation: postdigits -> function-merge
+[annotation] Attached annotation: predigits -> function-merge
+[function-merge] Applying to: roman
+[function-merge] Applying to: postdigits
+[function-merge] Applying to: predigits
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/roman[0m
+
+real	0m57.923s
+user	0m0.960s
+sys	0m0.244s

@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_25_22_14_30_/prog_myobf-latest-bogus
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_22_14_30_/prog_myobf-latest-bogus/pattern.
+[2K[DEBUG] There are 18 functions.
+
+real	0m7.015s
+user	0m3.104s
+sys	0m0.242s

@@ -1,0 +1,14 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,val,jump,fail,xrefs_from
+16784704,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16784704,16784748,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.fft'],"[{'addr': 16784189, 'type': 'CALL'}]",,,,
+16784705,"rsp,rbp,=",False,16784704,16784746,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,,,,
+16784708,"32,rsp,-=,32,0x8000000000000000,-,!,63,$o,^,of,:=,63,$s,sf,:=,$z,zf,:=,$p,pf,:=,64,$b,cf,:=,3,$b,af,:=",False,16784704,16784745,4,"sub rsp, 0x20","sub rsp, 0x20",4883ec20,cpu,sub,False,18,0,,,32.0,,,
+16784712,"rdi,0x18,rbp,-,=[8]",True,16784704,16784745,4,"mov qword [rbp - 0x18], rdi","mov qword [var_20h], rdi",48897de8,cpu,mov,False,268435465,0,,,,,,
+16784716,"rsi,0x10,rbp,-,=[8]",True,16784704,16784745,4,"mov qword [rbp - 0x10], rsi","mov qword [var_18h], rsi",488975f0,cpu,mov,False,268435465,0,,,,,,
+16784720,"edx,0x4,rbp,-,=[4]",True,16784704,16784746,3,"mov dword [rbp - 4], edx","mov dword [var_ch], edx",8955fc,cpu,mov,False,268435465,0,,,,,,
+16784723,"16784752,rip,8,rsp,-=,rsp,=[],rip,=",False,16784704,16784744,5,call 0x1001d70,call sym.rearrange,e818000000,cpu,call,False,3,0,,,,16784752.0,16784728.0,"[{'addr': 16784752, 'type': 'CALL'}]"
+16784728,"0x18,rbp,-,[8],rdi,=",True,16784704,16784745,4,"mov rdi, qword [rbp - 0x18]","mov rdi, qword [var_20h]",488b7de8,cpu,mov,False,9,0,,,,,,
+16784732,"0x10,rbp,-,[8],rsi,=",True,16784704,16784745,4,"mov rsi, qword [rbp - 0x10]","mov rsi, qword [var_18h]",488b75f0,cpu,mov,False,9,0,,,,,,
+16784736,"0x4,rbp,-,[4],rdx,=",True,16784704,16784746,3,"mov edx, dword [rbp - 4]","mov edx, dword [var_ch]",8b55fc,cpu,mov,False,9,0,,,,,,
+16784739,"32,rsp,+=,63,$o,of,:=,63,$s,sf,:=,$z,zf,:=,63,$c,cf,:=,$p,pf,:=,3,$c,af,:=",False,16784704,16784745,4,"add rsp, 0x20","add rsp, 0x20",4883c420,cpu,add,False,17,0,,,32.0,,,
+16784743,"rsp,[8],8,rsp,+=,rbp,=",False,16784704,16784748,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,,,,
+16784744,"0x1001eb0,rip,=",False,16784704,16784744,5,jmp 0x1001eb0,jmp sym.compute,e943010000,cpu,jmp,False,1,0,,,,16785072.0,,"[{'addr': 16785072, 'type': 'CODE'}]"

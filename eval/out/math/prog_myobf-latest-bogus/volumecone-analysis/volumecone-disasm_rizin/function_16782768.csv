@@ -1,0 +1,20 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,ptr,xrefs_from
+16782768,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16782768,16782845,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,"['sym.volume_cone', 'dbg.volume_cone']","[{'addr': 16782893, 'type': 'CALL'}]",,
+16782769,"rsp,rbp,=",False,16782768,16782843,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,,
+16782772,,False,16782768,16782842,4,"cvtsi2ss xmm1, edi","cvtsi2ss xmm1, edi",f30f2acf,sse,null,False,0,0,,,,
+16782776,,False,16782768,16782842,4,"cvtsi2sd xmm0, edi","cvtsi2sd xmm0, edi",f20f2ac7,sse,null,False,0,0,,,,
+16782780,"0x113c,rip,-,[8],xmm2,=",True,16782768,16782838,8,"movsd xmm2, qword [rip - 0x113c]","movsd xmm2, qword [data.01000488]",f20f1015c4eeffff,sse,mov,False,9,0,,,16778376.0,"[{'addr': 16778376, 'type': 'DATA'}]"
+16782788,"xmm2,xmm0,*=",False,16782768,16782842,4,"mulsd xmm0, xmm2","mulsd xmm0, xmm2",f20f59c2,sse,mul,False,20,0,,,,
+16782792,,False,16782768,16782842,4,"cvtsd2ss xmm0, xmm0","cvtsd2ss xmm0, xmm0",f20f5ac0,sse,null,False,0,0,,,,
+16782796,,False,16782768,16782842,4,"cvtss2sd xmm0, xmm0","cvtss2sd xmm0, xmm0",f30f5ac0,sse,null,False,0,0,,,,
+16782800,"xmm0,xmm0,*=",False,16782768,16782842,4,"mulsd xmm0, xmm0","mulsd xmm0, xmm0",f20f59c0,sse,mul,False,20,0,,,,
+16782804,"0x115c,rip,-,[8],xmm2,=",True,16782768,16782838,8,"movsd xmm2, qword [rip - 0x115c]","movsd xmm2, qword [data.01000480]",f20f1015a4eeffff,sse,mov,False,9,0,,,16778368.0,"[{'addr': 16778368, 'type': 'DATA'}]"
+16782812,"xmm2,xmm0,*=",False,16782768,16782842,4,"mulsd xmm0, xmm2","mulsd xmm0, xmm2",f20f59c2,sse,mul,False,20,0,,,,
+16782816,,False,16782768,16782842,4,"cvtss2sd xmm1, xmm1","cvtss2sd xmm1, xmm1",f30f5ac9,sse,null,False,0,0,,,,
+16782820,"xmm1,xmm0,*=",False,16782768,16782842,4,"mulsd xmm0, xmm1","mulsd xmm0, xmm1",f20f59c1,sse,mul,False,20,0,,,,
+16782824,"0x1160,rip,-,[8],xmm1,=",True,16782768,16782838,8,"movsd xmm1, qword [rip - 0x1160]","movsd xmm1, qword [data.01000490]",f20f100da0eeffff,sse,mov,False,9,0,,,16778384.0,"[{'addr': 16778384, 'type': 'DATA'}]"
+16782832,,False,16782768,16782842,4,"divsd xmm0, xmm1","divsd xmm0, xmm1",f20f5ec1,sse,null,False,0,0,,,,
+16782836,,False,16782768,16782842,4,"cvtsd2ss xmm0, xmm0","cvtsd2ss xmm0, xmm0",f20f5ac0,sse,null,False,0,0,,,,
+16782840,,False,16782768,16782842,4,"cvttss2si eax, xmm0","cvttss2si eax, xmm0",f30f2cc0,sse,null,False,0,0,,,,
+16782844,"rsp,[8],8,rsp,+=,rbp,=",False,16782768,16782845,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,,
+16782845,"rsp,[8],rip,=,8,rsp,+=",False,16782768,16782845,1,ret,ret,c3,cpu,ret,False,5,0,,,,

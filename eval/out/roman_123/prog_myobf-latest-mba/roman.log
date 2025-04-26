@@ -1,0 +1,39 @@
+cat: /opt/samplegenerator/src_roman/roman/roman.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman/roman/roman.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_22_23_54_57/prog_myobf-latest-mba:/app/out   --rm   thesis-v20-x86   'mba:main,predigits,postdigits,roman' roman
+Input: {'mba': ['main', 'predigits', 'postdigits', 'roman']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> mba
+[annotation] Attached annotation: roman -> mba
+[annotation] Attached annotation: postdigits -> mba
+[annotation] Attached annotation: predigits -> mba
+[mba] Applying to: main
+[mba] Applying to: roman
+[mba] x = 0: v4
+[mba] x + y: v5
+[mba] x + y: v4
+[mba] x + y: v2
+[mba] x + y: v6
+[mba] x + y: v2
+[mba] x + y: v5
+[mba] x + y: v1
+[mba] x + y: v4
+[mba] x + y: v2
+[mba] x + y: v3
+[mba] x > 0: v2
+[mba] x = 0: v3
+[mba] x > 0: v2
+[mba] x + y: v6
+[mba] Applying to: postdigits
+[mba] x > 0: v1
+[mba] x + y: v1
+[mba] Applying to: predigits
+[mba] x + y: v1
+[mba] x + y: v5
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/roman[0m
+
+real	0m59.256s
+user	0m0.968s
+sys	0m0.248s

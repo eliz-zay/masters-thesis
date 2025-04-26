@@ -1,0 +1,19 @@
+cat: /opt/samplegenerator/src_roman_2/recursive/recursive.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/recursive/recursive.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-orig:/app/out   --rm   thesis-v20-x86   '_:process_layer,transform_state,apply_gate,recursive_flow,mutate_state,sanity_check,initialize_state,main' recursive
+Input: {'_': ['process_layer', 'transform_state', 'apply_gate', 'recursive_flow', 'mutate_state', 'sanity_check', 'initialize_state', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> _
+[annotation] Attached annotation: recursive_flow -> _
+[annotation] Attached annotation: process_layer -> _
+[annotation] Attached annotation: transform_state -> _
+[annotation] Attached annotation: mutate_state -> _
+[annotation] Attached annotation: sanity_check -> _
+[annotation] Attached annotation: apply_gate -> _
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/recursive[0m
+
+real	0m59.736s
+user	0m0.906s
+sys	0m0.171s

@@ -1,0 +1,19 @@
+cat: /opt/samplegenerator/src_roman_2/mutation/mutation.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/mutation/mutation.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_23_19_32_59/prog_myobf-latest-merge:/app/out   --rm   thesis-v20-x86   'function-merge:mutate_value,analyze_pattern,chaotic_path,main' mutation
+Input: {'function-merge': ['mutate_value', 'analyze_pattern', 'chaotic_path', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> function-merge
+[annotation] Attached annotation: chaotic_path -> function-merge
+[annotation] Attached annotation: mutate_value -> function-merge
+[annotation] Attached annotation: analyze_pattern -> function-merge
+[function-merge] Applying to: chaotic_path
+[function-merge] Applying to: mutate_value
+[function-merge] Applying to: analyze_pattern
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/mutation[0m
+
+real	1m2.035s
+user	0m0.950s
+sys	0m0.205s

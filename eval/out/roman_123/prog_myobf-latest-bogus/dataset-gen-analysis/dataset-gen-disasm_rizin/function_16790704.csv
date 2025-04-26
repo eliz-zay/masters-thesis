@@ -1,0 +1,23 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,val,ptr
+16790704,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16790704,16790758,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.evaluate_conditions'],"[{'addr': 16790103, 'type': 'CALL'}]",,
+16790705,"rsp,rbp,=",False,16790704,16790756,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,,
+16790708,"esi,rcx,=",False,16790704,16790757,2,"mov ecx, esi","mov ecx, esi",89f1,cpu,mov,False,9,0,,,,
+16790710,"3,rsi,=",False,16790704,16790754,5,"mov esi, 3","mov esi, 3",be03000000,cpu,mov,False,9,0,,,3.0,
+16790715,"edi,rax,=",False,16790704,16790757,2,"mov eax, edi","mov eax, edi",89f8,cpu,mov,False,9,0,,,,
+16790717,"0,edx,=,31,eax,>>,?{,0xffffffff,edx,=,}",False,16790704,16790758,1,cdq,cdq,99,cpu,null,False,0,0,,,,
+16790718,"32,esi,~,32,edx,<<,eax,+,~%,32,esi,~,32,edx,<<,eax,+,~/,eax,=,edx,=",False,16790704,16790757,2,idiv esi,idiv esi,f7fe,cpu,div,False,21,0,,,,
+16790720,"0,edx,==,$z,zf,:=,32,$b,cf,:=,$p,pf,:=,31,$s,sf,:=,0,0x80000000,-,!,31,$o,^,of,:=,3,$b,af,:=",False,16790704,16790756,3,"cmp edx, 0","cmp edx, 0",83fa00,cpu,cmp,False,15,0,,,0.0,0.0
+16790723,"zf,!,dl,=",False,16790704,16790756,3,setne dl,setne dl,0f95c2,cpu,cmov,False,2147483657,0,,,,
+16790726,"ecx,rsi,=",False,16790704,16790757,2,"mov esi, ecx","mov esi, ecx",89ce,cpu,mov,False,9,0,,,,
+16790728,"1,rsi,&,0xffffffff,&,rsi,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16790704,16790756,3,"and esi, 1","and esi, 1",83e601,cpu,and,False,27,0,,,1.0,
+16790731,"0,esi,==,$z,zf,:=,32,$b,cf,:=,$p,pf,:=,31,$s,sf,:=,0,0x80000000,-,!,31,$o,^,of,:=,3,$b,af,:=",False,16790704,16790756,3,"cmp esi, 0","cmp esi, 0",83fe00,cpu,cmp,False,15,0,,,0.0,0.0
+16790734,"zf,al,=",False,16790704,16790756,3,sete al,sete al,0f94c0,cpu,cmov,False,2147483657,0,,,,
+16790737,"al,dl,|=,7,$s,sf,:=,$z,zf,:=,$p,pf,:=,0,of,:=,0,cf,:=",False,16790704,16790757,2,"or dl, al","or dl, al",08c2,cpu,or,False,26,0,,,,
+16790739,"edi,rcx,^,0xffffffff,&,rcx,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16790704,16790757,2,"xor ecx, edi","xor ecx, edi",31f9,cpu,xor,False,28,0,,,,
+16790741,"0,1,!,!,?{,1,1,-,ecx,<<,0x80000000,&,!,!,^,},1,ecx,<<=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,cf,=",False,16790704,16790757,2,"shl ecx, 1","shl ecx, 1",d1e1,cpu,shl,False,23,0,,,,
+16790743,"2,rcx,&,0xffffffff,&,rcx,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16790704,16790756,3,"and ecx, 2","and ecx, 2",83e102,cpu,and,False,27,0,,,2.0,
+16790746,"1,rax,=",False,16790704,16790754,5,"mov eax, 1","mov eax, 1",b801000000,cpu,mov,False,9,0,,,1.0,
+16790751,"0,1,dl,&,==,$z,zf,:=,$p,pf,:=,7,$s,sf,:=,0,cf,:=,0,of,:=",False,16790704,16790756,3,"test dl, 1","test dl, 1",f6c201,cpu,acmp,False,16,0,,,1.0,1.0
+16790754,"zf,!,?{,ecx,eax,=,}",False,16790704,16790756,3,"cmovne eax, ecx","cmovne eax, ecx",0f45c1,cpu,cmov,False,2147483657,0,,,,
+16790757,"rsp,[8],8,rsp,+=,rbp,=",False,16790704,16790758,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,,
+16790758,"rsp,[8],rip,=,8,rsp,+=",False,16790704,16790758,1,ret,ret,c3,cpu,ret,False,5,0,,,,

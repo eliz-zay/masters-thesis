@@ -1,0 +1,22 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,val,jump,fail
+16784464,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16784464,16784523,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.sanity_check'],"[{'addr': 16783366, 'type': 'CALL'}]",,,
+16784465,"rsp,rbp,=",False,16784464,16784521,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,,,
+16784468,"rdi,0x10,rbp,-,=[8]",True,16784464,16784520,4,"mov qword [rbp - 0x10], rdi","mov qword [var_18h], rdi",48897df0,cpu,mov,False,268435465,0,,,,,
+16784472,"eax,rax,^,0xffffffff,&,rax,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16784464,16784522,2,"xor eax, eax","xor eax, eax",31c0,cpu,xor,False,28,0,,,,,
+16784474,"10,rdi,[4],==,$z,zf,:=,32,$b,cf,:=,$p,pf,:=,31,$s,sf,:=,10,0x80000000,-,!,31,$o,^,of,:=,3,$b,af,:=",True,16784464,16784521,3,"cmp dword [rdi], 0xa","cmp dword [rdi], 0xa",833f0a,cpu,cmp,False,15,0,,,10.0,,
+16784477,"eax,0x4,rbp,-,=[4]",True,16784464,16784521,3,"mov dword [rbp - 4], eax","mov dword [var_ch], eax",8945fc,cpu,mov,False,268435465,0,,,,,
+16784480,"sf,of,!,^,zf,!,&,?{,16784519,rip,=,}",False,16784464,16784522,2,jg 0x1001c87,jg 0x1001c87,7f25,cpu,cjmp,False,2147483649,0,,,,16784519.0,16784482.0
+16784482,"0x10,rbp,-,[8],rcx,=",True,16784464,16784520,4,"mov rcx, qword [rbp - 0x10]","mov rcx, qword [var_18h]",488b4df0,cpu,mov,False,9,0,,,,,
+16784486,"eax,rax,^,0xffffffff,&,rax,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16784464,16784522,2,"xor eax, eax","xor eax, eax",31c0,cpu,xor,False,28,0,,,,,
+16784488,"18446744073709551566,0x8,rcx,+,[4],==,$z,zf,:=,32,$b,cf,:=,$p,pf,:=,31,$s,sf,:=,18446744073709551566,0x80000000,-,!,31,$o,^,of,:=,3,$b,af,:=",True,16784464,16784520,4,"cmp dword [rcx + 8], 0xffffffce","cmp dword [rcx + 8], 0xffffffce",837908ce,cpu,cmp,False,15,0,,,1.8446744073709552e+19,,
+16784492,"eax,0x4,rbp,-,=[4]",True,16784464,16784521,3,"mov dword [rbp - 4], eax","mov dword [var_ch], eax",8945fc,cpu,mov,False,268435465,0,,,,,
+16784495,"of,sf,^,?{,16784519,rip,=,}",False,16784464,16784522,2,jl 0x1001c87,jl 0x1001c87,7c16,cpu,cjmp,False,2147483649,0,,,,16784519.0,16784497.0
+16784497,"0x10,rbp,-,[8],rax,=",True,16784464,16784520,4,"mov rax, qword [rbp - 0x10]","mov rax, qword [var_18h]",488b45f0,cpu,mov,False,9,0,,,,,
+16784501,"10001,0x4,rax,+,[4],==,$z,zf,:=,32,$b,cf,:=,$p,pf,:=,31,$s,sf,:=,10001,0x80000000,-,!,31,$o,^,of,:=,3,$b,af,:=",True,16784464,16784517,7,"cmp dword [rax + 4], 0x2711","cmp dword [rax + 4], 0x2711",81780411270000,cpu,cmp,False,15,0,,,10001.0,,
+16784508,"sf,of,^,al,=",False,16784464,16784521,3,setl al,setl al,0f9cc0,cpu,cmov,False,2147483657,0,,,,,
+16784511,"1,al,&=,$z,zf,:=,$p,pf,:=,7,$s,sf,:=,0,cf,:=,0,of,:=",False,16784464,16784522,2,"and al, 1","and al, 1",2401,cpu,and,False,27,0,,,1.0,,
+16784513,"al,rax,=",False,16784464,16784521,3,"movzx eax, al","movzx eax, al",0fb6c0,cpu,mov,False,9,0,,,,,
+16784516,"eax,0x4,rbp,-,=[4]",True,16784464,16784521,3,"mov dword [rbp - 4], eax","mov dword [var_ch], eax",8945fc,cpu,mov,False,268435465,0,,,,,
+16784519,"0x4,rbp,-,[4],rax,=",True,16784464,16784521,3,"mov eax, dword [rbp - 4]","mov eax, dword [var_ch]",8b45fc,cpu,mov,False,9,0,,,,,
+16784522,"rsp,[8],8,rsp,+=,rbp,=",False,16784464,16784523,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,,,
+16784523,"rsp,[8],rip,=,8,rsp,+=",False,16784464,16784523,1,ret,ret,c3,cpu,ret,False,5,0,,,,,

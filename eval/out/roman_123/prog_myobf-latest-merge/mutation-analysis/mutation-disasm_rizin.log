@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_23_19_32_59/prog_myobf-latest-merge
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_23_19_32_59/prog_myobf-latest-merge/mutation.
+[2K[DEBUG] There are 7 functions.
+
+real	0m45.881s
+user	0m7.102s
+sys	0m0.749s

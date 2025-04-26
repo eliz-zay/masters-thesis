@@ -1,0 +1,67 @@
+cat: /opt/samplegenerator/src_roman_2/stepper/stepper.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/stepper/stepper.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-bogus:/app/out   --rm   thesis-v20-x86   'flatten:step1,step2,step3,step4,step5,step6,step7,step8,step9,step10,step11,step12,main;bogus-switch:step1,step2,step3,step4,step5,step6,step7,step8,step9,step10,step11,step12,main' stepper
+Input: {'flatten': ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'main'], 'bogus-switch': ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: main -> bogus-switch
+[annotation] Attached annotation: step1 -> flatten
+[annotation] Attached annotation: step1 -> bogus-switch
+[annotation] Attached annotation: step2 -> flatten
+[annotation] Attached annotation: step2 -> bogus-switch
+[annotation] Attached annotation: step3 -> flatten
+[annotation] Attached annotation: step3 -> bogus-switch
+[annotation] Attached annotation: step4 -> flatten
+[annotation] Attached annotation: step4 -> bogus-switch
+[annotation] Attached annotation: step5 -> flatten
+[annotation] Attached annotation: step5 -> bogus-switch
+[annotation] Attached annotation: step6 -> flatten
+[annotation] Attached annotation: step6 -> bogus-switch
+[annotation] Attached annotation: step7 -> flatten
+[annotation] Attached annotation: step7 -> bogus-switch
+[annotation] Attached annotation: step8 -> flatten
+[annotation] Attached annotation: step8 -> bogus-switch
+[annotation] Attached annotation: step9 -> flatten
+[annotation] Attached annotation: step9 -> bogus-switch
+[annotation] Attached annotation: step10 -> flatten
+[annotation] Attached annotation: step10 -> bogus-switch
+[annotation] Attached annotation: step11 -> flatten
+[annotation] Attached annotation: step11 -> bogus-switch
+[annotation] Attached annotation: step12 -> flatten
+[annotation] Attached annotation: step12 -> bogus-switch
+[flatten] Applying to: main
+[flatten] Applying to: step1
+[flatten] Applying to: step2
+[flatten] Applying to: step3
+[flatten] Applying to: step4
+[flatten] Applying to: step5
+[flatten] Applying to: step6
+[flatten] Applying to: step7
+[flatten] Applying to: step8
+[flatten] Applying to: step9
+[flatten] Applying to: step10
+[flatten] Applying to: step11
+[flatten] Applying to: step12
+[bogus-switch] Applying to: main
+[bogus-switch] Generated duplicate case #4 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #5 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #6 for case #3, replacing 2 references
+[bogus-switch] Applying to: step1
+[bogus-switch] Applying to: step2
+[bogus-switch] Applying to: step3
+[bogus-switch] Applying to: step4
+[bogus-switch] Applying to: step5
+[bogus-switch] Applying to: step6
+[bogus-switch] Applying to: step7
+[bogus-switch] Applying to: step8
+[bogus-switch] Applying to: step9
+[bogus-switch] Applying to: step10
+[bogus-switch] Applying to: step11
+[bogus-switch] Applying to: step12
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/stepper[0m
+
+real	1m2.199s
+user	0m0.912s
+sys	0m0.200s

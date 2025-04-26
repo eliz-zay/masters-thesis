@@ -1,0 +1,7 @@
+,exit_code,stdout,real_time,cpu_time
+prog_clang-oslatest-O0,0,b'You loose!\nResult: 0x12\n',0.01724866699805716,0.01284441600000008
+prog_myobf-latest-bogus,0,b'You loose!\nResult: 0x12\n',0.018143792000046233,0.003136457999999953
+prog_myobf-latest-flatten,0,b'You loose!\nResult: 0x12\n',0.01889179200225044,0.0034682500000000616
+prog_myobf-latest-mba,0,b'You loose!\nResult: 0x12\n',0.018388291999144712,0.0027190409999999776
+prog_myobf-latest-merge,0,b'You loose!\nResult: 0x12\n',0.01824800000031246,0.0028842499999999216
+prog_myobf-latest-orig,0,b'You loose!\nResult: 0x12\n',0.01816799999869545,0.002503791999999949

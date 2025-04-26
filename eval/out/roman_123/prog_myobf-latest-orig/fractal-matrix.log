@@ -1,0 +1,17 @@
+cat: /opt/samplegenerator/src_roman_2/fractal-matrix/fractal-matrix.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/fractal-matrix/fractal-matrix.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-orig:/app/out   --rm   thesis-v20-x86   '_:create_fractal,propagate_changes,generate_matrix,analyze_path,main' fractal-matrix
+Input: {'_': ['create_fractal', 'propagate_changes', 'generate_matrix', 'analyze_path', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> _
+[annotation] Attached annotation: generate_matrix -> _
+[annotation] Attached annotation: analyze_path -> _
+[annotation] Attached annotation: create_fractal -> _
+[annotation] Attached annotation: propagate_changes -> _
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/fractal-matrix[0m
+
+real	0m57.024s
+user	0m0.891s
+sys	0m0.200s

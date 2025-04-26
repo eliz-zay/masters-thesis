@@ -1,0 +1,12 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,comment,val,ptr,xrefs_from
+16782848,"ebp,rbp,^,0xffffffff,&,rbp,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16782848,16782888,2,"xor ebp, ebp","xor ebp, ebp",31ed,cpu,xor,False,28,0,"['entry0', 'section..text', 'segment.LOAD1', 'sym._start']",WzEzXSAtci14IHNlY3Rpb24gc2l6ZSA4MjIgbmFtZWQgLnRleHQ=,,,
+16782850,"rdx,r9,=",False,16782848,16782887,3,"mov r9, rdx","mov r9, rdx",4989d1,cpu,mov,False,9,0,,,,,
+16782853,"rsp,[8],8,rsp,+=,rsi,=",False,16782848,16782889,1,pop rsi,pop rsi,5e,cpu,pop,False,14,0,,,,,
+16782854,"rsp,rdx,=",False,16782848,16782887,3,"mov rdx, rsp","mov rdx, rsp",4889e2,cpu,mov,False,9,0,,,,,
+16782857,"18446744073709551600,rsp,&=,$z,zf,:=,$p,pf,:=,63,$s,sf,:=,0,cf,:=,0,of,:=",False,16782848,16782886,4,"and rsp, 0xfffffffffffffff0","and rsp, 0xfffffffffffffff0",4883e4f0,cpu,and,False,27,0,,,1.8446744073709552e+19,,
+16782861,"rax,8,rsp,-,=[8],8,rsp,-=",False,16782848,16782889,1,push rax,push rax,50,cpu,rpush,False,268435468,0,,,,,
+16782862,"rsp,8,rsp,-,=[8],8,rsp,-=",False,16782848,16782889,1,push rsp,push rsp,54,cpu,rpush,False,268435468,0,,,,,
+16782863,"0x31a,rip,+,r8,=",True,16782848,16782883,7,"lea r8, [rip + 0x31a]","lea r8, [dbg.__libc_csu_fini]",4c8d051a030000,cpu,lea,False,33,0,,,,16783664.0,"[{'addr': 16783664, 'type': 'DATA'}]"
+16782870,"0x2a3,rip,+,rcx,=",True,16782848,16782883,7,"lea rcx, [rip + 0x2a3]","lea rcx, [dbg.__libc_csu_init]",488d0da3020000,cpu,lea,False,33,0,,,,16783552.0,"[{'addr': 16783552, 'type': 'DATA'}]"
+16782877,"0x23c,rip,+,rdi,=",True,16782848,16782883,7,"lea rdi, [rip + 0x23c]","lea rdi, [dbg.main]",488d3d3c020000,cpu,lea,False,33,0,,,,16783456.0,"[{'addr': 16783456, 'type': 'DATA'}]"
+16782884,"0x14a6,rip,+,[8],rip,8,rsp,-=,rsp,=[],rip,=",True,16782848,16782884,6,call qword [rip + 0x14a6],call qword [reloc.__libc_start_main],ff15a6140000,cpu,ircall,False,402653188,0,,,,16788176.0,"[{'addr': 16788176, 'type': 'CALL'}]"

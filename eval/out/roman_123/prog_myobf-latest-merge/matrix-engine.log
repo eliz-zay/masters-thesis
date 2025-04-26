@@ -1,0 +1,33 @@
+cat: /opt/samplegenerator/src_roman_2/matrix-engine/matrix-engine.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/matrix-engine/matrix-engine.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-merge:/app/out   --rm   thesis-v20-x86   'function-merge:compute_matrix,analyze_sequences,recursive_map,deep_compare,scramble_data,mutate_flags,shift_values,aggregate_columns,summarize_output,run,main' matrix-engine
+Input: {'function-merge': ['compute_matrix', 'analyze_sequences', 'recursive_map', 'deep_compare', 'scramble_data', 'mutate_flags', 'shift_values', 'aggregate_columns', 'summarize_output', 'run', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> function-merge
+[annotation] Attached annotation: run -> function-merge
+[annotation] Attached annotation: compute_matrix -> function-merge
+[annotation] Attached annotation: analyze_sequences -> function-merge
+[annotation] Attached annotation: scramble_data -> function-merge
+[annotation] Attached annotation: mutate_flags -> function-merge
+[annotation] Attached annotation: shift_values -> function-merge
+[annotation] Attached annotation: aggregate_columns -> function-merge
+[annotation] Attached annotation: deep_compare -> function-merge
+[annotation] Attached annotation: recursive_map -> function-merge
+[annotation] Attached annotation: summarize_output -> function-merge
+[function-merge] Applying to: run
+[function-merge] Applying to: compute_matrix
+[function-merge] Applying to: analyze_sequences
+[function-merge] Applying to: scramble_data
+[function-merge] Applying to: mutate_flags
+[function-merge] Applying to: shift_values
+[function-merge] Applying to: aggregate_columns
+[function-merge] Applying to: deep_compare
+[function-merge] Applying to: recursive_map
+[function-merge] Applying to: summarize_output
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/matrix-engine[0m
+
+real	0m56.857s
+user	0m0.911s
+sys	0m0.224s

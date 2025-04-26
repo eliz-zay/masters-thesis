@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_25_17_11_45_roman_2/prog_myobf-latest-mba
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_17_11_45_roman_2/prog_myobf-latest-mba/fractal-matrix.
+[2K[DEBUG] There are 11 functions.
+
+real	0m39.203s
+user	0m5.944s
+sys	0m0.397s

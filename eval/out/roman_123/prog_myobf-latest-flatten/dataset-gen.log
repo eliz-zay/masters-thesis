@@ -1,0 +1,34 @@
+cat: /opt/samplegenerator/src_roman_3/dataset-gen/dataset-gen.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_3/dataset-gen/dataset-gen.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_22_14_30/prog_myobf-latest-flatten:/app/out   --rm   thesis-v20-x86   'flatten:evaluate_conditions,calculate_flags,process_array,combine_signals,recursive_filter,logical_chain,input_guard,generate_dataset,inject_entropy,analyze_dynamics,main' dataset-gen
+Input: {'flatten': ['evaluate_conditions', 'calculate_flags', 'process_array', 'combine_signals', 'recursive_filter', 'logical_chain', 'input_guard', 'generate_dataset', 'inject_entropy', 'analyze_dynamics', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: input_guard -> flatten
+[annotation] Attached annotation: generate_dataset -> flatten
+[annotation] Attached annotation: inject_entropy -> flatten
+[annotation] Attached annotation: process_array -> flatten
+[annotation] Attached annotation: recursive_filter -> flatten
+[annotation] Attached annotation: logical_chain -> flatten
+[annotation] Attached annotation: calculate_flags -> flatten
+[annotation] Attached annotation: combine_signals -> flatten
+[annotation] Attached annotation: analyze_dynamics -> flatten
+[annotation] Attached annotation: evaluate_conditions -> flatten
+[flatten] Applying to: main
+[flatten] Applying to: input_guard
+[flatten] Applying to: generate_dataset
+[flatten] Applying to: inject_entropy
+[flatten] Applying to: process_array
+[flatten] Applying to: recursive_filter
+[flatten] Applying to: logical_chain
+[flatten] Applying to: calculate_flags
+[flatten] Applying to: combine_signals
+[flatten] Applying to: analyze_dynamics
+[flatten] Applying to: evaluate_conditions
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/dataset-gen[0m
+
+real	1m2.378s
+user	0m0.973s
+sys	0m0.259s

@@ -1,0 +1,16 @@
+cat: /opt/samplegenerator/src_roman_2/mutation/mutation.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/mutation/mutation.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_23_19_32_59/prog_myobf-latest-orig:/app/out   --rm   thesis-v20-x86   '_:mutate_value,analyze_pattern,chaotic_path,main' mutation
+Input: {'_': ['mutate_value', 'analyze_pattern', 'chaotic_path', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> _
+[annotation] Attached annotation: chaotic_path -> _
+[annotation] Attached annotation: mutate_value -> _
+[annotation] Attached annotation: analyze_pattern -> _
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/mutation[0m
+
+real	0m58.823s
+user	0m0.978s
+sys	0m0.230s

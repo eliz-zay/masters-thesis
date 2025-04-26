@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_23_19_32_59/prog_myobf-latest-orig
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_23_19_32_59/prog_myobf-latest-orig/logic-reactor.
+[2K[DEBUG] There are 11 functions.
+
+real	0m44.678s
+user	0m6.951s
+sys	0m0.707s

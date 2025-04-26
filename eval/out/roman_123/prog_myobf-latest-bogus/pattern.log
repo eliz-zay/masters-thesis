@@ -1,0 +1,123 @@
+cat: /opt/samplegenerator/src_roman_3/pattern/pattern.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_3/pattern/pattern.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_22_14_30/prog_myobf-latest-bogus:/app/out   --rm   thesis-v20-x86   'flatten:process_data,validate_input,transform_numbers,generate_pattern,find_max_value,calculate_average,modify_values,filter_data,run,main;bogus-switch:process_data,validate_input,transform_numbers,generate_pattern,find_max_value,calculate_average,modify_values,filter_data,run,main' pattern
+Input: {'flatten': ['process_data', 'validate_input', 'transform_numbers', 'generate_pattern', 'find_max_value', 'calculate_average', 'modify_values', 'filter_data', 'run', 'main'], 'bogus-switch': ['process_data', 'validate_input', 'transform_numbers', 'generate_pattern', 'find_max_value', 'calculate_average', 'modify_values', 'filter_data', 'run', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: main -> bogus-switch
+[annotation] Attached annotation: run -> flatten
+[annotation] Attached annotation: run -> bogus-switch
+[annotation] Attached annotation: validate_input -> flatten
+[annotation] Attached annotation: validate_input -> bogus-switch
+[annotation] Attached annotation: generate_pattern -> flatten
+[annotation] Attached annotation: generate_pattern -> bogus-switch
+[annotation] Attached annotation: transform_numbers -> flatten
+[annotation] Attached annotation: transform_numbers -> bogus-switch
+[annotation] Attached annotation: calculate_average -> flatten
+[annotation] Attached annotation: calculate_average -> bogus-switch
+[annotation] Attached annotation: find_max_value -> flatten
+[annotation] Attached annotation: find_max_value -> bogus-switch
+[annotation] Attached annotation: modify_values -> flatten
+[annotation] Attached annotation: modify_values -> bogus-switch
+[annotation] Attached annotation: filter_data -> flatten
+[annotation] Attached annotation: filter_data -> bogus-switch
+[annotation] Attached annotation: process_data -> flatten
+[annotation] Attached annotation: process_data -> bogus-switch
+[flatten] Applying to: main
+[flatten] Applying to: run
+[flatten] Applying to: validate_input
+[flatten] Applying to: generate_pattern
+[flatten] Applying to: transform_numbers
+[flatten] Applying to: calculate_average
+[flatten] Applying to: find_max_value
+[flatten] Applying to: modify_values
+[flatten] Applying to: filter_data
+[flatten] Applying to: process_data
+[bogus-switch] Applying to: main
+[bogus-switch] Applying to: run
+[bogus-switch] Generated duplicate case #13 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #14 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #15 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #16 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #17 for case #6, replacing 1 references
+[bogus-switch] Generated duplicate case #18 for case #5, replacing 0 references
+[bogus-switch] Generated duplicate case #19 for case #8, replacing 1 references
+[bogus-switch] Generated duplicate case #20 for case #7, replacing 0 references
+[bogus-switch] Generated duplicate case #21 for case #10, replacing 1 references
+[bogus-switch] Generated duplicate case #22 for case #9, replacing 0 references
+[bogus-switch] Applying to: validate_input
+[bogus-switch] Generated duplicate case #4 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #5 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #6 for case #0, replacing 0 references
+[bogus-switch] Applying to: generate_pattern
+[bogus-switch] Generated duplicate case #8 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #6, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #5, replacing 0 references
+[bogus-switch] Applying to: transform_numbers
+[bogus-switch] Generated duplicate case #8 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #6, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #5, replacing 0 references
+[bogus-switch] Applying to: calculate_average
+[bogus-switch] Applying to: find_max_value
+[bogus-switch] Generated duplicate case #8 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #6, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #5, replacing 0 references
+[bogus-switch] Applying to: modify_values
+[bogus-switch] Generated duplicate case #21 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #22 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #23 for case #14, replacing 0 references
+[bogus-switch] Generated duplicate case #24 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #25 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #26 for case #13, replacing 0 references
+[bogus-switch] Generated duplicate case #27 for case #15, replacing 1 references
+[bogus-switch] Generated duplicate case #28 for case #4, replacing 1 references
+[bogus-switch] Generated duplicate case #29 for case #12, replacing 0 references
+[bogus-switch] Generated duplicate case #30 for case #5, replacing 0 references
+[bogus-switch] Generated duplicate case #31 for case #6, replacing 1 references
+[bogus-switch] Generated duplicate case #32 for case #7, replacing 0 references
+[bogus-switch] Generated duplicate case #33 for case #8, replacing 1 references
+[bogus-switch] Generated duplicate case #34 for case #9, replacing 0 references
+[bogus-switch] Generated duplicate case #35 for case #10, replacing 1 references
+[bogus-switch] Applying to: filter_data
+[bogus-switch] Generated duplicate case #26 for case #7, replacing 0 references
+[bogus-switch] Generated duplicate case #27 for case #8, replacing 1 references
+[bogus-switch] Generated duplicate case #28 for case #9, replacing 0 references
+[bogus-switch] Generated duplicate case #29 for case #10, replacing 1 references
+[bogus-switch] Generated duplicate case #30 for case #11, replacing 0 references
+[bogus-switch] Generated duplicate case #31 for case #12, replacing 1 references
+[bogus-switch] Generated duplicate case #32 for case #5, replacing 0 references
+[bogus-switch] Generated duplicate case #33 for case #6, replacing 1 references
+[bogus-switch] Generated duplicate case #34 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #35 for case #22, replacing 0 references
+[bogus-switch] Generated duplicate case #36 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #37 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #38 for case #21, replacing 0 references
+[bogus-switch] Generated duplicate case #39 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #40 for case #23, replacing 1 references
+[bogus-switch] Generated duplicate case #41 for case #4, replacing 1 references
+[bogus-switch] Generated duplicate case #42 for case #20, replacing 0 references
+[bogus-switch] Generated duplicate case #43 for case #13, replacing 0 references
+[bogus-switch] Generated duplicate case #44 for case #14, replacing 1 references
+[bogus-switch] Applying to: process_data
+[bogus-switch] Generated duplicate case #8 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #6, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #5, replacing 0 references
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/pattern[0m
+
+real	0m59.036s
+user	0m0.891s
+sys	0m0.267s

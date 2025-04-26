@@ -1,0 +1,25 @@
+cat: /opt/samplegenerator/src_roman_2/stepper/stepper.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/stepper/stepper.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-orig:/app/out   --rm   thesis-v20-x86   '_:step1,step2,step3,step4,step5,step6,step7,step8,step9,step10,step11,step12,main' stepper
+Input: {'_': ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> _
+[annotation] Attached annotation: step1 -> _
+[annotation] Attached annotation: step2 -> _
+[annotation] Attached annotation: step3 -> _
+[annotation] Attached annotation: step4 -> _
+[annotation] Attached annotation: step5 -> _
+[annotation] Attached annotation: step6 -> _
+[annotation] Attached annotation: step7 -> _
+[annotation] Attached annotation: step8 -> _
+[annotation] Attached annotation: step9 -> _
+[annotation] Attached annotation: step10 -> _
+[annotation] Attached annotation: step11 -> _
+[annotation] Attached annotation: step12 -> _
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/stepper[0m
+
+real	0m58.188s
+user	0m0.880s
+sys	0m0.191s

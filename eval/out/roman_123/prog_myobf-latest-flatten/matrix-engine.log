@@ -1,0 +1,34 @@
+cat: /opt/samplegenerator/src_roman_2/matrix-engine/matrix-engine.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/matrix-engine/matrix-engine.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-flatten:/app/out   --rm   thesis-v20-x86   'flatten:compute_matrix,analyze_sequences,recursive_map,deep_compare,scramble_data,mutate_flags,shift_values,aggregate_columns,summarize_output,run,main' matrix-engine
+Input: {'flatten': ['compute_matrix', 'analyze_sequences', 'recursive_map', 'deep_compare', 'scramble_data', 'mutate_flags', 'shift_values', 'aggregate_columns', 'summarize_output', 'run', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: run -> flatten
+[annotation] Attached annotation: compute_matrix -> flatten
+[annotation] Attached annotation: analyze_sequences -> flatten
+[annotation] Attached annotation: scramble_data -> flatten
+[annotation] Attached annotation: mutate_flags -> flatten
+[annotation] Attached annotation: shift_values -> flatten
+[annotation] Attached annotation: aggregate_columns -> flatten
+[annotation] Attached annotation: deep_compare -> flatten
+[annotation] Attached annotation: recursive_map -> flatten
+[annotation] Attached annotation: summarize_output -> flatten
+[flatten] Applying to: main
+[flatten] Applying to: run
+[flatten] Applying to: compute_matrix
+[flatten] Applying to: analyze_sequences
+[flatten] Applying to: scramble_data
+[flatten] Applying to: mutate_flags
+[flatten] Applying to: shift_values
+[flatten] Applying to: aggregate_columns
+[flatten] Applying to: deep_compare
+[flatten] Applying to: recursive_map
+[flatten] Applying to: summarize_output
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/matrix-engine[0m
+
+real	1m0.285s
+user	0m0.885s
+sys	0m0.196s

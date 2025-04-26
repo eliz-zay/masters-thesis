@@ -1,0 +1,38 @@
+cat: /opt/samplegenerator/src_roman_2/events/events.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/events/events.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-mba:/app/out   --rm   thesis-v20-x86   'mba:evaluate_event,complex_rule,process_events,handle_event,main' events
+Input: {'mba': ['evaluate_event', 'complex_rule', 'process_events', 'handle_event', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> mba
+[annotation] Attached annotation: process_events -> mba
+[annotation] Attached annotation: handle_event -> mba
+[annotation] Attached annotation: evaluate_event -> mba
+[annotation] Attached annotation: complex_rule -> mba
+[mba] Applying to: main
+[mba] Applying to: process_events
+[mba] x = 0: v4
+[mba] Applying to: handle_event
+[mba] Applying to: evaluate_event
+[mba] x + y: v5
+[mba] x + y: v4
+[mba] x = 0: v4
+[mba] x + y: v6
+[mba] x + y: v2
+[mba] Applying to: complex_rule
+[mba] x = 0: v3
+[mba] x = 0: v1
+[mba] x + y: v4
+[mba] x + y: v2
+[mba] x + y: v3
+[mba] x = 0: v4
+[mba] x + y: v3
+[mba] x + y: v2
+[mba] x + y: v6
+[mba] x + y: v5
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/events[0m
+
+real	1m6.681s
+user	0m1.086s
+sys	0m0.235s

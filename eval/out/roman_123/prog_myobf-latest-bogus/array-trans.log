@@ -1,0 +1,66 @@
+cat: /opt/samplegenerator/src_roman_3/array-trans/array-trans.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_3/array-trans/array-trans.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_22_14_30/prog_myobf-latest-bogus:/app/out   --rm   thesis-v20-x86   'flatten:validate_data,transform_array,calculate_statistics,modify_data,main;bogus-switch:validate_data,transform_array,calculate_statistics,modify_data,main' array-trans
+Input: {'flatten': ['validate_data', 'transform_array', 'calculate_statistics', 'modify_data', 'main'], 'bogus-switch': ['validate_data', 'transform_array', 'calculate_statistics', 'modify_data', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: main -> bogus-switch
+[annotation] Attached annotation: validate_data -> flatten
+[annotation] Attached annotation: validate_data -> bogus-switch
+[annotation] Attached annotation: transform_array -> flatten
+[annotation] Attached annotation: transform_array -> bogus-switch
+[annotation] Attached annotation: calculate_statistics -> flatten
+[annotation] Attached annotation: calculate_statistics -> bogus-switch
+[annotation] Attached annotation: modify_data -> flatten
+[annotation] Attached annotation: modify_data -> bogus-switch
+[flatten] Applying to: main
+[flatten] Applying to: validate_data
+[flatten] Applying to: transform_array
+[flatten] Applying to: calculate_statistics
+[flatten] Applying to: modify_data
+[bogus-switch] Applying to: main
+[bogus-switch] Generated duplicate case #11 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #10, replacing 1 references
+[bogus-switch] Generated duplicate case #14 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #15 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #16 for case #9, replacing 1 references
+[bogus-switch] Generated duplicate case #17 for case #6, replacing 1 references
+[bogus-switch] Generated duplicate case #18 for case #5, replacing 0 references
+[bogus-switch] Applying to: validate_data
+[bogus-switch] Generated duplicate case #4 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #5 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #6 for case #2, replacing 0 references
+[bogus-switch] Applying to: transform_array
+[bogus-switch] Generated duplicate case #9 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #3, replacing 1 references
+[bogus-switch] Generated duplicate case #13 for case #8, replacing 1 references
+[bogus-switch] Generated duplicate case #14 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #15 for case #5, replacing 0 references
+[bogus-switch] Applying to: calculate_statistics
+[bogus-switch] Generated duplicate case #13 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #14 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #15 for case #11, replacing 0 references
+[bogus-switch] Generated duplicate case #16 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #17 for case #6, replacing 0 references
+[bogus-switch] Generated duplicate case #18 for case #9, replacing 0 references
+[bogus-switch] Generated duplicate case #19 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #20 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #21 for case #10, replacing 0 references
+[bogus-switch] Generated duplicate case #22 for case #5, replacing 0 references
+[bogus-switch] Applying to: modify_data
+[bogus-switch] Generated duplicate case #8 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #6, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #5, replacing 0 references
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/array-trans[0m
+
+real	0m59.278s
+user	0m1.032s
+sys	0m0.256s

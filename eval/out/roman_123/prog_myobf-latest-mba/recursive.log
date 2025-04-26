@@ -1,0 +1,44 @@
+cat: /opt/samplegenerator/src_roman_2/recursive/recursive.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/recursive/recursive.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-mba:/app/out   --rm   thesis-v20-x86   'mba:process_layer,transform_state,apply_gate,recursive_flow,mutate_state,sanity_check,initialize_state,main' recursive
+Input: {'mba': ['process_layer', 'transform_state', 'apply_gate', 'recursive_flow', 'mutate_state', 'sanity_check', 'initialize_state', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> mba
+[annotation] Attached annotation: recursive_flow -> mba
+[annotation] Attached annotation: process_layer -> mba
+[annotation] Attached annotation: transform_state -> mba
+[annotation] Attached annotation: mutate_state -> mba
+[annotation] Attached annotation: sanity_check -> mba
+[annotation] Attached annotation: apply_gate -> mba
+[mba] Applying to: main
+[mba] Applying to: recursive_flow
+[mba] Applying to: process_layer
+[mba] x = 0: v4
+[mba] x + y: v5
+[mba] x + y: v4
+[mba] x + y: v2
+[mba] x + y: v6
+[mba] x + y: v2
+[mba] x + y: v5
+[mba] Applying to: transform_state
+[mba] x = 0: v1
+[mba] x + y: v4
+[mba] x + y: v2
+[mba] x + y: v3
+[mba] Applying to: mutate_state
+[mba] x + y: v2
+[mba] x + y: v3
+[mba] x = 0: v4
+[mba] x + y: v6
+[mba] x + y: v5
+[mba] Applying to: sanity_check
+[mba] Applying to: apply_gate
+[mba] x + y: v1
+[mba] x + y: v1
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/recursive[0m
+
+real	0m55.938s
+user	0m0.910s
+sys	0m0.168s

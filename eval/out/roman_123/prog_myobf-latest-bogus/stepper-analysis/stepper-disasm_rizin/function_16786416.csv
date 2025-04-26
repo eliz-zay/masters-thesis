@@ -1,0 +1,53 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,val,ptr,xrefs_from,jump,fail
+16786416,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16786416,16786614,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.step12'],"[{'addr': 16783912, 'type': 'CALL'}, {'addr': 16784169, 'type': 'CALL'}]",,,,,
+16786417,"rsp,rbp,=",False,16786416,16786612,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,,,,,
+16786420,"32,rsp,-=,32,0x8000000000000000,-,!,63,$o,^,of,:=,63,$s,sf,:=,$z,zf,:=,$p,pf,:=,64,$b,cf,:=,3,$b,af,:=",False,16786416,16786611,4,"sub rsp, 0x20","sub rsp, 0x20",4883ec20,cpu,sub,False,18,0,,,32.0,,,,
+16786424,"rdi,0x18,rbp,-,=[8]",True,16786416,16786611,4,"mov qword [rbp - 0x18], rdi","mov qword [format], rdi",48897de8,cpu,mov,False,268435465,0,,,,,,,
+16786428,"0x1ddc,rip,-,rdi,=",True,16786416,16786608,7,"lea rdi, [rip - 0x1ddc]","lea rdi, str.Final_output:",488d3d24e2ffff,cpu,lea,False,33,0,,,,16778791.0,"[{'addr': 16778791, 'type': 'DATA'}]",,
+16786435,"16786800,rip,8,rsp,-=,rsp,=[],rip,=",False,16786416,16786610,5,call 0x1002570,call sym.imp.puts,e868010000,cpu,call,False,3,0,,,,,"[{'addr': 16786800, 'type': 'CALL'}]",16786800.0,16786440.0
+16786440,"0x18,rbp,-,[8],rdi,=",True,16786416,16786611,4,"mov rdi, qword [rbp - 0x18]","mov rdi, qword [format]",488b7de8,cpu,mov,False,9,0,,,,,,,
+16786444,"rdi,[4],rsi,=",True,16786416,16786613,2,"mov esi, dword [rdi]","mov esi, dword [rdi]",8b37,cpu,mov,False,9,0,,,,,,,
+16786446,"0x1ddf,rip,-,rdi,=",True,16786416,16786608,7,"lea rdi, [rip - 0x1ddf]","lea rdi, data.01000636",488d3d21e2ffff,cpu,lea,False,33,0,,,,16778806.0,"[{'addr': 16778806, 'type': 'DATA'}]",,
+16786453,"rdi,0x10,rbp,-,=[8]",True,16786416,16786611,4,"mov qword [rbp - 0x10], rdi","mov qword [var_18h], rdi",48897df0,cpu,mov,False,268435465,0,,,,,,,
+16786457,"eax,rax,^,0xffffffff,&,rax,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16786416,16786613,2,"xor eax, eax","xor eax, eax",31c0,cpu,xor,False,28,0,,,,,,,
+16786459,"al,0x1,rbp,-,=[1]",True,16786416,16786612,3,"mov byte [rbp - 1], al","mov byte [var_9h], al",8845ff,cpu,mov,False,268435465,0,,,,,,,
+16786462,"16786768,rip,8,rsp,-=,rsp,=[],rip,=",False,16786416,16786610,5,call 0x1002550,call sym.imp.printf,e82d010000,cpu,call,False,3,0,,,,,"[{'addr': 16786768, 'type': 'CALL'}]",16786768.0,16786467.0
+16786467,"0x18,rbp,-,[8],rcx,=",True,16786416,16786611,4,"mov rcx, qword [rbp - 0x18]","mov rcx, qword [format]",488b4de8,cpu,mov,False,9,0,,,,,,,
+16786471,"0x10,rbp,-,[8],rdi,=",True,16786416,16786611,4,"mov rdi, qword [rbp - 0x10]","mov rdi, qword [var_18h]",488b7df0,cpu,mov,False,9,0,,,,,,,
+16786475,"0x1,rbp,-,[1],al,=",True,16786416,16786612,3,"mov al, byte [rbp - 1]","mov al, byte [var_9h]",8a45ff,cpu,mov,False,9,0,,,,,,,
+16786478,"0x4,rcx,+,[4],rsi,=",True,16786416,16786612,3,"mov esi, dword [rcx + 4]","mov esi, dword [rcx + 4]",8b7104,cpu,mov,False,9,0,,,,,,,
+16786481,"16786768,rip,8,rsp,-=,rsp,=[],rip,=",False,16786416,16786610,5,call 0x1002550,call sym.imp.printf,e81a010000,cpu,call,False,3,0,,,,,"[{'addr': 16786768, 'type': 'CALL'}]",16786768.0,16786486.0
+16786486,"0x18,rbp,-,[8],rcx,=",True,16786416,16786611,4,"mov rcx, qword [rbp - 0x18]","mov rcx, qword [format]",488b4de8,cpu,mov,False,9,0,,,,,,,
+16786490,"0x10,rbp,-,[8],rdi,=",True,16786416,16786611,4,"mov rdi, qword [rbp - 0x10]","mov rdi, qword [var_18h]",488b7df0,cpu,mov,False,9,0,,,,,,,
+16786494,"0x1,rbp,-,[1],al,=",True,16786416,16786612,3,"mov al, byte [rbp - 1]","mov al, byte [var_9h]",8a45ff,cpu,mov,False,9,0,,,,,,,
+16786497,"0x8,rcx,+,[4],rsi,=",True,16786416,16786612,3,"mov esi, dword [rcx + 8]","mov esi, dword [rcx + 8]",8b7108,cpu,mov,False,9,0,,,,,,,
+16786500,"16786768,rip,8,rsp,-=,rsp,=[],rip,=",False,16786416,16786610,5,call 0x1002550,call sym.imp.printf,e807010000,cpu,call,False,3,0,,,,,"[{'addr': 16786768, 'type': 'CALL'}]",16786768.0,16786505.0
+16786505,"0x18,rbp,-,[8],rcx,=",True,16786416,16786611,4,"mov rcx, qword [rbp - 0x18]","mov rcx, qword [format]",488b4de8,cpu,mov,False,9,0,,,,,,,
+16786509,"0x10,rbp,-,[8],rdi,=",True,16786416,16786611,4,"mov rdi, qword [rbp - 0x10]","mov rdi, qword [var_18h]",488b7df0,cpu,mov,False,9,0,,,,,,,
+16786513,"0x1,rbp,-,[1],al,=",True,16786416,16786612,3,"mov al, byte [rbp - 1]","mov al, byte [var_9h]",8a45ff,cpu,mov,False,9,0,,,,,,,
+16786516,"0xc,rcx,+,[4],rsi,=",True,16786416,16786612,3,"mov esi, dword [rcx + 0xc]","mov esi, dword [rcx + 0xc]",8b710c,cpu,mov,False,9,0,,,,,,,
+16786519,"16786768,rip,8,rsp,-=,rsp,=[],rip,=",False,16786416,16786610,5,call 0x1002550,call sym.imp.printf,e8f4000000,cpu,call,False,3,0,,,,,"[{'addr': 16786768, 'type': 'CALL'}]",16786768.0,16786524.0
+16786524,"0x18,rbp,-,[8],rcx,=",True,16786416,16786611,4,"mov rcx, qword [rbp - 0x18]","mov rcx, qword [format]",488b4de8,cpu,mov,False,9,0,,,,,,,
+16786528,"0x10,rbp,-,[8],rdi,=",True,16786416,16786611,4,"mov rdi, qword [rbp - 0x10]","mov rdi, qword [var_18h]",488b7df0,cpu,mov,False,9,0,,,,,,,
+16786532,"0x1,rbp,-,[1],al,=",True,16786416,16786612,3,"mov al, byte [rbp - 1]","mov al, byte [var_9h]",8a45ff,cpu,mov,False,9,0,,,,,,,
+16786535,"0x10,rcx,+,[4],rsi,=",True,16786416,16786612,3,"mov esi, dword [rcx + 0x10]","mov esi, dword [rcx + 0x10]",8b7110,cpu,mov,False,9,0,,,,,,,
+16786538,"16786768,rip,8,rsp,-=,rsp,=[],rip,=",False,16786416,16786610,5,call 0x1002550,call sym.imp.printf,e8e1000000,cpu,call,False,3,0,,,,,"[{'addr': 16786768, 'type': 'CALL'}]",16786768.0,16786543.0
+16786543,"0x18,rbp,-,[8],rcx,=",True,16786416,16786611,4,"mov rcx, qword [rbp - 0x18]","mov rcx, qword [format]",488b4de8,cpu,mov,False,9,0,,,,,,,
+16786547,"0x10,rbp,-,[8],rdi,=",True,16786416,16786611,4,"mov rdi, qword [rbp - 0x10]","mov rdi, qword [var_18h]",488b7df0,cpu,mov,False,9,0,,,,,,,
+16786551,"0x1,rbp,-,[1],al,=",True,16786416,16786612,3,"mov al, byte [rbp - 1]","mov al, byte [var_9h]",8a45ff,cpu,mov,False,9,0,,,,,,,
+16786554,"0x14,rcx,+,[4],rsi,=",True,16786416,16786612,3,"mov esi, dword [rcx + 0x14]","mov esi, dword [rcx + 0x14]",8b7114,cpu,mov,False,9,0,,,,,,,
+16786557,"16786768,rip,8,rsp,-=,rsp,=[],rip,=",False,16786416,16786610,5,call 0x1002550,call sym.imp.printf,e8ce000000,cpu,call,False,3,0,,,,,"[{'addr': 16786768, 'type': 'CALL'}]",16786768.0,16786562.0
+16786562,"0x18,rbp,-,[8],rcx,=",True,16786416,16786611,4,"mov rcx, qword [rbp - 0x18]","mov rcx, qword [format]",488b4de8,cpu,mov,False,9,0,,,,,,,
+16786566,"0x10,rbp,-,[8],rdi,=",True,16786416,16786611,4,"mov rdi, qword [rbp - 0x10]","mov rdi, qword [var_18h]",488b7df0,cpu,mov,False,9,0,,,,,,,
+16786570,"0x1,rbp,-,[1],al,=",True,16786416,16786612,3,"mov al, byte [rbp - 1]","mov al, byte [var_9h]",8a45ff,cpu,mov,False,9,0,,,,,,,
+16786573,"0x18,rcx,+,[4],rsi,=",True,16786416,16786612,3,"mov esi, dword [rcx + 0x18]","mov esi, dword [rcx + 0x18]",8b7118,cpu,mov,False,9,0,,,,,,,
+16786576,"16786768,rip,8,rsp,-=,rsp,=[],rip,=",False,16786416,16786610,5,call 0x1002550,call sym.imp.printf,e8bb000000,cpu,call,False,3,0,,,,,"[{'addr': 16786768, 'type': 'CALL'}]",16786768.0,16786581.0
+16786581,"0x18,rbp,-,[8],rcx,=",True,16786416,16786611,4,"mov rcx, qword [rbp - 0x18]","mov rcx, qword [format]",488b4de8,cpu,mov,False,9,0,,,,,,,
+16786585,"0x10,rbp,-,[8],rdi,=",True,16786416,16786611,4,"mov rdi, qword [rbp - 0x10]","mov rdi, qword [var_18h]",488b7df0,cpu,mov,False,9,0,,,,,,,
+16786589,"0x1,rbp,-,[1],al,=",True,16786416,16786612,3,"mov al, byte [rbp - 1]","mov al, byte [var_9h]",8a45ff,cpu,mov,False,9,0,,,,,,,
+16786592,"0x1c,rcx,+,[4],rsi,=",True,16786416,16786612,3,"mov esi, dword [rcx + 0x1c]","mov esi, dword [rcx + 0x1c]",8b711c,cpu,mov,False,9,0,,,,,,,
+16786595,"16786768,rip,8,rsp,-=,rsp,=[],rip,=",False,16786416,16786610,5,call 0x1002550,call sym.imp.printf,e8a8000000,cpu,call,False,3,0,,,,,"[{'addr': 16786768, 'type': 'CALL'}]",16786768.0,16786600.0
+16786600,"10,rdi,=",False,16786416,16786610,5,"mov edi, 0xa","mov edi, 0xa",bf0a000000,cpu,mov,False,9,0,,,10.0,,,,
+16786605,"32,rsp,+=,63,$o,of,:=,63,$s,sf,:=,$z,zf,:=,63,$c,cf,:=,$p,pf,:=,3,$c,af,:=",False,16786416,16786611,4,"add rsp, 0x20","add rsp, 0x20",4883c420,cpu,add,False,17,0,,,32.0,,,,
+16786609,"rsp,[8],8,rsp,+=,rbp,=",False,16786416,16786614,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,,,,,
+16786610,"0x1002580,rip,=",False,16786416,16786610,5,jmp 0x1002580,jmp sym.imp.putchar,e9c9000000,cpu,jmp,False,1,0,,,,,"[{'addr': 16786816, 'type': 'CODE'}]",16786816.0,

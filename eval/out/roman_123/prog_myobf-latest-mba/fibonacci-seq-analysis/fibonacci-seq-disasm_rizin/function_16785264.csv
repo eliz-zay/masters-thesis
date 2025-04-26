@@ -1,0 +1,16 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,ptr,val
+16785264,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16785264,16785295,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.aggregate_metrics'],"[{'addr': 16783908, 'type': 'CALL'}]",,
+16785265,"rsp,rbp,=",False,16785264,16785293,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,,
+16785268,"rdi,[4],rcx,=",True,16785264,16785294,2,"mov ecx, dword [rdi]","mov ecx, dword [rdi]",8b0f,cpu,mov,False,9,0,,,,
+16785270,"0x4,rdi,+,[4],rdx,=",True,16785264,16785293,3,"mov edx, dword [rdi + 4]","mov edx, dword [rdi + 4]",8b5704,cpu,mov,False,9,0,,,,
+16785273,"0,1,!,!,?{,1,1,-,edx,<<,0x80000000,&,!,!,^,},1,edx,<<=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,cf,=",False,16785264,16785294,2,"shl edx, 1","shl edx, 1",d1e2,cpu,shl,False,23,0,,,,
+16785275,"ecx,rax,=",False,16785264,16785294,2,"mov eax, ecx","mov eax, ecx",89c8,cpu,mov,False,9,0,,,,
+16785277,"eax,eax,|=,31,$s,sf,:=,$z,zf,:=,$p,pf,:=,0,of,:=,0,cf,:=",False,16785264,16785294,2,"or eax, eax","or eax, eax",09c0,cpu,or,False,26,0,,,,
+16785279,"4294967295,rax,^,0xffffffff,&,rax,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16785264,16785293,3,"xor eax, 0xffffffff","xor eax, 0xffffffff",83f0ff,cpu,xor,False,28,0,,,4294967295.0,4294967295.0
+16785282,"4294967295,rdx,^,0xffffffff,&,rdx,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16785264,16785293,3,"xor edx, 0xffffffff","xor edx, 0xffffffff",83f2ff,cpu,xor,False,28,0,,,4294967295.0,4294967295.0
+16785285,"ecx,rax,^,0xffffffff,&,rax,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16785264,16785294,2,"xor eax, ecx","xor eax, ecx",31c8,cpu,xor,False,28,0,,,,
+16785287,"edx,rax,^,0xffffffff,&,rax,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16785264,16785294,2,"xor eax, edx","xor eax, edx",31d0,cpu,xor,False,28,0,,,,
+16785289,"ecx,eax,+=,31,$o,of,:=,31,$s,sf,:=,$z,zf,:=,31,$c,cf,:=,$p,pf,:=,3,$c,af,:=",False,16785264,16785294,2,"add eax, ecx","add eax, ecx",01c8,cpu,add,False,17,0,,,,
+16785291,"0x8,rdi,+,[4],eax,-=,0x8,rdi,+,[4],0x80000000,-,!,31,$o,^,of,:=,31,$s,sf,:=,$z,zf,:=,$p,pf,:=,32,$b,cf,:=,3,$b,af,:=",True,16785264,16785293,3,"sub eax, dword [rdi + 8]","sub eax, dword [rdi + 8]",2b4708,cpu,sub,False,18,0,,,,
+16785294,"rsp,[8],8,rsp,+=,rbp,=",False,16785264,16785295,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,,
+16785295,"rsp,[8],rip,=,8,rsp,+=",False,16785264,16785295,1,ret,ret,c3,cpu,ret,False,5,0,,,,

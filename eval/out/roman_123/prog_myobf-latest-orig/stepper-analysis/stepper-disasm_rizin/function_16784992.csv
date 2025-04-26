@@ -1,0 +1,11 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to
+16784992,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16784992,16785022,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.step7'],"[{'addr': 16783760, 'type': 'CALL'}]"
+16784993,"rsp,rbp,=",False,16784992,16785020,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,
+16784996,"rdi,[16],xmm0,=",True,16784992,16785020,3,"movups xmm0, xmmword [rdi]","movups xmm0, xmmword [rdi]",0f1007,sse,mov,False,9,0,,
+16784999,,False,16784992,16785018,5,"pshufd xmm0, xmm0, 0xb1","pshufd xmm0, xmm0, 0xb1",660f70c0b1,sse,null,False,0,0,,
+16785004,"xmm0,rdi,=[16]",True,16784992,16785020,3,"movups xmmword [rdi], xmm0","movups xmmword [rdi], xmm0",0f1107,sse,mov,False,9,0,,
+16785007,"0x10,rdi,+,[16],xmm0,=",True,16784992,16785019,4,"movups xmm0, xmmword [rdi + 0x10]","movups xmm0, xmmword [rdi + 0x10]",0f104710,sse,mov,False,9,0,,
+16785011,,False,16784992,16785018,5,"pshufd xmm0, xmm0, 0xb1","pshufd xmm0, xmm0, 0xb1",660f70c0b1,sse,null,False,0,0,,
+16785016,"xmm0,0x10,rdi,+,=[16]",False,16784992,16785018,5,"movdqu xmmword [rdi + 0x10], xmm0","movdqu xmmword [rdi + 0x10], xmm0",f30f7f4710,sse,null,False,0,0,,
+16785021,"rsp,[8],8,rsp,+=,rbp,=",False,16784992,16785022,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,
+16785022,"rsp,[8],rip,=,8,rsp,+=",False,16784992,16785022,1,ret,ret,c3,cpu,ret,False,5,0,,

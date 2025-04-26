@@ -1,0 +1,75 @@
+cat: /opt/samplegenerator/src_roman/cfg/cfg.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman/cfg/cfg.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_22_23_54_57/prog_myobf-latest-mba:/app/out   --rm   thesis-v20-x86   'mba:run,recursive_logic,function_a,function_b,function_c,main' cfg
+Input: {'mba': ['run', 'recursive_logic', 'function_a', 'function_b', 'function_c', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> mba
+[annotation] Attached annotation: run -> mba
+[annotation] Attached annotation: function_a -> mba
+[annotation] Attached annotation: function_b -> mba
+[annotation] Attached annotation: function_c -> mba
+[annotation] Attached annotation: recursive_logic -> mba
+[mba] Applying to: main
+[mba] Applying to: run
+[mba] x = 0: v4
+[mba] x + y: v5
+[mba] x + y: v4
+[mba] x + y: v2
+[mba] x + y: v6
+[mba] x + y: v2
+[mba] x + y: v5
+[mba] x + y: v1
+[mba] x + y: v4
+[mba] Applying to: function_a
+[mba] x > 0: v2
+[mba] x + y: v3
+[mba] x + y: v2
+[mba] x + y: v3
+[mba] x + y: v2
+[mba] x + y: v6
+[mba] x + y: v5
+[mba] x + y: v1
+[mba] Applying to: function_b
+[mba] x + y: v1
+[mba] x + y: v5
+[mba] Applying to: function_c
+[mba] x > 0: v1
+[mba] x + y: v6
+[mba] x + y: v3
+[mba] x + y: v4
+[mba] x + y: v4
+[mba] x + y: v3
+[mba] x + y: v3
+[mba] x + y: v3
+[mba] x = 0: v4
+[mba] x + y: v2
+[mba] x + y: v2
+[mba] x = 0: v2
+[mba] x + y: v1
+[mba] x + y: v1
+[mba] x = 0: v3
+[mba] x + y: v6
+[mba] x + y: v4
+[mba] x = 0: v2
+[mba] x + y: v5
+[mba] x + y: v2
+[mba] x = 0: v3
+[mba] x + y: v4
+[mba] x + y: v4
+[mba] x = 0: v2
+[mba] x + y: v6
+[mba] x + y: v3
+[mba] x = 0: v2
+[mba] x + y: v3
+[mba] Applying to: recursive_logic
+[mba] x + y: v3
+[mba] x + y: v6
+[mba] x + y: v1
+[mba] x + y: v6
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/cfg[0m
+
+real	1m4.187s
+user	0m0.977s
+sys	0m0.266s

@@ -1,0 +1,7 @@
+,exit_code,stdout,real_time,cpu_time
+prog_clang-oslatest-O0,0,b'You win!\nHash: 0x7\n',0.02264304100026493,0.017789416000000058
+prog_myobf-latest-bogus,0,b'You win!\nHash: 0x7\n',0.019791916998656234,0.0035970000000000724
+prog_myobf-latest-flatten,0,b'You win!\nHash: 0x7\n',0.01884770899778232,0.0029587909999999606
+prog_myobf-latest-mba,0,b'You win!\nHash: 0x7\n',0.019174917000782443,0.002780624999999981
+prog_myobf-latest-merge,0,b'You win!\nHash: 0x7\n',0.018181000003096415,0.002757791000000065
+prog_myobf-latest-orig,0,b'You win!\nHash: 0x7\n',0.01920487499955925,0.0028050829999999305

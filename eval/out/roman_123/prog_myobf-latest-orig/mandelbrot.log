@@ -1,0 +1,18 @@
+cat: /opt/samplegenerator/src_roman_3/mandelbrot/mandelbrot.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_3/mandelbrot/mandelbrot.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_22_14_30/prog_myobf-latest-orig:/app/out   --rm   thesis-v20-x86   '_:map,mandelbrot,render_mandelbrot,complex_math_operations,matrix_operations,main' mandelbrot
+Input: {'_': ['map', 'mandelbrot', 'render_mandelbrot', 'complex_math_operations', 'matrix_operations', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> _
+[annotation] Attached annotation: render_mandelbrot -> _
+[annotation] Attached annotation: complex_math_operations -> _
+[annotation] Attached annotation: matrix_operations -> _
+[annotation] Attached annotation: map -> _
+[annotation] Attached annotation: mandelbrot -> _
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/mandelbrot[0m
+
+real	0m57.515s
+user	0m0.888s
+sys	0m0.226s

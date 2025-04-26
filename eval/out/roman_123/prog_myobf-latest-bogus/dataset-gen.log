@@ -1,0 +1,94 @@
+cat: /opt/samplegenerator/src_roman_3/dataset-gen/dataset-gen.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_3/dataset-gen/dataset-gen.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_22_14_30/prog_myobf-latest-bogus:/app/out   --rm   thesis-v20-x86   'flatten:evaluate_conditions,calculate_flags,process_array,combine_signals,recursive_filter,logical_chain,input_guard,generate_dataset,inject_entropy,analyze_dynamics,main;bogus-switch:evaluate_conditions,calculate_flags,process_array,combine_signals,recursive_filter,logical_chain,input_guard,generate_dataset,inject_entropy,analyze_dynamics,main' dataset-gen
+Input: {'flatten': ['evaluate_conditions', 'calculate_flags', 'process_array', 'combine_signals', 'recursive_filter', 'logical_chain', 'input_guard', 'generate_dataset', 'inject_entropy', 'analyze_dynamics', 'main'], 'bogus-switch': ['evaluate_conditions', 'calculate_flags', 'process_array', 'combine_signals', 'recursive_filter', 'logical_chain', 'input_guard', 'generate_dataset', 'inject_entropy', 'analyze_dynamics', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: main -> bogus-switch
+[annotation] Attached annotation: input_guard -> flatten
+[annotation] Attached annotation: input_guard -> bogus-switch
+[annotation] Attached annotation: generate_dataset -> flatten
+[annotation] Attached annotation: generate_dataset -> bogus-switch
+[annotation] Attached annotation: inject_entropy -> flatten
+[annotation] Attached annotation: inject_entropy -> bogus-switch
+[annotation] Attached annotation: process_array -> flatten
+[annotation] Attached annotation: process_array -> bogus-switch
+[annotation] Attached annotation: recursive_filter -> flatten
+[annotation] Attached annotation: recursive_filter -> bogus-switch
+[annotation] Attached annotation: logical_chain -> flatten
+[annotation] Attached annotation: logical_chain -> bogus-switch
+[annotation] Attached annotation: calculate_flags -> flatten
+[annotation] Attached annotation: calculate_flags -> bogus-switch
+[annotation] Attached annotation: combine_signals -> flatten
+[annotation] Attached annotation: combine_signals -> bogus-switch
+[annotation] Attached annotation: analyze_dynamics -> flatten
+[annotation] Attached annotation: analyze_dynamics -> bogus-switch
+[annotation] Attached annotation: evaluate_conditions -> flatten
+[annotation] Attached annotation: evaluate_conditions -> bogus-switch
+[flatten] Applying to: main
+[flatten] Applying to: input_guard
+[flatten] Applying to: generate_dataset
+[flatten] Applying to: inject_entropy
+[flatten] Applying to: process_array
+[flatten] Applying to: recursive_filter
+[flatten] Applying to: logical_chain
+[flatten] Applying to: calculate_flags
+[flatten] Applying to: combine_signals
+[flatten] Applying to: analyze_dynamics
+[flatten] Applying to: evaluate_conditions
+[bogus-switch] Applying to: main
+[bogus-switch] Generated duplicate case #7 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #8 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #6, replacing 1 references
+[bogus-switch] Generated duplicate case #10 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #4, replacing 0 references
+[bogus-switch] Applying to: input_guard
+[bogus-switch] Generated duplicate case #4 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #5 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #6 for case #1, replacing 0 references
+[bogus-switch] Applying to: generate_dataset
+[bogus-switch] Generated duplicate case #4 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #5 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #6 for case #3, replacing 0 references
+[bogus-switch] Applying to: inject_entropy
+[bogus-switch] Applying to: process_array
+[bogus-switch] Generated duplicate case #16 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #17 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #18 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #19 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #20 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #21 for case #6, replacing 1 references
+[bogus-switch] Generated duplicate case #22 for case #5, replacing 0 references
+[bogus-switch] Generated duplicate case #23 for case #15, replacing 0 references
+[bogus-switch] Generated duplicate case #24 for case #7, replacing 0 references
+[bogus-switch] Generated duplicate case #25 for case #8, replacing 0 references
+[bogus-switch] Generated duplicate case #26 for case #11, replacing 2 references
+[bogus-switch] Generated duplicate case #27 for case #9, replacing 0 references
+[bogus-switch] Applying to: recursive_filter
+[bogus-switch] Generated duplicate case #8 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #7, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #3, replacing 1 references
+[bogus-switch] Generated duplicate case #13 for case #4, replacing 0 references
+[bogus-switch] Applying to: logical_chain
+[bogus-switch] Generated duplicate case #8 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #7, replacing 1 references
+[bogus-switch] Generated duplicate case #11 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #3, replacing 0 references
+[bogus-switch] Applying to: calculate_flags
+[bogus-switch] Generated duplicate case #4 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #5 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #6 for case #2, replacing 0 references
+[bogus-switch] Applying to: combine_signals
+[bogus-switch] Applying to: analyze_dynamics
+[bogus-switch] Applying to: evaluate_conditions
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/dataset-gen[0m
+
+real	0m57.600s
+user	0m0.896s
+sys	0m0.246s

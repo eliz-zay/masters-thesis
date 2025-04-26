@@ -1,0 +1,28 @@
+cat: /opt/samplegenerator/src_roman_3/fibonacci-seq/fibonacci-seq.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_3/fibonacci-seq/fibonacci-seq.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_22_14_30/prog_myobf-latest-flatten:/app/out   --rm   thesis-v20-x86   'flatten:compute_fibonacci,analyze_sequence,aggregate_metrics,transform_sequence,validate_input,build_sequence,process_sequence,main' fibonacci-seq
+Input: {'flatten': ['compute_fibonacci', 'analyze_sequence', 'aggregate_metrics', 'transform_sequence', 'validate_input', 'build_sequence', 'process_sequence', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: process_sequence -> flatten
+[annotation] Attached annotation: validate_input -> flatten
+[annotation] Attached annotation: build_sequence -> flatten
+[annotation] Attached annotation: analyze_sequence -> flatten
+[annotation] Attached annotation: aggregate_metrics -> flatten
+[annotation] Attached annotation: compute_fibonacci -> flatten
+[annotation] Attached annotation: transform_sequence -> flatten
+[flatten] Applying to: main
+[flatten] Applying to: process_sequence
+[flatten] Applying to: validate_input
+[flatten] Applying to: build_sequence
+[flatten] Applying to: analyze_sequence
+[flatten] Applying to: aggregate_metrics
+[flatten] Applying to: compute_fibonacci
+[flatten] Applying to: transform_sequence
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/fibonacci-seq[0m
+
+real	1m3.980s
+user	0m0.974s
+sys	0m0.354s

@@ -1,0 +1,6 @@
+/opt/samplegenerator/out/run_2025_04_25_17_11_45_roman_2/prog_myobf-latest-flatten
+[0;34m[INFO][0m: Calculating software metrics for /opt/samplegenerator/out/run_2025_04_25_17_11_45_roman_2/prog_myobf-latest-flatten/recursive.
+
+real	0m33.597s
+user	0m7.061s
+sys	0m0.405s

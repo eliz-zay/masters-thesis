@@ -1,0 +1,17 @@
+cat: /opt/samplegenerator/src_math/naivemodularinverse/naivemodularinverse.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_math/naivemodularinverse/naivemodularinverse.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_19_07_37_18/prog_myobf-latest-mba:/app/out   --rm   thesis-v20-x86   'mba:main,naiveModInv' naivemodularinverse
+Input: {'mba': ['main', 'naiveModInv']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: naiveModInv -> mba
+[annotation] Attached annotation: main -> mba
+[mba] Applying to: naiveModInv
+[mba] x + y: v2
+[mba] Applying to: main
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/naivemodularinverse[0m
+
+real	0m56.386s
+user	0m0.937s
+sys	0m0.255s

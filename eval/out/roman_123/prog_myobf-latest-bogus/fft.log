@@ -1,0 +1,46 @@
+cat: /opt/samplegenerator/src_roman_3/fft/fft.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_3/fft/fft.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_22_14_30/prog_myobf-latest-bogus:/app/out   --rm   thesis-v20-x86   'flatten:fft,rearrange,compute,main;bogus-switch:fft,rearrange,compute,main' fft
+Input: {'flatten': ['fft', 'rearrange', 'compute', 'main'], 'bogus-switch': ['fft', 'rearrange', 'compute', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: main -> bogus-switch
+[annotation] Attached annotation: fft -> flatten
+[annotation] Attached annotation: fft -> bogus-switch
+[annotation] Attached annotation: rearrange -> flatten
+[annotation] Attached annotation: rearrange -> bogus-switch
+[annotation] Attached annotation: compute -> flatten
+[annotation] Attached annotation: compute -> bogus-switch
+[flatten] Applying to: main
+[flatten] Applying to: fft
+[flatten] Applying to: rearrange
+[flatten] Applying to: compute
+[bogus-switch] Applying to: main
+[bogus-switch] Generated duplicate case #6 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #7 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #8 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #5, replacing 2 references
+[bogus-switch] Generated duplicate case #10 for case #4, replacing 0 references
+[bogus-switch] Applying to: fft
+[bogus-switch] Applying to: rearrange
+[bogus-switch] Generated duplicate case #8 for case #6, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #3, replacing 1 references
+[bogus-switch] Generated duplicate case #11 for case #7, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #2, replacing 0 references
+[bogus-switch] Applying to: compute
+[bogus-switch] Generated duplicate case #10 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #3, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #14 for case #4, replacing 0 references
+[bogus-switch] Generated duplicate case #15 for case #9, replacing 0 references
+[bogus-switch] Generated duplicate case #16 for case #5, replacing 0 references
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/fft[0m
+
+real	0m58.772s
+user	0m1.109s
+sys	0m0.318s

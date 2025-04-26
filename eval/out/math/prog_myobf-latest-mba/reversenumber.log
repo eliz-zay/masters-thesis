@@ -1,0 +1,19 @@
+cat: /opt/samplegenerator/src_math/reversenumber/reversenumber.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_math/reversenumber/reversenumber.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_19_07_37_18/prog_myobf-latest-mba:/app/out   --rm   thesis-v20-x86   'mba:main,reverse' reversenumber
+Input: {'mba': ['main', 'reverse']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: reverse -> mba
+[annotation] Attached annotation: main -> mba
+[mba] Applying to: reverse
+[mba] x = 0: v4
+[mba] x + y: v5
+[mba] x + y: v4
+[mba] Applying to: main
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/reversenumber[0m
+
+real	0m55.967s
+user	0m0.913s
+sys	0m0.225s

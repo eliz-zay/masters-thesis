@@ -1,0 +1,16 @@
+,0
+LOC,35.0
+ABC,23.15167380558045
+A,22.0
+B,6.0
+C,4.0
+Cyclomatic_Complexity,10.0
+Halstead_Volume,4626.064283057075
+Halstead_Level,0.07529597032809647
+Halstead_Difficulty,53.5
+Halstead_Effort,61438.404510883534
+Halstead_Time,3413.2446950490853
+MIwoc,67.2181603624773
+MI,14.742096007629641
+Myers_Interval,4.0
+Information_Flow,0.0

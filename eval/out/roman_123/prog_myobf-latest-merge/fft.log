@@ -1,0 +1,19 @@
+cat: /opt/samplegenerator/src_roman_3/fft/fft.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_3/fft/fft.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_22_14_30/prog_myobf-latest-merge:/app/out   --rm   thesis-v20-x86   'function-merge:fft,rearrange,compute,main' fft
+Input: {'function-merge': ['fft', 'rearrange', 'compute', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> function-merge
+[annotation] Attached annotation: fft -> function-merge
+[annotation] Attached annotation: rearrange -> function-merge
+[annotation] Attached annotation: compute -> function-merge
+[function-merge] Applying to: fft
+[function-merge] Applying to: rearrange
+[function-merge] Applying to: compute
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/fft[0m
+
+real	0m57.190s
+user	0m0.880s
+sys	0m0.212s

@@ -1,0 +1,7 @@
+,exit_code,stdout,real_time,cpu_time
+prog_clang-oslatest-O0,0,b'337 is not a palindrome.You loose!\nHash: 0x0\n',0.021991707999404753,0.016746123999999973
+prog_myobf-latest-bogus,0,b'337 is not a palindrome.You loose!\nHash: 0x0\n',0.019122166999295587,0.0036456659999999363
+prog_myobf-latest-flatten,0,b'337 is not a palindrome.You loose!\nHash: 0x0\n',0.01878095799838775,0.0028287099999999565
+prog_myobf-latest-mba,0,b'337 is not a palindrome.You loose!\nHash: 0x0\n',0.018766249999316642,0.0028880840000000685
+prog_myobf-latest-merge,0,b'337 is not a palindrome.You loose!\nHash: 0x0\n',0.01874854199922993,0.0024472079999999785
+prog_myobf-latest-orig,0,b'337 is not a palindrome.You loose!\nHash: 0x0\n',0.01905866699962644,0.0025580830000000443

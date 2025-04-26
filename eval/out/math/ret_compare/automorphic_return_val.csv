@@ -1,0 +1,7 @@
+,exit_code,stdout,real_time,cpu_time
+prog_clang-oslatest-O0,0,b'Not Automorphic \nYou loose!\nHash: 0x239\n',0.019020416999410372,0.01431779100000008
+prog_myobf-latest-bogus,0,b'Not Automorphic \nYou loose!\nHash: 0x239\n',0.020191667001199676,0.0032023749999998685
+prog_myobf-latest-flatten,0,b'Not Automorphic \nYou loose!\nHash: 0x239\n',0.02081249999901047,0.0028674149999998733
+prog_myobf-latest-mba,0,b'Not Automorphic \nYou loose!\nHash: 0x239\n',0.01901404200179968,0.002798084000000145
+prog_myobf-latest-merge,0,b'Not Automorphic \nYou loose!\nHash: 0x239\n',0.02165712500209338,0.003268542000000041
+prog_myobf-latest-orig,0,b'Not Automorphic \nYou loose!\nHash: 0x239\n',0.026934666999295587,0.007179540999999956

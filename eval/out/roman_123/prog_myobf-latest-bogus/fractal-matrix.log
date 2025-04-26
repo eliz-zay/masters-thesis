@@ -1,0 +1,49 @@
+cat: /opt/samplegenerator/src_roman_2/fractal-matrix/fractal-matrix.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/fractal-matrix/fractal-matrix.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-bogus:/app/out   --rm   thesis-v20-x86   'flatten:create_fractal,propagate_changes,generate_matrix,analyze_path,main;bogus-switch:create_fractal,propagate_changes,generate_matrix,analyze_path,main' fractal-matrix
+Input: {'flatten': ['create_fractal', 'propagate_changes', 'generate_matrix', 'analyze_path', 'main'], 'bogus-switch': ['create_fractal', 'propagate_changes', 'generate_matrix', 'analyze_path', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: main -> bogus-switch
+[annotation] Attached annotation: generate_matrix -> flatten
+[annotation] Attached annotation: generate_matrix -> bogus-switch
+[annotation] Attached annotation: analyze_path -> flatten
+[annotation] Attached annotation: analyze_path -> bogus-switch
+[annotation] Attached annotation: create_fractal -> flatten
+[annotation] Attached annotation: create_fractal -> bogus-switch
+[annotation] Attached annotation: propagate_changes -> flatten
+[annotation] Attached annotation: propagate_changes -> bogus-switch
+[flatten] Applying to: main
+[flatten] Applying to: generate_matrix
+[flatten] Applying to: analyze_path
+[flatten] Applying to: create_fractal
+[flatten] Applying to: propagate_changes
+[bogus-switch] Applying to: main
+[bogus-switch] Generated duplicate case #4 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #5 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #6 for case #3, replacing 2 references
+[bogus-switch] Applying to: generate_matrix
+[bogus-switch] Generated duplicate case #2 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #3 for case #1, replacing 0 references
+[bogus-switch] Applying to: analyze_path
+[bogus-switch] Generated duplicate case #8 for case #0, replacing 0 references
+[bogus-switch] Generated duplicate case #9 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #10 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #7, replacing 2 references
+[bogus-switch] Generated duplicate case #12 for case #5, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #3, replacing 0 references
+[bogus-switch] Applying to: create_fractal
+[bogus-switch] Applying to: propagate_changes
+[bogus-switch] Generated duplicate case #8 for case #0, replacing 1 references
+[bogus-switch] Generated duplicate case #9 for case #7, replacing 1 references
+[bogus-switch] Generated duplicate case #10 for case #6, replacing 0 references
+[bogus-switch] Generated duplicate case #11 for case #1, replacing 0 references
+[bogus-switch] Generated duplicate case #12 for case #2, replacing 0 references
+[bogus-switch] Generated duplicate case #13 for case #3, replacing 0 references
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/fractal-matrix[0m
+
+real	1m0.973s
+user	0m1.385s
+sys	0m0.349s

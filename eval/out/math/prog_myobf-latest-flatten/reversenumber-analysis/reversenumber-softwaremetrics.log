@@ -1,0 +1,6 @@
+/opt/samplegenerator/out/run_2025_04_24_07_37_18_math/prog_myobf-latest-flatten
+[0;34m[INFO][0m: Calculating software metrics for /opt/samplegenerator/out/run_2025_04_24_07_37_18_math/prog_myobf-latest-flatten/reversenumber.
+
+real	0m18.846s
+user	0m4.593s
+sys	0m0.246s

@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_24_07_37_18_math/prog_myobf-latest-mba
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_24_07_37_18_math/prog_myobf-latest-mba/volumecylinder.
+[2K[DEBUG] There are 9 functions.
+
+real	0m25.750s
+user	0m4.559s
+sys	0m0.405s

@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-mba
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-mba/fft.
+[2K[DEBUG] There are 15 functions.
+
+real	0m48.875s
+user	0m7.125s
+sys	0m0.587s

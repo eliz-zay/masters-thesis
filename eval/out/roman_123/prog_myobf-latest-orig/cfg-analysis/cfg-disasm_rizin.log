@@ -1,0 +1,7 @@
+/opt/samplegenerator/out/run_2025_04_22_23_54_57/prog_myobf-latest-orig
+[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_22_23_54_57/prog_myobf-latest-orig/cfg.
+[2K[DEBUG] There are 13 functions.
+
+real	0m13.361s
+user	0m3.931s
+sys	0m0.305s

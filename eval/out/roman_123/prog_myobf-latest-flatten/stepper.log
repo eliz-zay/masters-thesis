@@ -1,0 +1,38 @@
+cat: /opt/samplegenerator/src_roman_2/stepper/stepper.opts: No such file or directory
+[0;34m[INFO][0m: docker run   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/src_roman_2/stepper/stepper.c:/app/in/target.c   -v /Users/elizaveta/Documents/uni/thesis/OSAGE/out/run_2025_04_25_17_11_45/prog_myobf-latest-flatten:/app/out   --rm   thesis-v20-x86   'flatten:step1,step2,step3,step4,step5,step6,step7,step8,step9,step10,step11,step12,main' stepper
+Input: {'flatten': ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'main']}
+Annotated file saved as: build/src/target.c
+[0;34mCompiling...[0m
+[0;34mObfuscating...[0m
+[annotation] Attached annotation: main -> flatten
+[annotation] Attached annotation: step1 -> flatten
+[annotation] Attached annotation: step2 -> flatten
+[annotation] Attached annotation: step3 -> flatten
+[annotation] Attached annotation: step4 -> flatten
+[annotation] Attached annotation: step5 -> flatten
+[annotation] Attached annotation: step6 -> flatten
+[annotation] Attached annotation: step7 -> flatten
+[annotation] Attached annotation: step8 -> flatten
+[annotation] Attached annotation: step9 -> flatten
+[annotation] Attached annotation: step10 -> flatten
+[annotation] Attached annotation: step11 -> flatten
+[annotation] Attached annotation: step12 -> flatten
+[flatten] Applying to: main
+[flatten] Applying to: step1
+[flatten] Applying to: step2
+[flatten] Applying to: step3
+[flatten] Applying to: step4
+[flatten] Applying to: step5
+[flatten] Applying to: step6
+[flatten] Applying to: step7
+[flatten] Applying to: step8
+[flatten] Applying to: step9
+[flatten] Applying to: step10
+[flatten] Applying to: step11
+[flatten] Applying to: step12
+[0;34mCompiling IR to binary...[0m
+[0;34mExecutable created: /app/out/stepper[0m
+
+real	1m4.568s
+user	0m0.871s
+sys	0m0.184s

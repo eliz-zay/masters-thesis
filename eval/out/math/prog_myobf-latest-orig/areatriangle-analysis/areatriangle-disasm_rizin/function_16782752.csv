@@ -1,0 +1,13 @@
+offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,ptr,xrefs_from
+16782752,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16782752,16782793,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,['sym.area_triangle'],"[{'addr': 16782845, 'type': 'CALL'}]",,
+16782753,"rsp,rbp,=",False,16782752,16782791,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,,
+16782756,,False,16782752,16782790,4,"cvtsi2sd xmm0, edi","cvtsi2sd xmm0, edi",f20f2ac7,sse,null,False,0,0,,,,
+16782760,"0x1130,rip,-,[8],xmm1,=",True,16782752,16782786,8,"movsd xmm1, qword [rip - 0x1130]","movsd xmm1, qword [data.01000480]",f20f100dd0eeffff,sse,mov,False,9,0,,,16778368.0,"[{'addr': 16778368, 'type': 'DATA'}]"
+16782768,"xmm1,xmm0,*=",False,16782752,16782790,4,"mulsd xmm0, xmm1","mulsd xmm0, xmm1",f20f59c1,sse,mul,False,20,0,,,,
+16782772,,False,16782752,16782790,4,"cvtsd2ss xmm1, xmm0","cvtsd2ss xmm1, xmm0",f20f5ac8,sse,null,False,0,0,,,,
+16782776,,False,16782752,16782790,4,"cvtss2sd xmm1, xmm1","cvtss2sd xmm1, xmm1",f30f5ac9,sse,null,False,0,0,,,,
+16782780,"xmm1,xmm0,*=",False,16782752,16782790,4,"mulsd xmm0, xmm1","mulsd xmm0, xmm1",f20f59c1,sse,mul,False,20,0,,,,
+16782784,,False,16782752,16782790,4,"cvtsd2ss xmm0, xmm0","cvtsd2ss xmm0, xmm0",f20f5ac0,sse,null,False,0,0,,,,
+16782788,,False,16782752,16782790,4,"cvttss2si eax, xmm0","cvttss2si eax, xmm0",f30f2cc0,sse,null,False,0,0,,,,
+16782792,"rsp,[8],8,rsp,+=,rbp,=",False,16782752,16782793,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,,
+16782793,"rsp,[8],rip,=,8,rsp,+=",False,16782752,16782793,1,ret,ret,c3,cpu,ret,False,5,0,,,,
