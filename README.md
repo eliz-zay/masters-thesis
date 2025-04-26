@@ -1,12 +1,11 @@
 # Thesis
 
 ## OSAGE and Docker
-- `docker build -t thesis-v20 .`
+- `docker build -t thesis-v20-x86 -f Dockerfile.x86 .`
 - `OSAGE_DIR=<full_path_to_OSAGE>` - host path to OSAGE directory   
 - ```shell
     docker run \
       -v $OSAGE_DIR/<path_to_src_file.c>:/app/in/target.c \
-      -v $OSAGE_DIR/<path_to_includes.h>:/app/in/includes.h \
       -v $OSAGE_DIR/<path_to_output_dir>:/app/out \
       -it thesis-v20 \
       <obfuscation_modes> <output_file.out>
@@ -17,9 +16,8 @@
   ```shell
     docker run \
       -v $OSAGE_DIR/src_strings/anagram/anagram.c:/app/in/target.c \
-      -v $OSAGE_DIR/src_strings/includes.h:/app/in/includes.h \
       -v $OSAGE_DIR/my-obfuscator:/app/out \
-      -it thesis-v20 \
+      -it thesis-v20-x86 \
       'flatten:checkAnagram' out.out
   ```
 

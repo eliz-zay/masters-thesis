@@ -18,8 +18,17 @@ namespace {
       errs() << "[" << this->annotationName << "] x > 0: v1\n";
 
       Type *xType = x->getType();
+      int shift;
+      if (xType->isIntegerTy(32)) {
+        shift = 31;
+      } else if (xType->isIntegerTy(64)) {
+        shift = 63;
+      } else {
+        errs() << "[" << this->annotationName << "] Unknown operand type: " << xType << "\n";
+        return nullptr;
+      }
 
-      Value *shiftedX = builder.CreateLShr(x, ConstantInt::get(xType, 31));
+      Value *shiftedX = builder.CreateLShr(x, ConstantInt::get(xType, shift));
       Value *xorResult = builder.CreateXor(shiftedX, ConstantInt::get(xType, 1));
       Value *subResult = builder.CreateSub(ConstantInt::get(xType, 3), xorResult);
       Value *finalXor = builder.CreateXor(subResult, ConstantInt::get(xType, 2));

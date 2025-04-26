@@ -47,7 +47,6 @@ def annotate_c_file(input_c_file_path, output_c_file_path, annotation_string):
             annotations_to_add.append(f'__attribute__((noinline))\n')
 
           annotations_to_add.append(f'__attribute__((annotate("{ann}")))\n')
-          print(f'Match: {function_name}')
 
       if annotations_to_add:
         modified_lines.extend(annotations_to_add)

@@ -12,5 +12,6 @@
 
 # Vizualize CFG
 ../../llvm-project/build/bin/opt -passes=dot-cfg exec/obf.ll -o /dev/null
-dot -Tpng .merged.dot -o out/merged.obf.png
+dot -Tpng .square_array.dot -o out/square_array.obf.png
+dot -Tpng .main.dot -o out/main.obf.png
 rm .*.dot

@@ -48,6 +48,7 @@ public:
       this->applyPass(F);
     } catch (const std::runtime_error& e) {
       errs() << "[" << this->annotationName << "] ERROR: " << e.what() << "\n";
+      throw e;
     }
 
     return PreservedAnalyses::none();

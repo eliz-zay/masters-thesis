@@ -26,7 +26,62 @@
 #include <string.h>
 #include <stdarg.h>
 
-#include "cinnabar.h"
+// #include "cinnabar.h"
+
+
+
+
+
+
+#include <stddef.h>
+#include <stdint.h>
+
+//--------------------------------------------------------------
+// Error codes.
+//--------------------------------------------------------------
+
+typedef enum {
+    CnbrSuccess             = 0,
+    CnbrInvalidParameter,
+    CnbrInvalidPrivateKey,
+    CnbrInvalidPublicKey,
+    CnbrKeyIsTooShort,
+    CnbrInvalidSignature,
+}
+    CnbrStatus;
+
+//--------------------------------------------------------------
+// A signature.
+//--------------------------------------------------------------
+
+typedef struct _CNBR_SIGNATURE {
+    size_t      signature_length;
+    uint8_t   * signature_data;
+}
+    CNBR_SIGNATURE;
+
+//--------------------------------------------------------------
+// Signing functions.
+//--------------------------------------------------------------
+
+#if defined (__cplusplus)
+extern "C" {
+#endif
+
+CnbrStatus  CnbrSignature(CNBR_SIGNATURE * signature, const void * document_data, size_t document_length, const char * pem_private_key);
+CnbrStatus  CnbrVerifySignature(const uint8_t * signature_data, size_t signature_length, const void * document_data, size_t document_length, const char * pem_public_key);
+CnbrStatus  CnbrEraseSignature(CNBR_SIGNATURE * signature);
+
+#if defined (__cplusplus)
+}
+#endif
+
+
+
+
+
+
+
 
 //========================================================================
 // Helper functions.

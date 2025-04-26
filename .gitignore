@@ -40,3 +40,4 @@
 
 *.dot
 *.png
+.DS_Store

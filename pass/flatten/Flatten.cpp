@@ -120,7 +120,10 @@ namespace {
       LLVMContext &context, IRBuilder<> &builder,
       AllocaInst *caseVar, BasicBlock *block, std::map<BasicBlock *, int> blockCaseIdxs
     ) const {
-      if (dyn_cast<ReturnInst>(block->getTerminator())) {
+      if (
+        dyn_cast<ReturnInst>(block->getTerminator())
+        || dyn_cast<UnreachableInst>(block->getTerminator())
+      ) {
         return;
       }
 
