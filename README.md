@@ -40,7 +40,7 @@ For example, this command obfuscates `/path/to/target.c` and generates `/path/to
 > - For Function Merging, make sure target functions are `static`, meaning they have internal linkage. Otherwise, merging is not applied for safety reasons.
 
 ### Example
-```
+```C
 __attribute__((noinline))
 __attribute__((annotate("flatten")))
 __attribute__((annotate("bogus-switch")))
