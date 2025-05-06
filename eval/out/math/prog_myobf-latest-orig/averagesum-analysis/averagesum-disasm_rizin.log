@@ -1,7 +1,0 @@
-/opt/samplegenerator/out/run_2025_04_24_21_09_09/prog_myobf-latest-orig
-[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_24_21_09_09/prog_myobf-latest-orig/averagesum.
-[2K[DEBUG] There are 9 functions.
-
-real	0m30.204s
-user	0m5.243s
-sys	0m0.486s

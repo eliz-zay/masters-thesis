@@ -1,7 +1,0 @@
-/opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-mba
-[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-mba/mandelbrot.
-[2K[DEBUG] There are 18 functions.
-
-real	0m31.306s
-user	0m5.195s
-sys	0m0.393s

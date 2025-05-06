@@ -41,10 +41,6 @@ namespace {
     }
 
     // x > 0 => (((x >> 16) ^ 0xCFD00FAA >> 14) & (1 << 1)) == 0) && x != 0
-    // >> 16 --> shifts sign bit to 15th position
-    // ^ 0xCFD00FAA --> does nothing, does not affect sign bit
-    // >> 14 --> shifts sign bit to 2nd position
-    // & (1 << 1) --> makes zero all bits except for the 2nd, with sign bit
     Value *insertXsgtZero_v2(IRBuilder<> &builder, Value* x) const {
       errs() << "[" << this->annotationName << "] x > 0: v2\n";
 
@@ -74,7 +70,6 @@ namespace {
     }
 
     // x == 0 => 56 ^ x ^ 72 = 112
-    // 56 ^ 72 equal 112, thus every bit of x must be zero
     Value *insertXeqZero_v1(IRBuilder<> &builder, Value* x) const {
       errs() << "[" << this->annotationName << "] x = 0: v1\n";
 
@@ -92,9 +87,6 @@ namespace {
     }
 
     // x == 0 => 76 ^ ~(x ^ ~x) ^ 40 ^ x == 100
-    // 76 ^ 40 = 100
-    // ^ ~(x ^ ~x) makes no changes
-    // ^ x checks that every bit of x is zero
     Value *insertXeqZero_v2(IRBuilder<> &builder, Value* x) const {
       errs() << "[" << this->annotationName << "] x = 0: v2\n";
 
@@ -116,10 +108,6 @@ namespace {
     }
 
     // x == 0 => ((x >> 6) < 5001) && (x >= 0) && (((x << 2) ^ 3) - 3 == 0)
-    // ((x << 2) ^ 3) - 3 == 0 - checks that every bit of (x << 2) is zero
-    // x >= 0 - checks that left bit is zero
-    // (x >> 6) < 5001 - checks that second left bit is zero, otherwise x is much
-    //                   larger that 5001
     Value *insertXeqZero_v3(IRBuilder<> &builder, Value* x) const {
       errs() << "[" << this->annotationName << "] x = 0: v3\n";
 
@@ -146,7 +134,6 @@ namespace {
     }
 
     // x == 0 => (x << 1) ^ x == 0
-    // for 100...0 left shift is compensated by x
     Value *insertXeqZero_v4(IRBuilder<> &builder, Value* x) const {
       errs() << "[" << this->annotationName << "] x = 0: v4\n";
 
@@ -268,6 +255,7 @@ namespace {
       return sum;
     }
 
+    // Randomizes MBA for `x > 0` (SGT, Signed Greater Than)
     Value *pickAndInsertXsgtZero(IRBuilder<> &builder, Value *x) const {
       switch (rand() % 2) {
         case 0:
@@ -277,6 +265,7 @@ namespace {
       }
     }
 
+    // Randomizes MBA for `x == 0`
     Value *pickAndInsertXeqZero(IRBuilder<> &builder, Value *x) const {
       switch (rand() % 4) {
         case 0:
@@ -290,6 +279,7 @@ namespace {
       }
     }
 
+    // Randomizes MBA for `x + y`
     Value *pickAndInsertXaddY(IRBuilder<> &builder, Value *x, Value *y) const {
       switch (rand() % 6) {
         case 0:
@@ -307,6 +297,7 @@ namespace {
       }
     }
 
+    // Checks if instruction is `x > 0` (SGT)
     bool isXsgtZero(ICmpInst* icmpInst) const {
       Value *op2 = icmpInst->getOperand(1);
       return (
@@ -316,6 +307,7 @@ namespace {
       );
     }
 
+    // Checks if instruction is `x == 0`
     bool isXeqZero(ICmpInst* icmpInst) const {
       Value *op2 = icmpInst->getOperand(1);
       return (
@@ -325,6 +317,7 @@ namespace {
       );
     }
 
+    // Checks if instruction is `x + y`
     bool isXaddY(Instruction &inst) const {
       return inst.getOpcode() == Instruction::Add;
     }

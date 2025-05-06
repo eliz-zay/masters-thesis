@@ -1,7 +1,0 @@
-/opt/samplegenerator/out/run_2025_04_25_17_11_45_roman_2/prog_myobf-latest-flatten
-[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_17_11_45_roman_2/prog_myobf-latest-flatten/stepper.
-[2K[DEBUG] There are 20 functions.
-
-real	0m42.264s
-user	0m6.342s
-sys	0m0.471s

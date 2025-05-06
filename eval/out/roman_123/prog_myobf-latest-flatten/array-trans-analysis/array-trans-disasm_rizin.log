@@ -1,7 +1,0 @@
-/opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-flatten
-[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-flatten/array-trans.
-[2K[DEBUG] There are 12 functions.
-
-real	0m59.169s
-user	0m8.168s
-sys	0m0.701s

@@ -29,6 +29,7 @@ namespace {
   private:
     static constexpr const char *annotationName = "function-merge";
 
+    // Parses annotated target functions
     std::vector<Function *> getTargetFunctions(Module &M) const {
       std::vector<Function *> annotatedFunctions;
 
@@ -77,6 +78,7 @@ namespace {
       return annotatedFunctions;
     }
 
+    // Creates a void function, later used as a unified function
     Function* createVoidFunction(Module &M, std::vector<Type *> &argTypes) const {
       LLVMContext &context = M.getContext();
 
@@ -87,6 +89,7 @@ namespace {
       return newFunc;
     }
 
+    // Creates a switch, which acts as a dispatcher component
     SwitchInst* createSwitchCase(Function *mergedFunc) const {
       LLVMContext &context = mergedFunc->getContext();
 
@@ -103,6 +106,8 @@ namespace {
       return switchInst;
     }
 
+    // Adds target function body as a switch case inside a unified function's dispatcher,
+    // and copies arguments, including the one for return value
     void addCase(
       Function *mergedFunc,
       SwitchInst *switchInst,
@@ -143,7 +148,7 @@ namespace {
 
       IRBuilder<> builder(context);
 
-      // set return variable and create return void
+      // Set return variable and create return void
       for (auto block = clonedEntryBlock->getIterator(); block != mergedFunc->end(); block++) {
         auto returnInst = dyn_cast<ReturnInst>(block->getTerminator());
         if (!returnInst) {
@@ -151,7 +156,7 @@ namespace {
         }
 
         Value *returnValue = returnInst->getReturnValue();
-        // void return instructions are already valid
+        // Void return instructions are already valid
         if (!returnValue) {
           continue;
         }
@@ -165,6 +170,7 @@ namespace {
       }
     }
 
+    // A main function: merges target functions
     MergedFunction merge(Module &M, std::vector<Function *> targetFuncs) const {
       LLVMContext &context = M.getContext();
 
@@ -201,6 +207,7 @@ namespace {
       return {mergedFunc, targetFuncsInfo};
     }
 
+    // Removes annotation, a preparation step before deleting a function
     void removeAnnotation(Module &M, Function *func) const {
       GlobalVariable *annotations = M.getNamedGlobal("llvm.global.annotations");
       if (!annotations) {
@@ -241,6 +248,7 @@ namespace {
       func->removeDeadConstantUsers();
     }
 
+    // Replaces function uses to the calls of a unified function with corresponding arguments
     void replaceFunctionUses(Function *mergedFunc, Function *func, FunctionInfo &funcInfo) const {
       LLVMContext &context = mergedFunc->getContext();
       IRBuilder<> builder(context);
@@ -291,7 +299,7 @@ namespace {
           callInst->replaceAllUsesWith(builder.CreateLoad(returnType, resultVar));
         }
 
-        // Delete later to avoid modifying `uses()` iterator in for loop
+        // Delete later to avoid modifying `uses()` iterator in the loop
         callInstToDelete.push_back(callInst);
       }
 
@@ -300,6 +308,7 @@ namespace {
       }
     }
 
+    // Verifies that function is not referenced and deleted it
     void deleteFunctionIfNoUses(Module &M, Function *func) const {
       for (auto &use : func->uses()) {
         if (dyn_cast<InvokeInst>(use.getUser())) {

@@ -1,6 +1,0 @@
-,exit_code,stdout,real_time,cpu_time
-prog_myobf-latest-bogus,0,b'Sequence:\n15 48 31 31 18 21 13 6 11 19 10 41 44 17 47 26 37 25 4 11 \nMetrics -> Sum: 475 Min: 4 Max: 48\nAggregate metric: 435\n',0.044493791996501386,0.02661749999999996
-prog_myobf-latest-flatten,0,b'Sequence:\n15 48 31 31 18 21 13 6 11 19 10 41 44 17 47 26 37 25 4 11 \nMetrics -> Sum: 475 Min: 4 Max: 48\nAggregate metric: 435\n',0.025842167000519112,0.004628124999999983
-prog_myobf-latest-mba,0,b'Sequence:\n15 48 31 31 18 21 13 6 11 19 10 41 44 17 47 26 37 25 4 11 \nMetrics -> Sum: 475 Min: 4 Max: 48\nAggregate metric: 435\n',0.02270491700619459,0.0033734589999996345
-prog_myobf-latest-merge,0,b'Sequence:\n15 48 31 31 18 21 13 6 11 19 10 41 44 17 47 26 37 25 4 11 \nMetrics -> Sum: 475 Min: 4 Max: 48\nAggregate metric: 435\n',0.022960749993217178,0.0028422909999998858
-prog_myobf-latest-orig,0,b'Sequence:\n15 48 31 31 18 21 13 6 11 19 10 41 44 17 47 26 37 25 4 11 \nMetrics -> Sum: 475 Min: 4 Max: 48\nAggregate metric: 435\n',0.02262508300191257,0.0028879169999997956

@@ -1,7 +1,0 @@
-/opt/samplegenerator/out/run_2025_04_25_17_11_45_roman_2/prog_myobf-latest-orig
-[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_17_11_45_roman_2/prog_myobf-latest-orig/stepper.
-[2K[DEBUG] There are 20 functions.
-
-real	0m31.304s
-user	0m5.348s
-sys	0m0.394s

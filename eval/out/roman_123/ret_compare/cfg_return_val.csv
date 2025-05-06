@@ -1,6 +1,0 @@
-,exit_code,stdout,real_time,cpu_time
-prog_myobf-latest-bogus,0,b'Sum: 0\nProduct: 1\nResult: 14\nLoop Counter: 9\n',0.029852374995243736,0.016461209000000032
-prog_myobf-latest-flatten,0,b'Sum: 0\nProduct: 1\nResult: 14\nLoop Counter: 9\n',0.02144954100367613,0.00415087599999997
-prog_myobf-latest-mba,0,b'Sum: 0\nProduct: 1\nResult: 14\nLoop Counter: 9\n',0.020262624995666556,0.0031703750000000586
-prog_myobf-latest-merge,0,b'Sum: 0\nProduct: 1\nResult: 14\nLoop Counter: 9\n',0.01946829099324532,0.0030828749999998184
-prog_myobf-latest-orig,0,b'Sum: 0\nProduct: 1\nResult: 14\nLoop Counter: 9\n',0.0187789170013275,0.0030885830000000336

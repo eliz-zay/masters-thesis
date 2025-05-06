@@ -1,7 +1,0 @@
-,exit_code,stdout,real_time,cpu_time
-prog_clang-oslatest-O0,0,b'Not a mirror number 965311You loose!\nHash: 0x0\n',0.018200167000031797,0.013739126000000157
-prog_myobf-latest-bogus,0,b'Not a mirror number 965311You loose!\nHash: 0x0\n',0.02051704200130189,0.0031071240000000167
-prog_myobf-latest-flatten,0,b'Not a mirror number 965311You loose!\nHash: 0x0\n',0.019568874999094987,0.002749501000000043
-prog_myobf-latest-mba,0,b'Not a mirror number 965311You loose!\nHash: 0x0\n',0.01903108400074416,0.0028097089999998826
-prog_myobf-latest-merge,0,b'Not a mirror number 965311You loose!\nHash: 0x0\n',0.02035783400060609,0.002718167000000049
-prog_myobf-latest-orig,0,b'Not a mirror number 965311You loose!\nHash: 0x0\n',0.019586082999012433,0.0028749990000001002

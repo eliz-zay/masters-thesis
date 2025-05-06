@@ -1,7 +1,0 @@
-/opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-mba
-[0;34m[INFO][0m: Disassembling /opt/samplegenerator/out/run_2025_04_25_22_14_30/prog_myobf-latest-mba/pattern.
-[2K[DEBUG] There are 18 functions.
-
-real	0m41.563s
-user	0m6.031s
-sys	0m0.480s

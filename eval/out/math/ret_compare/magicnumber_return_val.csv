@@ -1,7 +1,0 @@
-,exit_code,stdout,real_time,cpu_time
-prog_clang-oslatest-O0,0,b'337 is not a magic number\nYou loose!\nResult: 0x193\n',0.020407666997925844,0.015098499000000043
-prog_myobf-latest-bogus,0,b'337 is not a magic number\nYou loose!\nResult: 0x193\n',0.020013375000417,0.004069041000000162
-prog_myobf-latest-flatten,0,b'337 is not a magic number\nYou loose!\nResult: 0x193\n',0.02034304199696635,0.002996292000000178
-prog_myobf-latest-mba,0,b'337 is not a magic number\nYou loose!\nResult: 0x193\n',0.019070999998803018,0.0032941250000000366
-prog_myobf-latest-merge,0,b'337 is not a magic number\nYou loose!\nResult: 0x193\n',0.01874445800058311,0.002874749999999926
-prog_myobf-latest-orig,0,b'337 is not a magic number\nYou loose!\nResult: 0x193\n',0.018864666002627928,0.002884958000000104

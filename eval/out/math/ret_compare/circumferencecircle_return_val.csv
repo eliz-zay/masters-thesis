@@ -1,7 +1,0 @@
-,exit_code,stdout,real_time,cpu_time
-prog_clang-oslatest-O0,0,b'You loose!\nHash: 0x844\n',0.017413749999832362,0.01318354300000002
-prog_myobf-latest-bogus,0,b'You loose!\nHash: 0x844\n',0.018938832999992883,0.003616208999999815
-prog_myobf-latest-flatten,0,b'You loose!\nHash: 0x844\n',0.018546499999501975,0.00257645899999992
-prog_myobf-latest-mba,0,b'You loose!\nHash: 0x844\n',0.018313291999220382,0.002684498999999896
-prog_myobf-latest-merge,0,b'You loose!\nHash: 0x844\n',0.019577667000703514,0.0029157499999998837
-prog_myobf-latest-orig,0,b'You loose!\nHash: 0x844\n',0.020547292002447648,0.0028078339999999535

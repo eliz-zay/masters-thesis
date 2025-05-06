@@ -1,5 +1,0 @@
-offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to
-16784688,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16784688,16784693,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,"['sym.__libc_csu_fini', 'dbg.__libc_csu_fini']","[{'addr': 16782959, 'type': 'DATA'}]"
-16784689,"rsp,rbp,=",False,16784688,16784691,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,
-16784692,"rsp,[8],8,rsp,+=,rbp,=",False,16784688,16784693,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,
-16784693,"rsp,[8],rip,=,8,rsp,+=",False,16784688,16784693,1,ret,ret,c3,cpu,ret,False,5,0,,

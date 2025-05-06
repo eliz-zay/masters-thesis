@@ -1,6 +1,0 @@
-,exit_code,stdout,real_time,cpu_time
-prog_myobf-latest-bogus,0,"b'Processed Data:\n101 3 5 8 16 43 56 33 44 20 165 61 17 119 29 101 \nFlags: 494, Signal: 89\nAvg: 45.00, Inversions: 6\n'",0.04090375000669155,0.01976291699999999
-prog_myobf-latest-flatten,0,"b'Processed Data:\n101 3 5 8 16 43 56 33 44 20 165 61 17 119 29 101 \nFlags: 494, Signal: 89\nAvg: 45.00, Inversions: 6\n'",0.027953541997703724,0.005444874999999794
-prog_myobf-latest-mba,0,"b'Processed Data:\n101 3 5 8 16 43 56 33 44 20 165 61 17 119 29 101 \nFlags: 494, Signal: 89\nAvg: 45.00, Inversions: 6\n'",0.023430082990671508,0.003033041000000125
-prog_myobf-latest-merge,0,"b'Processed Data:\n101 3 5 8 16 43 56 33 44 20 165 61 17 119 29 101 \nFlags: 494, Signal: 89\nAvg: 45.00, Inversions: 6\n'",0.02373579199775122,0.003010251000000075
-prog_myobf-latest-orig,0,"b'Processed Data:\n101 3 5 8 16 43 56 33 44 20 165 61 17 119 29 101 \nFlags: 494, Signal: 89\nAvg: 45.00, Inversions: 6\n'",0.022250582987908274,0.0031299580000001548

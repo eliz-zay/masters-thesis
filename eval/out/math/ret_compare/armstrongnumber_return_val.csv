@@ -1,7 +1,0 @@
-,exit_code,stdout,real_time,cpu_time
-prog_clang-oslatest-O0,0,b'337 is not an Armstrong number.\nYou loose!\n',0.021081667000544257,0.01498762500000006
-prog_myobf-latest-bogus,0,b'337 is not an Armstrong number.\nYou loose!\n',0.02091975000075763,0.0034212489999998486
-prog_myobf-latest-flatten,0,b'337 is not an Armstrong number.\nYou loose!\n',0.02083962499818881,0.0029557909999999854
-prog_myobf-latest-mba,0,b'337 is not an Armstrong number.\nYou loose!\n',0.02051079200100503,0.0030755410000000705
-prog_myobf-latest-merge,0,b'337 is not an Armstrong number.\nYou loose!\n',0.019924749998608604,0.0030439170000000626
-prog_myobf-latest-orig,0,b'337 is not an Armstrong number.\nYou loose!\n',0.01948387499942328,0.0028171660000000376

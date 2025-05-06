@@ -1,5 +1,0 @@
-offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags
-16783424,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16783424,16783429,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,"['sym.init_program', 'dbg.init_program']"
-16783425,"rsp,rbp,=",False,16783424,16783427,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,
-16783428,"rsp,[8],8,rsp,+=,rbp,=",False,16783424,16783429,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,
-16783429,"rsp,[8],rip,=,8,rsp,+=",False,16783424,16783429,1,ret,ret,c3,cpu,ret,False,5,0,

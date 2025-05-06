@@ -1,7 +1,0 @@
-offset,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_to,jump,fail,xrefs_from
-16783520,"rbp,8,rsp,-,=[8],8,rsp,-=",False,16783520,16783532,1,push rbp,push rbp,55,cpu,rpush,False,268435468,0,"['main', 'sym.main']","[{'addr': 16783501, 'type': 'DATA'}]",,,
-16783521,"rsp,rbp,=",False,16783520,16783530,3,"mov rbp, rsp","mov rbp, rsp",4889e5,cpu,mov,False,9,0,,,,,
-16783524,"16783536,rip,8,rsp,-=,rsp,=[],rip,=",False,16783520,16783528,5,call 0x10018b0,call sym.run,e807000000,cpu,call,False,3,0,,,16783536.0,16783529.0,"[{'addr': 16783536, 'type': 'CALL'}]"
-16783529,"eax,rax,^,0xffffffff,&,rax,=,$z,zf,:=,$p,pf,:=,31,$s,sf,:=,0,cf,:=,0,of,:=",False,16783520,16783531,2,"xor eax, eax","xor eax, eax",31c0,cpu,xor,False,28,0,,,,,
-16783531,"rsp,[8],8,rsp,+=,rbp,=",False,16783520,16783532,1,pop rbp,pop rbp,5d,cpu,pop,False,14,0,,,,,
-16783532,"rsp,[8],rip,=,8,rsp,+=",False,16783520,16783532,1,ret,ret,c3,cpu,ret,False,5,0,,,,,

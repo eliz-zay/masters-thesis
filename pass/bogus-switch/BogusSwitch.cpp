@@ -23,7 +23,7 @@ namespace {
 
     // A fraction of `store i32 caseValue, ptr %caseVar` instructions with case values of original blocks
     // to be replaced by similar instructions with case values of duplicated blocks.
-    // A value is close to zero may lead to unreachable duplicated blocks (dead code)
+    // A value close to zero may lead to unreachable duplicated blocks (dead code)
     const double storeInstRemappingPart = 0.5;
 
     // Checks if the switch was annotated by control-flow flattening pass, indicating

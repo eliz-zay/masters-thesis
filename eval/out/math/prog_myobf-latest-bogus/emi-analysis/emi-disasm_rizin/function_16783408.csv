@@ -1,2 +1,0 @@
-offset,ptr,esil,refptr,fcn_addr,fcn_last,size,opcode,disasm,bytes,family,type,reloc,type_num,type2_num,flags,xrefs_from,xrefs_to
-16783408,16787944,"0x11b2,rip,+,[8],rip,=",True,16783408,16783408,6,jmp qword [rip + 0x11b2],jmp qword [reloc.strtod],ff25b2110000,cpu,irjmp,False,402653186,0,['sym.imp.strtod'],"[{'addr': 16787944, 'type': 'CODE'}]","[{'addr': 16783092, 'type': 'CALL'}, {'addr': 16783118, 'type': 'CALL'}, {'addr': 16783144, 'type': 'CALL'}]"
