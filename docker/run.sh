@@ -12,6 +12,8 @@ fi
 SRC_FILE="/app/in/target.c"
 OUT_FILE="/app/out/$1"
 
+mkdir build
+
 echo -e "${BLUE}Compiling...${NC}"
 
 # Compile
